@@ -1,0 +1,44 @@
+{% extends "project/base.html" %}
+{% load thumbnail %}
+
+{% block sub_title %}
+  Publish holding content
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Publish holding content
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="pure-g-r">
+    <div class="pure-u-1">
+      <table class="pure-table pure-table-bordered">
+        <tbody>
+          <tr>
+            <td><strong>Company</strong></td>
+            <td>{{ holdingcontent.company }}</td>
+          </tr>
+          <tr>
+            <td><strong>What you do...</strong></td>
+            <td>{{ holdingcontent.what_we_do }}</td>
+          </tr>
+          <tr>
+            <td><strong>Desciption</strong></td>
+            <td>{{ holdingcontent.description }}</td>
+          </tr>
+          {% if holdingcontent.logo %}
+            <tr>
+              <td><strong>Logo</strong></td>
+              <td>
+                <img src="{% thumbnail holdingcontent.logo 224x168 crop %}" />
+              </td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+    <div class="pure-u-1">
+      {% include '_form.html' with legend='Are you sure you want to publish this content?' submit='Publish' %}
+    </div>
+  </div>
+{% endblock content %}

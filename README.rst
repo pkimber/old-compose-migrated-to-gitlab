@@ -62,7 +62,7 @@ Usage
       django-admin.py syncdb --noinput && \
       django-admin.py migrate --all --noinput && \
       django-admin.py demo_data_login && \
-      django-admin.py demo_data_holding && \
+      django-admin.py init_app_holding && \
       django-admin.py runserver
 
 Release

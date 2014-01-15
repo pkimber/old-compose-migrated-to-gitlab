@@ -1,0 +1,17 @@
+{% extends "project/base.html" %}
+
+{% block sub_title %}
+  Edit holding content
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Edit holding content
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="pure-g-r">
+    <div class="pure-u-1">
+      {% include '_form.html' with legend='Footer' multipart=True %}
+    </div>
+  </div>
+{% endblock content %}

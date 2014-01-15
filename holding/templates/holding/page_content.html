@@ -4,16 +4,24 @@
 {% load thumbnail %}
 
 {% block sub_title %}
-  Example app
+  Example appss
 {% endblock sub_title %}
 
+{% block heading %}
+  {% if content.company %}
+    {{ content.company }}
+  {% endif %}
+{% endblock heading %}
+
 {% block sub_heading %}
-  Example app
+  {% if content.what_we_do %}
+    {{ content.what_we_do }}
+  {% endif %}
 {% endblock sub_heading %}
 
 {% block stylesheets %}
   {{ block.super }}
-  <link rel="stylesheet" href="{% static 'example/css/example.css' %}">
+  <link rel="stylesheet" href="{% static 'holding/css/holding.css' %}">
 {% endblock stylesheets %}
 
 {% block menu %}
@@ -25,9 +33,27 @@
 {% endblock menu %}
 
 {% block content %}
+  {% if design %}
+    <div class="pure-g-r">
+      <div class="pure-u-1">
+        <div class="l-box">
+          {% cms_moderate content False %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
   <div class="pure-g-r">
-    <div class="pure-u-1">
-      Hello
+    <div class="pure-u-3-4">
+      <div class="l-box">
+        {{ content.description|urlize|linebreaksbr }}
+      </div>
+    </div>
+    <div class="pure-u-1-4">
+      <div class="l-box">
+        {% if content.logo %}
+          <img src="{% thumbnail content.logo 224x168 crop %}" />
+        {% endif %}
+      </div>
     </div>
   </div>
 {% endblock content %}

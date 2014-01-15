@@ -4,6 +4,8 @@ from django.conf.urls import (
 )
 
 from .views import (
+    HoldingContentPublishView,
+    HoldingContentUpdateView,
     PageDesignView,
     PageView,
     TitleContentPublishView,
@@ -26,6 +28,14 @@ urlpatterns = patterns(
     url(regex=r'^(?P<page>[-\w\d]+)/design/$',
         view=PageDesignView.as_view(),
         name='project.page.design'
+        ),
+    url(regex=r'^content/(?P<pk>\d+)/publish/$',
+        view=HoldingContentPublishView.as_view(),
+        name='holding.content.publish'
+        ),
+    url(regex=r'^content/(?P<pk>\d+)/edit/$',
+        view=HoldingContentUpdateView.as_view(),
+        name='holding.content.update'
         ),
     url(regex=r'^title/(?P<pk>\d+)/publish/$',
         view=TitleContentPublishView.as_view(),

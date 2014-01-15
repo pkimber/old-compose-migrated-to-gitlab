@@ -17,10 +17,10 @@ class Migration(SchemaMigration):
             ('moderate_state', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['cms.ModerateState'])),
             ('date_moderated', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
             ('user_moderated', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='+', null=True, to=orm['auth.User'])),
-            ('title', self.gf('django.db.models.fields.TextField')()),
+            ('company', self.gf('django.db.models.fields.TextField')()),
+            ('what_we_do', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
             ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75, null=True, blank=True)),
-            ('picture', self.gf('django.db.models.fields.files.ImageField')(max_length=100, blank=True)),
+            ('logo', self.gf('django.db.models.fields.files.ImageField')(max_length=100, blank=True)),
         ))
         db.send_create_signal(u'holding', ['HoldingContent'])
 
@@ -137,17 +137,17 @@ class Migration(SchemaMigration):
         },
         u'holding.holdingcontent': {
             'Meta': {'unique_together': "(('container', 'moderate_state'),)", 'object_name': 'HoldingContent'},
+            'company': ('django.db.models.fields.TextField', [], {}),
             'container': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['cms.Container']"}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'date_moderated': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'logo': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'blank': 'True'}),
             'moderate_state': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['cms.ModerateState']"}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'picture': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'blank': 'True'}),
-            'title': ('django.db.models.fields.TextField', [], {}),
-            'user_moderated': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'+'", 'null': 'True', 'to': u"orm['auth.User']"})
+            'user_moderated': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'+'", 'null': 'True', 'to': u"orm['auth.User']"}),
+            'what_we_do': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'})
         },
         u'holding.titlecontent': {
             'Meta': {'unique_together': "(('container', 'moderate_state'),)", 'object_name': 'TitleContent'},

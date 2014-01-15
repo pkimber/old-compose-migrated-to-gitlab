@@ -16,10 +16,15 @@ from cms.views import (
 )
 
 from .forms import (
+    HoldingContentEmptyForm,
+    HoldingContentForm,
     TitleContentEmptyForm,
     TitleContentForm,
 )
-from .models import TitleContent
+from .models import (
+    HoldingContent,
+    TitleContent,
+)
 
 
 class PageBaseView(ContentPageMixin, TemplateView):
@@ -39,19 +44,17 @@ class PageDesignView(
     def get_context_data(self, **kwargs):
         context = super(PageDesignView, self).get_context_data(**kwargs)
         section = self._get_body()
+        contents = HoldingContent.objects.pending(section)
+        if contents:
+            c = contents[0]
+        else:
+            raise CmsError('Cannot find pending content for this section.')
         context.update(dict(
             design=True,
+            content=c,
             footer_content=TitleContent.objects.pending(
                 self._get_home_page_footer()
             ),
-            #stripe_content=HoldingContent.objects.pending(section),
-            #stripe_create_url=reverse(
-            #    'project.stripe.create',
-            #    kwargs=dict(
-            #        page=section.page.slug,
-            #        layout=section.layout.slug,
-            #    )
-            #),
         ))
         return context
 
@@ -60,14 +63,33 @@ class PageView(PageBaseView):
 
     def get_context_data(self, **kwargs):
         context = super(PageView, self).get_context_data(**kwargs)
+        contents = HoldingContent.objects.published(self._get_body())
+        if contents:
+            c = contents[0]
+        else:
+            c = HoldingContent()
         context.update(dict(
             design=False,
+            content=c,
             footer_content=TitleContent.objects.published(
                 self._get_home_page_footer()
             ),
-            #stripe_content=StripeContent.objects.published(self._get_body()),
         ))
         return context
+
+
+class HoldingContentPublishView(ContentPublishView):
+
+    form_class = HoldingContentEmptyForm
+    model = HoldingContent
+    template_name = 'holding/content_publish.html'
+
+
+class HoldingContentUpdateView(ContentUpdateView):
+
+    form_class = HoldingContentForm
+    model = HoldingContent
+    template_name = 'holding/content_update.html'
 
 
 class TitleContentPublishView(ContentPublishView):

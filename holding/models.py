@@ -6,10 +6,10 @@ from cms.models import ContentModel
 
 class HoldingContent(ContentModel):
 
-    title = models.TextField()
-    heading = models.TextField()
+    company = models.TextField()
+    what_we_do = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    picture = models.ImageField(upload_to='holding/%Y/%m/%d', blank=True)
+    logo = models.ImageField(upload_to='holding/%Y/%m/%d', blank=True)
 
     class Meta:
         # cannot put 'unique_together' on abstract base class
@@ -22,16 +22,16 @@ class HoldingContent(ContentModel):
         return self.container.holdingcontent_set
 
     def __unicode__(self):
-        return unicode('{} {}'.format(self.title, self.moderate_state))
+        return unicode('{} {}'.format(self.company, self.moderate_state))
 
     def url_publish(self):
-        return reverse('project.stripe.publish', kwargs={'pk': self.pk})
+        return reverse('holding.content.publish', kwargs={'pk': self.pk})
 
     def url_remove(self):
         return reverse('project.stripe.remove', kwargs={'pk': self.pk})
 
     def url_update(self):
-        return reverse('project.stripe.update', kwargs={'pk': self.pk})
+        return reverse('holding.content.update', kwargs={'pk': self.pk})
 
 
 class TitleContent(ContentModel):
@@ -54,9 +54,6 @@ class TitleContent(ContentModel):
 
     def url_publish(self):
         return reverse('holding.title.publish', kwargs={'pk': self.pk})
-
-    def url_remove(self):
-        return reverse('project.title.remove', kwargs={'pk': self.pk})
 
     def url_update(self):
         return reverse('holding.title.update', kwargs={'pk': self.pk})

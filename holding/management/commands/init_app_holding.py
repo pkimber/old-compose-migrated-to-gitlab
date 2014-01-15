@@ -8,8 +8,14 @@ from cms.service import (
     init_section,
 )
 from cms.tests.scenario import default_moderate_state
-from holding.models import TitleContent
-from holding.tests.model_maker import make_title_content
+from holding.models import (
+    HoldingContent,
+    TitleContent,
+)
+from holding.tests.model_maker import (
+    make_holding_content,
+    make_title_content,
+)
 
 
 class Command(BaseCommand):
@@ -25,6 +31,15 @@ class Command(BaseCommand):
             print("make_title_content: {}".format(container.section.layout.name))
             return make_title_content(container, ModerateState.pending(), title)
 
+    def _init_content(self, container, company):
+        """Create a main content section - if there isn't one already."""
+        result = HoldingContent.objects.filter(container=container)
+        if result:
+            return result[0]
+        else:
+            print("make_holding_content: {}".format(container.section.layout.name))
+            return make_holding_content(container, ModerateState.pending(), company)
+
     def handle(self, *args, **options):
         default_moderate_state()
         # page
@@ -33,8 +48,14 @@ class Command(BaseCommand):
         body = init_layout('Body')
         footer = init_layout('Footer')
         # sections
-        init_section(home, body)
+        content_section = init_section(home, body)
         footer_section = init_section(home, footer)
+        # holding content
+        holding_container = init_container(content_section, 1)
+        self._init_content(
+            holding_container,
+            'Please edit this content...'
+        )
         # footer
         footer_container = init_container(footer_section, 1)
         self._init_footer(
