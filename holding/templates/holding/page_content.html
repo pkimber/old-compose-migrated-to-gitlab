@@ -1,0 +1,23 @@
+{% extends "holding/base.html" %}
+{% load staticfiles %}
+
+{% block sub_title %}
+  Example app
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Example app
+{% endblock sub_heading %}
+
+{% block stylesheets %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'example/css/example.css' %}">
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="pure-g-r">
+    <div class="pure-u-1">
+      Hello
+    </div>
+  </div>
+{% endblock content %}
