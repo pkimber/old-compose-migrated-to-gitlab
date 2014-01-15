@@ -23,11 +23,11 @@ urlpatterns = patterns(
     url(regex=r'^design/',
         view=PageDesignView.as_view(),
         kwargs=dict(page='home'),
-        name='project.page.design.home'
+        name='holding.page.design.home'
         ),
     url(regex=r'^(?P<page>[-\w\d]+)/design/$',
         view=PageDesignView.as_view(),
-        name='project.page.design'
+        name='holding.page.design'
         ),
     url(regex=r'^content/(?P<pk>\d+)/publish/$',
         view=HoldingContentPublishView.as_view(),

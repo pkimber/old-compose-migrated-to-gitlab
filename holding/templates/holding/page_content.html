@@ -27,7 +27,7 @@
 {% block menu %}
   {% if user.is_authenticated %}
     <li {% if design %}class="pure-menu-selected"{% endif %}>
-      <a href="{% url "project.page.design.home" %}">Design</a>
+      <a href="{% url "holding.page.design.home" %}">Design</a>
     </li>
   {% endif %}
 {% endblock menu %}
