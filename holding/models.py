@@ -1,12 +1,14 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 
 from cms.models import ContentModel
 
 
 class HoldingContent(ContentModel):
+
     title = models.TextField()
+    heading = models.TextField()
     description = models.TextField(blank=True, null=True)
-    email = models.EmailField(blank=True, null=True)
     picture = models.ImageField(upload_to='holding/%Y/%m/%d', blank=True)
 
     class Meta:
@@ -33,6 +35,7 @@ class HoldingContent(ContentModel):
 
 
 class TitleContent(ContentModel):
+
     """Just a title."""
     title = models.TextField()
 
@@ -50,10 +53,10 @@ class TitleContent(ContentModel):
         return unicode('{} {}'.format(self.title, self.moderate_state))
 
     def url_publish(self):
-        return reverse('project.title.publish', kwargs={'pk': self.pk})
+        return reverse('holding.title.publish', kwargs={'pk': self.pk})
 
     def url_remove(self):
         return reverse('project.title.remove', kwargs={'pk': self.pk})
 
     def url_update(self):
-        return reverse('project.title.update', kwargs={'pk': self.pk})
+        return reverse('holding.title.update', kwargs={'pk': self.pk})

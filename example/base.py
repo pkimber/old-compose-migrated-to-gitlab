@@ -121,6 +121,7 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
+    'easy_thumbnails',
     'reversion',
     'south',
 )
@@ -174,7 +175,7 @@ FTP_STATIC_URL = None
 
 # URL where requests are redirected after login when the contrib.auth.login
 # view gets no next parameter.
-LOGIN_REDIRECT_URL = reverse_lazy('project.home.user')
+LOGIN_REDIRECT_URL = reverse_lazy('project.page.design.home')
 
 # https://github.com/johnsensible/django-sendfile
 SENDFILE_BACKEND = 'sendfile.backends.development'

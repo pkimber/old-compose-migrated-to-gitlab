@@ -1,5 +1,7 @@
 {% extends "holding/base.html" %}
+{% load cms_tags %}
 {% load staticfiles %}
+{% load thumbnail %}
 
 {% block sub_title %}
   Example app
@@ -14,6 +16,14 @@
   <link rel="stylesheet" href="{% static 'example/css/example.css' %}">
 {% endblock stylesheets %}
 
+{% block menu %}
+  {% if user.is_authenticated %}
+    <li {% if design %}class="pure-menu-selected"{% endif %}>
+      <a href="{% url "project.page.design.home" %}">Design</a>
+    </li>
+  {% endif %}
+{% endblock menu %}
+
 {% block content %}
   <div class="pure-g-r">
     <div class="pure-u-1">
@@ -21,3 +31,34 @@
     </div>
   </div>
 {% endblock content %}
+
+{% block footer %}
+  <div class="legal pure-g-r">
+    <div class="pure-u-1-5">
+    </div>
+    <div class="pure-u-3-5">
+      <div class="l-box legal-logo">
+        {% for f in footer_content %}
+          <p class="legal-license">
+          {% if f.title %}
+            {{ f.title|linebreaksbr }}
+          {% endif %}
+          {% if design %}{% cms_moderate f False %}{% endif %}
+          </p>
+        {% endfor %}
+        <br />
+        <a href="http://yuilibrary.com/">
+          <img height="30" width="65" alt="YUI logo" src="{% static "img/holding/yui.png" %}">
+        </a>
+        <p class="legal-license">
+          This site is built using
+          <a href="http://purecss.io/">
+            Yahoo Pure CSS
+          </a>
+        </p>
+      </div>
+    </div>
+    <div class="pure-u-1-5">
+    </div>
+  </div>
+{% endblock footer %}
