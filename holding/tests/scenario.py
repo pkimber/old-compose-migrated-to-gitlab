@@ -6,6 +6,7 @@ from cms.service import (
     init_section,
 )
 from cms.tests.scenario import default_moderate_state
+
 from holding.models import (
     HoldingContent,
     TitleContent,
@@ -14,6 +15,22 @@ from holding.tests.model_maker import (
     make_holding_content,
     make_title_content,
 )
+
+
+def get_title_content():
+    result = TitleContent.objects.all()
+    if result:
+        return result[0]
+    else:
+        raise CmsError("Cannot find any title content")
+
+
+def get_holding_content():
+    result = HoldingContent.objects.all()
+    if result:
+        return result[0]
+    else:
+        raise CmsError("Cannot find any holding content")
 
 
 def _init_footer(container, title):

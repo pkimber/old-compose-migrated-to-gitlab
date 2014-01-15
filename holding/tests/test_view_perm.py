@@ -9,17 +9,14 @@ from holding.models import (
     HoldingContent,
     TitleContent,
 )
-from holding.tests.scenario import init_app_holding
+from holding.tests.scenario import (
+    get_holding_content,
+    get_title_content,
+    init_app_holding,
+)
 
 
 class TestViewPerm(PermTestCase):
-
-    def _get_holding_content(self):
-        result = HoldingContent.objects.all()
-        if result:
-            return result[0]
-        else:
-            raise CmsError("Cannot find any holding content")
 
     def setUp(self):
         default_moderate_state()
@@ -27,13 +24,23 @@ class TestViewPerm(PermTestCase):
         default_scenario_login()
 
     def test_content_publish(self):
-        content = self._get_holding_content()
+        content = get_holding_content()
         url = reverse('holding.content.publish', kwargs={'pk': content.pk})
         self.assert_staff_only(url)
 
     def test_content_update(self):
-        content = self._get_holding_content()
+        content = get_holding_content()
         url = reverse('holding.content.update', kwargs={'pk': content.pk})
+        self.assert_staff_only(url)
+
+    def test_footer_publish(self):
+        content = get_title_content()
+        url = reverse('holding.title.publish', kwargs={'pk': content.pk})
+        self.assert_staff_only(url)
+
+    def test_footer_update(self):
+        content = get_title_content()
+        url = reverse('holding.title.update', kwargs={'pk': content.pk})
         self.assert_staff_only(url)
 
     def test_home(self):
@@ -41,7 +48,7 @@ class TestViewPerm(PermTestCase):
         self.assert_any(url)
 
     def test_page_design_home(self):
-        url = reverse('holding.page.design', kwargs=dict(page=page.slug))
+        url = reverse('project.page.design', kwargs=dict(page=page.slug))
         self.assert_staff_only(url)
 
     def test_page_design_home(self):

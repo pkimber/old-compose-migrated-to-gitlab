@@ -27,7 +27,7 @@ urlpatterns = patterns(
         ),
     url(regex=r'^(?P<page>[-\w\d]+)/design/$',
         view=PageDesignView.as_view(),
-        name='holding.page.design'
+        name='project.page.design'
         ),
     url(regex=r'^content/(?P<pk>\d+)/publish/$',
         view=HoldingContentPublishView.as_view(),
