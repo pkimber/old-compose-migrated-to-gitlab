@@ -45,7 +45,9 @@
   <div class="pure-g-r">
     <div class="pure-u-3-4">
       <div class="l-box">
-        {{ content.description|urlize|linebreaksbr }}
+        {% if content.description %}
+          {{ content.description|urlize|linebreaksbr }}
+        {% endif %}
       </div>
     </div>
     <div class="pure-u-1-4">

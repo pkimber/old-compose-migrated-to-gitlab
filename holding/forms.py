@@ -23,6 +23,9 @@ class HoldingContentForm(RequiredFieldForm):
             self.fields[name].widget.attrs.update(
                 {'class': 'pure-input-2-3'}
             )
+        self.fields['company'].widget.attrs.update({
+            'rows': '1',
+        })
 
     class Meta:
         model = HoldingContent

@@ -65,7 +65,7 @@ def init_app_holding():
     footer_section = init_section(home, footer)
     # holding content
     holding_container = init_container(content_section, 1)
-    _init_content(holding_container, 'Please edit this content...')
+    _init_content(holding_container, 'Your Company Name')
     # footer
     footer_container = init_container(footer_section, 1)
     _init_footer(footer_container, 'Please edit this footer...')
