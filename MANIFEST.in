@@ -1,0 +1,9 @@
+recursive-include holding/static *
+recursive-include holding/templates *
+
+include LICENSE
+include README
+include requirements/*.txt
+include *.txt
+
+prune example/
