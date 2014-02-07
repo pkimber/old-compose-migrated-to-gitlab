@@ -11,7 +11,6 @@ from cms.views import (
     ContentCreateView,
     ContentPageMixin,
     ContentPublishView,
-    ContentRemoveView,
     ContentUpdateView,
 )
 
@@ -78,28 +77,32 @@ class PageView(PageBaseView):
         return context
 
 
-class HoldingContentPublishView(ContentPublishView):
+class HoldingContentPublishView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
 
     form_class = HoldingContentEmptyForm
     model = HoldingContent
     template_name = 'holding/content_publish.html'
 
 
-class HoldingContentUpdateView(ContentUpdateView):
+class HoldingContentUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
 
     form_class = HoldingContentForm
     model = HoldingContent
     template_name = 'holding/content_update.html'
 
 
-class TitleContentPublishView(ContentPublishView):
+class TitleContentPublishView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
 
     form_class = TitleContentEmptyForm
     model = TitleContent
     template_name = 'holding/title_publish.html'
 
 
-class TitleContentUpdateView(ContentUpdateView):
+class TitleContentUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
 
     form_class = TitleContentForm
     model = TitleContent
