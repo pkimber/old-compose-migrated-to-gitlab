@@ -1,3 +1,6 @@
+# -*- encoding: utf-8 -*-
+
+from __future__ import unicode_literals
 from cms.models import ModerateState
 from cms.service import (
     init_container,

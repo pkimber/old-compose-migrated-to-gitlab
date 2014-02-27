@@ -1,3 +1,6 @@
+# -*- encoding: utf-8 -*-
+
+from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -21,8 +24,8 @@ class HoldingContent(ContentModel):
     def _get_content_set(self):
         return self.container.holdingcontent_set
 
-    def __unicode__(self):
-        return unicode('{} {}'.format(self.company, self.moderate_state))
+    def __str__(self):
+        return '{} {}'.format(self.company, self.moderate_state)
 
     def url_publish(self):
         return reverse('holding.content.publish', kwargs={'pk': self.pk})
@@ -49,8 +52,8 @@ class TitleContent(ContentModel):
     def _get_content_set(self):
         return self.container.titlecontent_set
 
-    def __unicode__(self):
-        return unicode('{} {}'.format(self.title, self.moderate_state))
+    def __str__(self):
+        return '{} {}'.format(self.title, self.moderate_state)
 
     def url_publish(self):
         return reverse('holding.title.publish', kwargs={'pk': self.pk})
