@@ -3,15 +3,15 @@
 {% load staticfiles %}
 {% load thumbnail %}
 
-{% block sub_title %}
-  Example appss
-{% endblock sub_title %}
-
-{% block heading %}
-  {% if content.company %}
+{% if content.company %}
+  {% block title %}
     {{ content.company }}
-  {% endif %}
-{% endblock heading %}
+  {% endblock title %}
+  {% block heading %}
+    {{ content.company }}
+  {% endblock heading %}
+{% endif %}
+
 
 {% block sub_heading %}
   {% if content.what_we_do %}
