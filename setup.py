@@ -1,6 +1,3 @@
-# -*- encoding: utf-8 -*-
-
-from __future__ import unicode_literals
 import os
 from distutils.core import setup
 
@@ -35,7 +32,7 @@ setup(
             'templates/holding/*.*',
         ],
     },
-    version='0.0.03',
+    version='0.0.04',
     description='holding',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
