@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
-
 from __future__ import unicode_literals
-from django.core.urlresolvers import reverse
+
 from django.views.generic import TemplateView
 
 from braces.views import (
@@ -9,9 +8,11 @@ from braces.views import (
     StaffuserRequiredMixin,
 )
 
-from cms.models import Section
+from cms.models import (
+    CmsError,
+    Section,
+)
 from cms.views import (
-    ContentCreateView,
     ContentPageMixin,
     ContentPublishView,
     ContentUpdateView,

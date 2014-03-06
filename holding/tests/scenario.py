@@ -1,7 +1,11 @@
 # -*- encoding: utf-8 -*-
-
 from __future__ import unicode_literals
-from cms.models import ModerateState
+
+from cms.models import (
+    CmsError,
+    ModerateState,
+    Page,
+)
 from cms.service import (
     init_container,
     init_layout,
@@ -34,6 +38,10 @@ def get_holding_content():
         return result[0]
     else:
         raise CmsError("Cannot find any holding content")
+
+
+def get_page_home():
+    return Page.objects.get(slug='home')
 
 
 def _init_footer(container, title):

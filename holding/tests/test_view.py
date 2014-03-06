@@ -58,4 +58,3 @@ class TestView(TestCase):
             {'title': 'Hatherleigh'}
         )
         self.assertEqual(response.status_code, 302)
-
