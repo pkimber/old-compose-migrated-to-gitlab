@@ -38,6 +38,9 @@ class HoldingForm(RequiredFieldForm):
             'description',
             'logo',
         )
+        widgets = {
+            'logo': forms.FileInput,
+        }
 
 
 class TitleEmptyForm(forms.ModelForm):
