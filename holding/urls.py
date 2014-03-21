@@ -1,18 +1,18 @@
 # -*- encoding: utf-8 -*-
-
 from __future__ import unicode_literals
+
 from django.conf.urls import (
     patterns,
     url,
 )
 
 from .views import (
-    HoldingContentPublishView,
-    HoldingContentUpdateView,
+    HoldingPublishView,
+    HoldingUpdateView,
     PageDesignView,
     PageView,
-    TitleContentPublishView,
-    TitleContentUpdateView,
+    TitlePublishView,
+    TitleUpdateView,
 )
 
 
@@ -33,19 +33,19 @@ urlpatterns = patterns(
         name='project.page.design'
         ),
     url(regex=r'^content/(?P<pk>\d+)/publish/$',
-        view=HoldingContentPublishView.as_view(),
+        view=HoldingPublishView.as_view(),
         name='holding.content.publish'
         ),
     url(regex=r'^content/(?P<pk>\d+)/edit/$',
-        view=HoldingContentUpdateView.as_view(),
+        view=HoldingUpdateView.as_view(),
         name='holding.content.update'
         ),
     url(regex=r'^title/(?P<pk>\d+)/publish/$',
-        view=TitleContentPublishView.as_view(),
+        view=TitlePublishView.as_view(),
         name='holding.title.publish'
         ),
     url(regex=r'^title/(?P<pk>\d+)/edit/$',
-        view=TitleContentUpdateView.as_view(),
+        view=TitleUpdateView.as_view(),
         name='holding.title.update'
         ),
 )

@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
-
 from __future__ import unicode_literals
+
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from cms.tests.scenario import default_moderate_state
+from block.tests.scenario import default_moderate_state
 from login.tests.scenario import (
     default_scenario_login,
     get_user_staff,

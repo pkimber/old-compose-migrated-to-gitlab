@@ -8,25 +8,26 @@ from braces.views import (
     StaffuserRequiredMixin,
 )
 
-from cms.models import (
-    CmsError,
+from block.models import (
+    BlockError,
+    Page,
     Section,
 )
-from cms.views import (
+from block.views import (
     ContentPageMixin,
     ContentPublishView,
     ContentUpdateView,
 )
 
 from .forms import (
-    HoldingContentEmptyForm,
-    HoldingContentForm,
-    TitleContentEmptyForm,
-    TitleContentForm,
+    HoldingEmptyForm,
+    HoldingForm,
+    TitleEmptyForm,
+    TitleForm,
 )
 from .models import (
-    HoldingContent,
-    TitleContent,
+    Holding,
+    Title,
 )
 
 
@@ -35,10 +36,13 @@ class PageBaseView(ContentPageMixin, TemplateView):
     template_name = 'holding/page_content.html'
 
     def _get_body(self):
-        return Section.objects.get(page=self.get_page(), layout__slug='body')
+        return Section.objects.get(slug='body')
 
-    def _get_home_page_footer(self):
-        return Section.objects.get(page__slug='home', layout__slug='footer')
+    def _get_footer(self):
+        return Section.objects.get(slug='footer')
+
+    def _get_home_page(self):
+        return Page.objects.get(slug='home')
 
 
 class PageDesignView(
@@ -46,17 +50,19 @@ class PageDesignView(
 
     def get_context_data(self, **kwargs):
         context = super(PageDesignView, self).get_context_data(**kwargs)
-        section = self._get_body()
-        contents = HoldingContent.objects.pending(section)
+        page = self.get_page()
+        body = self._get_body()
+        contents = Holding.objects.pending(page, body)
         if contents:
             c = contents[0]
         else:
-            raise CmsError('Cannot find pending content for this section.')
+            raise BlockError('Cannot find pending content for this section.')
         context.update(dict(
             design=True,
             content=c,
-            footer_content=TitleContent.objects.pending(
-                self._get_home_page_footer()
+            footer_content=Title.objects.pending(
+                self._get_home_page(),
+                self._get_footer(),
             ),
         ))
         return context
@@ -66,48 +72,52 @@ class PageView(PageBaseView):
 
     def get_context_data(self, **kwargs):
         context = super(PageView, self).get_context_data(**kwargs)
-        contents = HoldingContent.objects.published(self._get_body())
+        contents = Holding.objects.published(
+            self.get_page(),
+            self._get_body(),
+        )
         if contents:
             c = contents[0]
         else:
-            c = HoldingContent()
+            c = Holding()
         context.update(dict(
             design=False,
             content=c,
-            footer_content=TitleContent.objects.published(
-                self._get_home_page_footer()
+            footer_content=Title.objects.published(
+                self._get_home_page(),
+                self._get_footer(),
             ),
         ))
         return context
 
 
-class HoldingContentPublishView(
+class HoldingPublishView(
         LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
 
-    form_class = HoldingContentEmptyForm
-    model = HoldingContent
-    template_name = 'holding/content_publish.html'
+    form_class = HoldingEmptyForm
+    model = Holding
+    template_name = 'holding/holding_publish.html'
 
 
-class HoldingContentUpdateView(
+class HoldingUpdateView(
         LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
 
-    form_class = HoldingContentForm
-    model = HoldingContent
-    template_name = 'holding/content_update.html'
+    form_class = HoldingForm
+    model = Holding
+    template_name = 'holding/holding_update.html'
 
 
-class TitleContentPublishView(
+class TitlePublishView(
         LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
 
-    form_class = TitleContentEmptyForm
-    model = TitleContent
+    form_class = TitleEmptyForm
+    model = Title
     template_name = 'holding/title_publish.html'
 
 
-class TitleContentUpdateView(
+class TitleUpdateView(
         LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
 
-    form_class = TitleContentForm
-    model = TitleContent
+    form_class = TitleForm
+    model = Title
     template_name = 'holding/title_update.html'

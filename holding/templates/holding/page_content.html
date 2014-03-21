@@ -1,5 +1,5 @@
 {% extends "holding/base.html" %}
-{% load cms_tags %}
+{% load block_tags %}
 {% load staticfiles %}
 {% load thumbnail %}
 
@@ -37,7 +37,7 @@
     <div class="pure-g-r">
       <div class="pure-u-1">
         <div class="l-box">
-          {% cms_moderate content False %}
+          {% block_moderate content False %}
         </div>
       </div>
     </div>
@@ -71,7 +71,7 @@
           {% if f.title %}
             {{ f.title|linebreaksbr }}
           {% endif %}
-          {% if design %}{% cms_moderate f False %}{% endif %}
+          {% if design %}{% block_moderate f False %}{% endif %}
           </p>
         {% endfor %}
         <br />

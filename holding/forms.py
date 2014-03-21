@@ -1,27 +1,27 @@
 # -*- encoding: utf-8 -*-
-
 from __future__ import unicode_literals
+
 from django import forms
 
 from base.form_utils import RequiredFieldForm
 
 from .models import (
-    HoldingContent,
-    TitleContent,
+    Holding,
+    Title,
 )
 
 
-class HoldingContentEmptyForm(forms.ModelForm):
+class HoldingEmptyForm(forms.ModelForm):
 
     class Meta:
-        model = HoldingContent
+        model = Holding
         fields = ()
 
 
-class HoldingContentForm(RequiredFieldForm):
+class HoldingForm(RequiredFieldForm):
 
     def __init__(self, *args, **kwargs):
-        super(HoldingContentForm, self).__init__(*args, **kwargs)
+        super(HoldingForm, self).__init__(*args, **kwargs)
         for name in ('company', 'what_we_do', 'description'):
             self.fields[name].widget.attrs.update(
                 {'class': 'pure-input-2-3'}
@@ -31,7 +31,7 @@ class HoldingContentForm(RequiredFieldForm):
         })
 
     class Meta:
-        model = HoldingContent
+        model = Holding
         fields = (
             'company',
             'what_we_do',
@@ -40,24 +40,24 @@ class HoldingContentForm(RequiredFieldForm):
         )
 
 
-class TitleContentEmptyForm(forms.ModelForm):
+class TitleEmptyForm(forms.ModelForm):
 
     class Meta:
-        model = TitleContent
+        model = Title
         fields = ()
 
 
-class TitleContentForm(RequiredFieldForm):
+class TitleForm(RequiredFieldForm):
 
     def __init__(self, *args, **kwargs):
-        super(TitleContentForm, self).__init__(*args, **kwargs)
+        super(TitleForm, self).__init__(*args, **kwargs)
         for name in ('title',):
             self.fields[name].widget.attrs.update(
                 {'class': 'pure-input-2-3'}
             )
 
     class Meta:
-        model = TitleContent
+        model = Title
         fields = (
             'title',
         )

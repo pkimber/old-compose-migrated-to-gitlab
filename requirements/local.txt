@@ -1,6 +1,6 @@
 -r base.txt
 -e ../base
--e ../cms
+-e ../block
 -e ../login
 beautifulsoup4
 fabric

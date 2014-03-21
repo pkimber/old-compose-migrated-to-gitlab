@@ -1,67 +1,87 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
-from cms.models import (
-    CmsError,
+from block.models import (
+    BlockError,
     ModerateState,
     Page,
 )
-from cms.service import (
-    init_container,
-    init_layout,
+from block.service import (
     init_page,
     init_section,
 )
-from cms.tests.scenario import default_moderate_state
+from block.tests.scenario import default_moderate_state
 
 from holding.models import (
-    HoldingContent,
-    TitleContent,
+    Holding,
+    HoldingBlock,
+    Title,
+    TitleBlock,
 )
 from holding.tests.model_maker import (
-    make_holding_content,
-    make_title_content,
+    make_holding,
+    make_holding_block,
+    make_title,
+    make_title_block,
 )
 
 
 def get_title_content():
-    result = TitleContent.objects.all()
+    result = Title.objects.all()
     if result:
         return result[0]
     else:
-        raise CmsError("Cannot find any title content")
+        raise BlockError("Cannot find any title content")
 
 
 def get_holding_content():
-    result = HoldingContent.objects.all()
+    result = Holding.objects.all()
     if result:
         return result[0]
     else:
-        raise CmsError("Cannot find any holding content")
+        raise BlockError("Cannot find any holding content")
 
 
 def get_page_home():
     return Page.objects.get(slug='home')
 
 
-def _init_footer(container, title):
+def _init_holding_block(page, section):
+    try:
+        result = HoldingBlock.objects.get(page=page, section=section)
+    except HoldingBlock.DoesNotExist:
+        print("make_holding_block: {}.{}".format(page.name, section.name))
+        result = make_holding_block(page, section)
+    return result
+
+
+def _init_title_block(page, section):
+    try:
+        result = TitleBlock.objects.get(page=page, section=section)
+    except TitleBlock.DoesNotExist:
+        print("make_title_block: {}.{}".format(page.name, section.name))
+        result = make_title_block(page, section)
+    return result
+
+
+def _init_footer(block, title):
     """Create a footer - if there isn't one already."""
-    result = TitleContent.objects.filter(container=container)
+    result = Title.objects.filter(block=block)
     if result:
         return result[0]
     else:
-        print("make_title_content: {}".format(container.section.layout.name))
-        return make_title_content(container, ModerateState.pending(), title)
+        print("make_title: {}".format(title))
+        return make_title(block, 1, ModerateState.pending(), title)
 
 
-def _init_content(container, company):
+def _init_holding(block, company):
     """Create a main content section - if there isn't one already."""
-    result = HoldingContent.objects.filter(container=container)
+    result = Holding.objects.filter(block=block)
     if result:
         return result[0]
     else:
-        print("make_holding_content: {}".format(container.section.layout.name))
-        return make_holding_content(container, ModerateState.pending(), company)
+        print("make_holding: {}".format(company))
+        return make_holding(block, 1, ModerateState.pending(), company)
 
 
 def init_app_holding():
@@ -69,14 +89,11 @@ def init_app_holding():
     # page
     home = init_page('Home', 0, is_home=True)
     # layout
-    body = init_layout('Body')
-    footer = init_layout('Footer')
-    # sections
-    content_section = init_section(home, body)
-    footer_section = init_section(home, footer)
-    # holding content
-    holding_container = init_container(content_section, 1)
-    _init_content(holding_container, 'Your Company Name')
+    body = init_section('Body')
+    footer = init_section('Footer')
+    # holding
+    holding_block = _init_holding_block(home, body)
+    _init_holding(holding_block, 'Your Company Name')
     # footer
-    footer_container = init_container(footer_section, 1)
-    _init_footer(footer_container, 'Please edit this footer...')
+    title_block = _init_title_block(home, footer)
+    _init_footer(title_block, 'Please edit this footer...')
