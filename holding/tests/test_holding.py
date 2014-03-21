@@ -3,14 +3,8 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 
-from block.models import ModerateState
 from block.tests.helper import check_content_methods
-from block.tests.model_maker import (
-    make_page,
-    make_section,
-)
 from block.tests.scenario import default_moderate_state
-from login.tests.scenario import default_scenario_login
 
 from holding.tests.scenario import (
     get_holding_content,
