@@ -43,9 +43,6 @@ class Holding(ContentModel):
     def url_publish(self):
         return reverse('holding.content.publish', kwargs={'pk': self.pk})
 
-    def url_remove(self):
-        return reverse('project.stripe.remove', kwargs={'pk': self.pk})
-
     def url_update(self):
         return reverse('holding.content.update', kwargs={'pk': self.pk})
 
