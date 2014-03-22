@@ -32,7 +32,7 @@ setup(
             'templates/holding/*.*',
         ],
     },
-    version='0.0.06',
+    version='0.0.07',
     description='holding',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
