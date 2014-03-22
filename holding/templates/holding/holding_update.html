@@ -1,4 +1,4 @@
-{% extends "holding/base.html" %}
+{% extends "project/base.html" %}
 
 {% block sub_title %}
   Edit holding content
@@ -11,7 +11,7 @@
 {% block content %}
   <div class="pure-g-r">
     <div class="pure-u-1">
-      {% include '_form.html' with legend='Footer' multipart=True %}
+      {% include '_form.html' with legend='Holding content' multipart=True %}
     </div>
   </div>
 {% endblock content %}
