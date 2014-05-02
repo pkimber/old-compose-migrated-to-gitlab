@@ -27,68 +27,71 @@ from .forms import (
 )
 from .models import (
     Holding,
+    PAGE_HOME,
+    SECTION_BODY,
+    SECTION_FOOTER,
     Title,
 )
 
 
-class PageBaseView(ContentPageMixin, TemplateView):
-
-    template_name = 'holding/page_content.html'
-
-    def _get_body(self):
-        return Section.objects.get(slug='body')
-
-    def _get_footer(self):
-        return Section.objects.get(slug='footer')
-
-    def _get_home_page(self):
-        return Page.objects.get(slug='home')
-
-
-class PageDesignView(
-        LoginRequiredMixin, StaffuserRequiredMixin, PageBaseView):
-
-    def get_context_data(self, **kwargs):
-        context = super(PageDesignView, self).get_context_data(**kwargs)
-        page = self.get_page()
-        body = self._get_body()
-        contents = Holding.objects.pending(page, body)
-        if contents:
-            c = contents[0]
-        else:
-            raise BlockError('Cannot find pending content for this section.')
-        context.update(dict(
-            design=True,
-            content=c,
-            footer_content=Title.objects.pending(
-                self._get_home_page(),
-                self._get_footer(),
-            ),
-        ))
-        return context
-
-
-class PageView(PageBaseView):
-
-    def get_context_data(self, **kwargs):
-        context = super(PageView, self).get_context_data(**kwargs)
-        contents = Holding.objects.published(
-            self.get_page(),
-            self._get_body(),
-        )
-        if contents:
-            c = contents[0]
-        else:
-            c = Holding()
-        context.update(dict(
-            design=False,
-            content=c,
-            footer_content=Title.objects.published(
-                self._get_home_page(),
-                self._get_footer(),
-            ),
-        ))
-        return context
+#class PageBaseView(ContentPageMixin, TemplateView):
+#
+#    template_name = 'holding/page_content.html'
+#
+#    def _get_body(self):
+#        return Section.objects.get(slug=SECTION_BODY)
+#
+#    def _get_footer(self):
+#        return Section.objects.get(slug=SECTION_FOOTER)
+#
+#    def _get_home_page(self):
+#        return Page.objects.get(slug=PAGE_HOME)
+#
+#
+#class PageDesignView(
+#        LoginRequiredMixin, StaffuserRequiredMixin, PageBaseView):
+#
+#    def get_context_data(self, **kwargs):
+#        context = super(PageDesignView, self).get_context_data(**kwargs)
+#        page = self.get_page()
+#        body = self._get_body()
+#        contents = Holding.objects.pending(page, body)
+#        if contents:
+#            c = contents[0]
+#        else:
+#            raise BlockError('Cannot find pending content for this section.')
+#        context.update(dict(
+#            design=True,
+#            content=c,
+#            footer_content=Title.objects.pending(
+#                self._get_home_page(),
+#                self._get_footer(),
+#            ),
+#        ))
+#        return context
+#
+#
+#class PageView(PageBaseView):
+#
+#    def get_context_data(self, **kwargs):
+#        context = super(PageView, self).get_context_data(**kwargs)
+#        contents = Holding.objects.published(
+#            self.get_page(),
+#            self._get_body(),
+#        )
+#        if contents:
+#            c = contents[0]
+#        else:
+#            c = Holding()
+#        context.update(dict(
+#            design=False,
+#            content=c,
+#            footer_content=Title.objects.published(
+#                self._get_home_page(),
+#                self._get_footer(),
+#            ),
+#        ))
+#        return context
 
 
 class HoldingPublishView(

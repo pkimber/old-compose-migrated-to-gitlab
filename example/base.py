@@ -173,7 +173,7 @@ FTP_STATIC_URL = None
 
 # URL where requests are redirected after login when the contrib.auth.login
 # view gets no next parameter.
-LOGIN_REDIRECT_URL = reverse_lazy('holding.page.design.home')
+LOGIN_REDIRECT_URL = reverse_lazy('project.page.design', kwargs=dict(page='home'))
 
 # https://github.com/johnsensible/django-sendfile
 SENDFILE_BACKEND = 'sendfile.backends.development'

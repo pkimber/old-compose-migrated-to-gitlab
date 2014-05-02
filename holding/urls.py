@@ -6,11 +6,14 @@ from django.conf.urls import (
     url,
 )
 
+from block.views import (
+    PageDesignView,
+    PageView,
+)
+from .models import PAGE_HOME
 from .views import (
     HoldingPublishView,
     HoldingUpdateView,
-    PageDesignView,
-    PageView,
     TitlePublishView,
     TitleUpdateView,
 )
@@ -20,13 +23,12 @@ urlpatterns = patterns(
     '',
     url(regex=r'^$',
         view=PageView.as_view(),
-        kwargs=dict(page='home'),
+        kwargs=dict(page=PAGE_HOME),
         name='project.home'
         ),
-    url(regex=r'^design/',
-        view=PageDesignView.as_view(),
-        kwargs=dict(page='home'),
-        name='holding.page.design.home'
+    url(regex=r'^(?P<page>[-\w\d]+)/$',
+        view=PageView.as_view(),
+        name='project.page'
         ),
     url(regex=r'^(?P<page>[-\w\d]+)/design/$',
         view=PageDesignView.as_view(),

@@ -11,40 +11,36 @@ from holding.models import (
 )
 
 
-def make_holding_block(page, section, **kwargs):
+def make_holding_block(page_section, **kwargs):
     defaults = dict(
-        page=page,
-        section=section,
+        page_section=page_section,
     )
     defaults.update(kwargs)
     return clean_and_save(HoldingBlock(**defaults))
 
 
-def make_holding(block, order, moderate_state, company, **kwargs):
+def make_holding(block, order, company, **kwargs):
     defaults = dict(
         block=block,
         order=order,
-        moderate_state=moderate_state,
         company=company,
     )
     defaults.update(kwargs)
     return clean_and_save(Holding(**defaults))
 
 
-def make_title_block(page, section, **kwargs):
+def make_title_block(page_section, **kwargs):
     defaults = dict(
-        page=page,
-        section=section,
+        page_section=page_section,
     )
     defaults.update(kwargs)
     return clean_and_save(TitleBlock(**defaults))
 
 
-def make_title(block, order, moderate_state, title, **kwargs):
+def make_title(block, order, title, **kwargs):
     defaults = dict(
         block=block,
         order=order,
-        moderate_state=moderate_state,
         title=title,
     )
     defaults.update(kwargs)

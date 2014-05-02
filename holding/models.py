@@ -12,6 +12,11 @@ from block.models import (
 )
 
 
+PAGE_HOME = 'home'
+SECTION_BODY = 'body'
+SECTION_FOOTER = 'footer'
+
+
 class HoldingBlock(BlockModel):
     pass
 
@@ -34,11 +39,8 @@ class Holding(ContentModel):
         verbose_name = 'Holding content'
         verbose_name_plural = 'Holding contents'
 
-    def _get_content_set(self):
-        return self.container.holdingcontent_set
-
     def __str__(self):
-        return '{} {}'.format(self.company, self.moderate_state)
+        return '{}'.format(self.company)
 
     def url_publish(self):
         return reverse('holding.content.publish', kwargs={'pk': self.pk})
@@ -69,11 +71,8 @@ class Title(ContentModel):
         verbose_name = 'Title'
         verbose_name_plural = 'Titles'
 
-    def _get_content_set(self):
-        return self.container.titlecontent_set
-
     def __str__(self):
-        return '{} {}'.format(self.title, self.moderate_state)
+        return '{}'.format(self.title)
 
     def url_publish(self):
         return reverse('holding.title.publish', kwargs={'pk': self.pk})

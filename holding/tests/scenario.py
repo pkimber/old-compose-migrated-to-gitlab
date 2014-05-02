@@ -8,13 +8,17 @@ from block.models import (
 )
 from block.service import (
     init_page,
+    init_page_section,
     init_section,
 )
-from block.tests.scenario import default_moderate_state
+from block.tests.scenario import default_scenario_block
 
 from holding.models import (
     Holding,
     HoldingBlock,
+    PAGE_HOME,
+    SECTION_BODY,
+    SECTION_FOOTER,
     Title,
     TitleBlock,
 )
@@ -43,24 +47,24 @@ def get_holding_content():
 
 
 def get_page_home():
-    return Page.objects.get(slug='home')
+    return Page.objects.get(slug=PAGE_HOME)
 
 
-def _init_holding_block(page, section):
+def _init_holding_block(page_section):
     try:
-        result = HoldingBlock.objects.get(page=page, section=section)
+        result = HoldingBlock.objects.get(page_section=page_section)
     except HoldingBlock.DoesNotExist:
-        print("make_holding_block: {}.{}".format(page.name, section.name))
-        result = make_holding_block(page, section)
+        print("make_holding_block: {}".format(page_section))
+        result = make_holding_block(page_section)
     return result
 
 
-def _init_title_block(page, section):
+def _init_title_block(page_section):
     try:
-        result = TitleBlock.objects.get(page=page, section=section)
+        result = TitleBlock.objects.get(page_section=page_section)
     except TitleBlock.DoesNotExist:
-        print("make_title_block: {}.{}".format(page.name, section.name))
-        result = make_title_block(page, section)
+        print("make_title_block: {}".format(page_section))
+        result = make_title_block(page_section)
     return result
 
 
@@ -71,7 +75,7 @@ def _init_footer(block, title):
         return result[0]
     else:
         print("make_title: {}".format(title))
-        return make_title(block, 1, ModerateState.pending(), title)
+        return make_title(block, 1, title)
 
 
 def _init_holding(block, company):
@@ -81,19 +85,38 @@ def _init_holding(block, company):
         return result[0]
     else:
         print("make_holding: {}".format(company))
-        return make_holding(block, 1, ModerateState.pending(), company)
+        return make_holding(block, 1, company)
 
 
 def init_app_holding():
-    default_moderate_state()
+    default_scenario_block()
     # page
-    home = init_page('Home', 0, is_home=True)
+    # name, slug_page, order, template_name, is_home=None, slug_menu=None):
+    home = init_page(
+        'Home',
+        PAGE_HOME,
+        0,
+        'holding/page_content.html',
+        is_home=True,
+    )
     # layout
-    body = init_section('Body')
-    footer = init_section('Footer')
+    body = init_section(
+        SECTION_BODY.capitalize(),
+        'holding',
+        'Holding',
+        None,
+    )
+    footer = init_section(
+        SECTION_FOOTER.capitalize(),
+        'holding',
+        'Title',
+        None,
+    )
+    home_body = init_page_section(home, body)
+    home_footer = init_page_section(home, footer)
     # holding
-    holding_block = _init_holding_block(home, body)
+    holding_block = _init_holding_block(home_body)
     _init_holding(holding_block, 'Your Company Name')
     # footer
-    title_block = _init_title_block(home, footer)
+    title_block = _init_title_block(home_footer)
     _init_footer(title_block, 'Please edit this footer...')

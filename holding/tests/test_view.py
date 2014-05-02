@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from block.tests.scenario import default_moderate_state
+from block.tests.scenario import default_scenario_block
 from login.tests.scenario import (
     default_scenario_login,
     get_user_staff,
@@ -21,7 +21,7 @@ from holding.tests.scenario import (
 class TestView(TestCase):
 
     def setUp(self):
-        default_moderate_state()
+        default_scenario_block()
         init_app_holding()
         default_scenario_login()
         staff = get_user_staff()

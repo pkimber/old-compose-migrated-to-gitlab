@@ -3,20 +3,24 @@
 {% load staticfiles %}
 {% load thumbnail %}
 
-{% if content.company %}
+
+{% if body_list %}
   {% block title %}
-    {{ content.company }}
+    {% for b in body_list %}
+      {{ b.company }}
+    {% endfor %}
   {% endblock title %}
   {% block heading %}
-    {{ content.company }}
+    {% for b in body_list %}
+      {{ b.company }}
+    {% endfor %}
   {% endblock heading %}
 {% endif %}
 
-
 {% block sub_heading %}
-  {% if content.what_we_do %}
-    {{ content.what_we_do }}
-  {% endif %}
+  {% for b in body_list %}
+    {{ b.what_we_do }}
+  {% endfor %}
 {% endblock sub_heading %}
 
 {% block stylesheets %}
@@ -26,38 +30,49 @@
 
 {% block menu %}
   {% if user.is_authenticated %}
-    <li {% if design %}class="pure-menu-selected"{% endif %}>
-      <a href="{% url "holding.page.design.home" %}">Design</a>
+    <li>
+      <a href="{% if design %}..{% else %}{{ page.get_design_url }}{% endif %}"
+        title="{% if design %}View{% else %}Design{% endif %}" >
+        {% if design %}
+          <i class="fa fa-square-o"></i>
+          View
+        {% else %}
+          <i class="fa fa-edit"></i>
+          Design
+        {% endif %}
+      </a>
     </li>
   {% endif %}
 {% endblock menu %}
 
 {% block content %}
-  {% if design %}
+  {% for b in body_list %}
+    {% if design %}
+      <div class="pure-g-r">
+        <div class="pure-u-1">
+          <div class="l-box">
+            {% block_moderate b False %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
     <div class="pure-g-r">
-      <div class="pure-u-1">
+      <div class="pure-u-3-4">
         <div class="l-box">
-          {% block_moderate content False %}
+          {% if b.description %}
+            {{ b.description|urlize|linebreaksbr }}
+          {% endif %}
+        </div>
+      </div>
+      <div class="pure-u-1-4">
+        <div class="l-box">
+          {% if b.logo %}
+            <img src="{% thumbnail b.logo 224x168 crop %}" />
+          {% endif %}
         </div>
       </div>
     </div>
-  {% endif %}
-  <div class="pure-g-r">
-    <div class="pure-u-3-4">
-      <div class="l-box">
-        {% if content.description %}
-          {{ content.description|urlize|linebreaksbr }}
-        {% endif %}
-      </div>
-    </div>
-    <div class="pure-u-1-4">
-      <div class="l-box">
-        {% if content.logo %}
-          <img src="{% thumbnail content.logo 224x168 crop %}" />
-        {% endif %}
-      </div>
-    </div>
-  </div>
+  {% endfor %}
 {% endblock content %}
 
 {% block footer %}
@@ -66,7 +81,7 @@
     </div>
     <div class="pure-u-3-5">
       <div class="l-box legal-logo">
-        {% for f in footer_content %}
+        {% for f in footer_list %}
           <p class="legal-license">
           {% if f.title %}
             {{ f.title|linebreaksbr }}

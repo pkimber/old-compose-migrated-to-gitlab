@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 
-from block.tests.helper import check_content_methods
-from block.tests.scenario import default_moderate_state
+from block.tests.helper import check_content
+from block.tests.scenario import default_scenario_block
 
 from holding.tests.scenario import (
     get_holding_content,
@@ -15,9 +15,9 @@ from holding.tests.scenario import (
 class TestHolding(TestCase):
 
     def setUp(self):
-        default_moderate_state()
+        default_scenario_block()
         init_app_holding()
 
     def test_content_methods(self):
         c = get_holding_content()
-        check_content_methods(c, ignore_remove=True)
+        check_content(c, ignore_remove=True)
