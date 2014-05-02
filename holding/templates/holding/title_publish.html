@@ -12,17 +12,19 @@
 {% block content %}
   <div class="pure-g-r">
     <div class="pure-u-1">
-      <table class="pure-table pure-table-bordered">
-        <tbody>
-          <tr>
-            <td><strong>Footer</strong></td>
-            <td>{{ object.title }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="pure-u-1">
-      {% include '_form.html' with legend='Are you sure you want to publish this footer?' submit='Publish' %}
+      <div class="l-box">
+        <table class="pure-table pure-table-bordered">
+          <tbody>
+            <tr>
+              <td><strong>Footer</strong></td>
+              <td>{{ object.title }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pure-u-1">
+        {% include '_form.html' with legend='Are you sure you want to publish this footer?' submit='Publish' %}
+      </div>
     </div>
   </div>
 {% endblock content %}

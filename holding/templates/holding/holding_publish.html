@@ -12,30 +12,32 @@
 {% block content %}
   <div class="pure-g-r">
     <div class="pure-u-1">
-      <table class="pure-table pure-table-bordered">
-        <tbody>
-          <tr>
-            <td><strong>Company</strong></td>
-            <td>{{ object.company }}</td>
-          </tr>
-          <tr>
-            <td><strong>What you do...</strong></td>
-            <td>{{ object.what_we_do }}</td>
-          </tr>
-          <tr>
-            <td><strong>Desciption</strong></td>
-            <td>{{ object.description }}</td>
-          </tr>
-          {% if object.logo %}
+      <div class="l-box">
+        <table class="pure-table pure-table-bordered">
+          <tbody>
             <tr>
-              <td><strong>Logo</strong></td>
-              <td>
-                <img src="{% thumbnail object.logo 224x168 crop %}" />
-              </td>
+              <td><strong>Company</strong></td>
+              <td>{{ object.company }}</td>
             </tr>
-          {% endif %}
-        </tbody>
-      </table>
+            <tr>
+              <td><strong>What you do...</strong></td>
+              <td>{{ object.what_we_do }}</td>
+            </tr>
+            <tr>
+              <td><strong>Desciption</strong></td>
+              <td>{{ object.description }}</td>
+            </tr>
+            {% if object.logo %}
+              <tr>
+                <td><strong>Logo</strong></td>
+                <td>
+                  <img src="{% thumbnail object.logo 224x168 crop %}" />
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="pure-u-1">
       {% include '_form.html' with legend='Are you sure you want to publish this content?' submit='Publish' %}
