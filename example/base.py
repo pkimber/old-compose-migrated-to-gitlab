@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse_lazy
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+TESTING = False
 THUMBNAIL_DEBUG = DEBUG
 
 SESSION_COOKIE_SECURE = False
