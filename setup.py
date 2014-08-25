@@ -19,7 +19,7 @@ def get_readme():
 
 
 setup(
-    name='pkimber-holding',
+    name='kb-holding',
     packages=['holding', 'holding.migrations', 'holding.tests', 'holding.management', 'holding.management.commands'],
     package_data={
         'holding': [
@@ -32,7 +32,7 @@ setup(
             'templates/holding/*.*',
         ],
     },
-    version='0.0.08',
+    version='0.0.09',
     description='holding',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
