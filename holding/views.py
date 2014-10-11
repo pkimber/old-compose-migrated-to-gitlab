@@ -1,20 +1,12 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.views.generic import TemplateView
-
 from braces.views import (
     LoginRequiredMixin,
     StaffuserRequiredMixin,
 )
 
-from block.models import (
-    BlockError,
-    Page,
-    Section,
-)
 from block.views import (
-    ContentPageMixin,
     ContentPublishView,
     ContentUpdateView,
 )
@@ -27,9 +19,6 @@ from .forms import (
 )
 from .models import (
     Holding,
-    PAGE_HOME,
-    SECTION_BODY,
-    SECTION_FOOTER,
     Title,
 )
 
