@@ -10,7 +10,7 @@ from block.service import (
     init_page_section,
     init_section,
 )
-from block.tests.scenario import default_scenario_block
+from block.tests.scenario import init_app_block
 
 from holding.models import (
     Holding,
@@ -88,7 +88,7 @@ def _init_holding(block, company):
 
 
 def init_app_holding():
-    default_scenario_block()
+    init_app_block()
     # page
     # name, slug_page, order, template_name, is_home=None, slug_menu=None):
     home = init_page(

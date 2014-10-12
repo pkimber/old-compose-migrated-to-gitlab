@@ -26,13 +26,21 @@ urlpatterns = patterns(
         kwargs=dict(page=PAGE_HOME),
         name='project.home'
         ),
+    url(regex=r'^(?P<page>[-\w\d]+)/design/$',
+        view=PageDesignView.as_view(),
+        name='project.page.design'
+        ),
+    url(regex=r'^(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/design/$',
+        view=PageDesignView.as_view(),
+        name='project.page.design'
+        ),
     url(regex=r'^(?P<page>[-\w\d]+)/$',
         view=PageView.as_view(),
         name='project.page'
         ),
-    url(regex=r'^(?P<page>[-\w\d]+)/design/$',
-        view=PageDesignView.as_view(),
-        name='project.page.design'
+    url(regex=r'^(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/$',
+        view=PageView.as_view(),
+        name='project.page'
         ),
     url(regex=r'^content/(?P<pk>\d+)/publish/$',
         view=HoldingPublishView.as_view(),

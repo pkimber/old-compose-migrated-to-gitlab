@@ -24,6 +24,9 @@ urlpatterns = patterns(
     url(regex=r'^admin/',
         view=include(admin.site.urls)
         ),
+    url(regex=r'^block/',
+        view=include('block.urls')
+        ),
     url(r'^home/user/$',
         view=RedirectView.as_view(url=reverse_lazy('project.home')),
         name='project.dash'
