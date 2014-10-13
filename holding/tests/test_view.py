@@ -4,47 +4,44 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from block.tests.scenario import default_scenario_block
-from login.tests.factories import TEST_PASSWORD
-from login.tests.scenario import (
-    default_scenario_login,
-    get_user_staff,
+from login.tests.factories import (
+    TEST_PASSWORD,
+    UserFactory,
 )
 
-from holding.tests.scenario import (
-    get_holding_content,
-    get_title_content,
-    init_app_holding,
+from holding.tests.factories import (
+    HoldingFactory,
+    TitleFactory,
 )
 
 
 class TestView(TestCase):
 
     def setUp(self):
-        default_scenario_block()
-        init_app_holding()
-        default_scenario_login()
-        staff = get_user_staff()
+        self.user = UserFactory(username='staff', is_staff=True)
         self.assertTrue(
-            self.client.login(username=staff.username, password=TEST_PASSWORD)
+            self.client.login(
+                username=self.user.username,
+                password=TEST_PASSWORD
+            )
         )
 
     def test_publish_content(self):
-        c = get_holding_content()
+        c = HoldingFactory()
         response = self.client.post(
             reverse('holding.content.publish', kwargs={'pk': c.pk}),
         )
         self.assertEqual(response.status_code, 302)
 
     def test_publish_footer(self):
-        c = get_title_content()
+        c = TitleFactory()
         response = self.client.post(
             reverse('holding.title.publish', kwargs={'pk': c.pk}),
         )
         self.assertEqual(response.status_code, 302)
 
     def test_update_content(self):
-        c = get_holding_content()
+        c = HoldingFactory()
         response = self.client.post(
             reverse('holding.content.update', kwargs={'pk': c.pk}),
             {'company': 'pkimber.net'}
@@ -52,7 +49,7 @@ class TestView(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_update_footer(self):
-        c = get_title_content()
+        c = TitleFactory()
         response = self.client.post(
             reverse('holding.title.update', kwargs={'pk': c.pk}),
             {'title': 'Hatherleigh'}
