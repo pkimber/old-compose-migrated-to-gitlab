@@ -4,49 +4,63 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 
 from base.tests.test_utils import PermTestCase
-from block.tests.scenario import default_scenario_block
-from login.tests.scenario import default_scenario_login
 
-from holding.tests.scenario import (
-    get_holding_content,
-    get_page_home,
-    get_title_content,
-    init_app_holding,
+from block.tests.factories import PageFactory
+from login.tests.factories import UserFactory
+
+from holding.tests.factories import (
+    HoldingFactory,
+    TitleFactory,
 )
 
 
 class TestViewPerm(PermTestCase):
 
     def setUp(self):
-        default_scenario_block()
-        init_app_holding()
-        default_scenario_login()
+        UserFactory(
+            username='admin',
+            email='admin@pkimber.net',
+            is_staff=True,
+            is_superuser=True
+        )
+        UserFactory(username='staff', email='staff@pkimber.net', is_staff=True)
+        UserFactory(
+            username='web', email='web@pkimber.net',
+            first_name='William', last_name='Webber'
+        )
 
     def test_content_publish(self):
-        content = get_holding_content()
-        url = reverse('holding.content.publish', kwargs={'pk': content.pk})
+        c = HoldingFactory()
+        url = reverse('holding.content.publish', kwargs={'pk': c.pk})
         self.assert_staff_only(url)
 
     def test_content_update(self):
-        content = get_holding_content()
-        url = reverse('holding.content.update', kwargs={'pk': content.pk})
+        c = HoldingFactory()
+        url = reverse('holding.content.update', kwargs={'pk': c.pk})
         self.assert_staff_only(url)
 
     def test_footer_publish(self):
-        content = get_title_content()
-        url = reverse('holding.title.publish', kwargs={'pk': content.pk})
+        c = TitleFactory()
+        url = reverse('holding.title.publish', kwargs={'pk': c.pk})
         self.assert_staff_only(url)
 
     def test_footer_update(self):
-        content = get_title_content()
-        url = reverse('holding.title.update', kwargs={'pk': content.pk})
+        c = TitleFactory()
+        url = reverse('holding.title.update', kwargs={'pk': c.pk})
         self.assert_staff_only(url)
 
     def test_home(self):
+        PageFactory(
+            slug='home', slug_menu='',
+            template_name='holding/page_content.html',
+        )
         url = reverse('project.home')
         self.assert_any(url)
 
     def test_page_design_home(self):
-        page = get_page_home()
-        url = reverse('project.page.design', kwargs=dict(page=page.slug))
+        p = PageFactory(
+            slug='home', slug_menu='',
+            template_name='holding/page_content.html',
+        )
+        url = reverse('project.page.design', kwargs=dict(page=p.slug))
         self.assert_staff_only(url)
