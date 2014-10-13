@@ -6,7 +6,6 @@ from django.core.urlresolvers import reverse
 from base.tests.test_utils import PermTestCase
 
 from block.tests.factories import PageFactory
-from login.tests.factories import UserFactory
 
 from holding.tests.factories import (
     HoldingFactory,
@@ -17,17 +16,7 @@ from holding.tests.factories import (
 class TestViewPerm(PermTestCase):
 
     def setUp(self):
-        UserFactory(
-            username='admin',
-            email='admin@pkimber.net',
-            is_staff=True,
-            is_superuser=True
-        )
-        UserFactory(username='staff', email='staff@pkimber.net', is_staff=True)
-        UserFactory(
-            username='web', email='web@pkimber.net',
-            first_name='William', last_name='Webber'
-        )
+        self.setup_users()
 
     def test_content_publish(self):
         c = HoldingFactory()
