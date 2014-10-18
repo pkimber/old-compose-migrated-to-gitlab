@@ -10,8 +10,13 @@ from .views import (
     PageCreateView,
     PageListView,
     PageUpdateView,
-    TemplateListView,
+    SectionCreateView,
+    SectionListView,
+    SectionUpdateView,
     TemplateCreateView,
+    TemplateListView,
+    TemplateSectionCreateView,
+    TemplateSectionRemoveView,
     TemplateUpdateView,
 )
 
@@ -30,6 +35,18 @@ urlpatterns = patterns(
         view=PageUpdateView.as_view(),
         name='cms.page.update'
         ),
+    url(regex=r'^section/$',
+        view=SectionListView.as_view(),
+        name='cms.section.list'
+        ),
+    url(regex=r'^section/create/$',
+        view=SectionCreateView.as_view(),
+        name='cms.section.create'
+        ),
+    url(regex=r'^section/(?P<pk>\d+)/update/$',
+        view=SectionUpdateView.as_view(),
+        name='cms.section.update'
+        ),
     url(regex=r'^template/$',
         view=TemplateListView.as_view(),
         name='cms.template.list'
@@ -41,5 +58,13 @@ urlpatterns = patterns(
     url(regex=r'^template/(?P<pk>\d+)/update/$',
         view=TemplateUpdateView.as_view(),
         name='cms.template.update'
+        ),
+    url(regex=r'^template/(?P<pk>\d+)/section/create/$',
+        view=TemplateSectionCreateView.as_view(),
+        name='cms.template.section.create'
+        ),
+    url(regex=r'^template/section/(?P<pk>\d+)/remove/$',
+        view=TemplateSectionRemoveView.as_view(),
+        name='cms.template.section.remove'
         ),
 )

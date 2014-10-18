@@ -13,6 +13,11 @@
     <div class="pure-menu pure-menu-open pure-menu-horizontal">
       <ul>
         <li>
+          <a href="{% url 'project.dash' %}">
+            <i class="fa fa-reply"></i>
+          </a>
+        </li>
+        <li>
           <a href="{% url 'cms.page.create' %}">
             <i class="fa fa-gbp"></i>
             Create page
@@ -23,6 +28,12 @@
             <a href="{% url 'cms.template.create' %}">
               <i class="fa fa-gbp"></i>
               Create template
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'cms.section.create' %}">
+              <i class="fa fa-gbp"></i>
+              Create section
             </a>
           </li>
         {% endif %}
@@ -50,6 +61,18 @@
                   </a>
                 </td>
                 <td>
+                  {% for template_section in object.templatesection_set.all %}
+                    <a href="{% url 'cms.template.section.remove' template_section.pk %}">
+                      <i class="fa fa-times"></i>
+                      {{ template_section.section.name }}
+                      <small>({{ template_section.section.block_app }}.models.{{ template_section.section.block_model }})</small>
+                    </a>
+                    <br />
+                  {% endfor %}
+                  <a href="{% url 'cms.template.section.create' object.pk %}">
+                    <i class="fa fa-plus"></i>
+                    Add section...
+                  </a>
                 </td>
               </tr>
             {% endfor %}

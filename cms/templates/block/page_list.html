@@ -20,9 +20,27 @@
         </li>
         {% if user.is_superuser %}
           <li>
+            <a href="{% url 'cms.template.list' %}">
+              <i class="fa fa-gbp"></i>
+              Templates
+            </a>
+          </li>
+          <li>
             <a href="{% url 'cms.template.create' %}">
               <i class="fa fa-gbp"></i>
               Create template
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'cms.section.list' %}">
+              <i class="fa fa-gbp"></i>
+              Sections
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'cms.section.create' %}">
+              <i class="fa fa-gbp"></i>
+              Create section
             </a>
           </li>
         {% endif %}
