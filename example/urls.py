@@ -18,9 +18,6 @@ urlpatterns = patterns(
     url(regex=r'^',
         view=include('login.urls')
         ),
-    url(regex=r'^',
-        view=include('holding.urls')
-        ),
     url(regex=r'^admin/',
         view=include(admin.site.urls)
         ),
@@ -30,6 +27,9 @@ urlpatterns = patterns(
     url(r'^home/user/$',
         view=RedirectView.as_view(url=reverse_lazy('project.home')),
         name='project.dash'
+        ),
+    url(regex=r'^',
+        view=include('cms.urls')
         ),
 )
 

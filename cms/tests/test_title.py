@@ -5,7 +5,7 @@ from django.test import TestCase
 
 from block.tests.helper import check_content
 
-from holding.tests.factories import TitleFactory
+from cms.tests.factories import TitleFactory
 
 
 class TestTitle(TestCase):

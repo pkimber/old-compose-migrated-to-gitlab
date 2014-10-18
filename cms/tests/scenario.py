@@ -12,7 +12,7 @@ from block.service import (
 )
 from block.tests.scenario import init_app_block
 
-from holding.models import (
+from cms.models import (
     Holding,
     HoldingBlock,
     PAGE_HOME,
@@ -21,7 +21,7 @@ from holding.models import (
     Title,
     TitleBlock,
 )
-from holding.tests.model_maker import (
+from cms.tests.model_maker import (
     make_holding,
     make_holding_block,
     make_title,
@@ -87,7 +87,7 @@ def _init_holding(block, company):
         return make_holding(block, 1, company)
 
 
-def init_app_holding():
+def init_app_cms():
     init_app_block()
     # page
     # name, slug_page, order, template_name, is_home=None, slug_menu=None):

@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import factory
 
 from block.tests.factories import PageSectionFactory
-from holding.models import (
+from cms.models import (
     Holding,
     HoldingBlock,
     Title,

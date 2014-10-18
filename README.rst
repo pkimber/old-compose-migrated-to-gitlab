@@ -1,7 +1,7 @@
 Holding
 *******
 
-Django application for a simple holding page
+Django application for a simple CMS site
 
 Install
 =======
@@ -11,8 +11,8 @@ Virtual Environment
 
 ::
 
-  pyvenv-3.4 --without-pip venv-holding
-  source venv-holding/bin/activate
+  pyvenv-3.4 --without-pip venv-cms
+  source venv-cms/bin/activate
   wget https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
   python get-pip.py
 
@@ -35,7 +35,7 @@ Usage
       touch temp.db && rm temp.db && \
       django-admin.py migrate --noinput && \
       django-admin.py demo_data_login && \
-      django-admin.py init_app_holding && \
+      django-admin.py init_app_cms && \
       django-admin.py runserver
 
 Release

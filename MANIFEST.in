@@ -1,5 +1,5 @@
-recursive-include holding/static *
-recursive-include holding/templates *
+recursive-include cms/static *
+recursive-include cms/templates *
 
 include LICENSE
 include README

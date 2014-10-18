@@ -5,7 +5,7 @@ from django.test import TestCase
 
 from block.tests.helper import check_content
 
-from holding.tests.factories import HoldingFactory
+from cms.tests.factories import HoldingFactory
 
 
 class TestHolding(TestCase):

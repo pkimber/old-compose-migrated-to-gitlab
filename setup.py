@@ -19,24 +19,24 @@ def get_readme():
 
 
 setup(
-    name='kb-holding',
-    packages=['holding', 'holding.migrations', 'holding.tests', 'holding.management', 'holding.management.commands'],
+    name='kb-cms',
+    packages=['cms', 'cms.migrations', 'cms.tests', 'cms.management', 'cms.management.commands'],
     package_data={
-        'holding': [
+        'cms': [
             'static/*.*',
-            'static/holding/*.*',
-            'static/holding/css/*.*',
+            'static/cms/*.*',
+            'static/cms/css/*.*',
             'static/img/*.*',
-            'static/img/holding/*.*',
+            'static/img/cms/*.*',
             'templates/*.*',
-            'templates/holding/*.*',
+            'templates/cms/*.*',
         ],
     },
     version='0.0.09',
-    description='holding',
+    description='cms',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
-    url='git@github.com:pkimber/holding.git',
+    url='git@github.com:pkimber/cms.git',
     classifiers=[
         'Development Status :: 1 - Planning',
         'Environment :: Console',

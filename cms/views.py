@@ -88,7 +88,7 @@ class HoldingPublishView(
 
     form_class = HoldingEmptyForm
     model = Holding
-    template_name = 'holding/holding_publish.html'
+    template_name = 'cms/holding_publish.html'
 
 
 class HoldingUpdateView(
@@ -96,7 +96,7 @@ class HoldingUpdateView(
 
     form_class = HoldingForm
     model = Holding
-    template_name = 'holding/holding_update.html'
+    template_name = 'cms/holding_update.html'
 
 
 class TitlePublishView(
@@ -104,7 +104,7 @@ class TitlePublishView(
 
     form_class = TitleEmptyForm
     model = Title
-    template_name = 'holding/title_publish.html'
+    template_name = 'cms/title_publish.html'
 
 
 class TitleUpdateView(
@@ -112,4 +112,4 @@ class TitleUpdateView(
 
     form_class = TitleForm
     model = Title
-    template_name = 'holding/title_update.html'
+    template_name = 'cms/title_update.html'

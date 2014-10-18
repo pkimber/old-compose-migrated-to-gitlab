@@ -125,7 +125,7 @@ LOCAL_APPS = (
     'base',
     'block',
     'example',
-    'holding',
+    'cms',
     'login',
 )
 

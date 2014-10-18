@@ -9,7 +9,7 @@ from login.tests.factories import (
     UserFactory,
 )
 
-from holding.tests.factories import (
+from cms.tests.factories import (
     HoldingFactory,
     TitleFactory,
 )
