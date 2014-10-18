@@ -1,13 +1,23 @@
 # -*- encoding: utf-8 -*-
-
 from __future__ import unicode_literals
+
 from django.conf import settings
-from django.conf.urls import patterns, include, url
+from django.conf.urls import (
+    include,
+    patterns,
+    url,
+)
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
+
+from block.models import PAGE_HOME
+from block.views import (
+    PageDesignView,
+    PageView,
+)
 
 
 admin.autodiscover()
@@ -21,15 +31,36 @@ urlpatterns = patterns(
     url(regex=r'^admin/',
         view=include(admin.site.urls)
         ),
-    url(regex=r'^block/',
-        view=include('block.urls')
-        ),
     url(r'^home/user/$',
         view=RedirectView.as_view(url=reverse_lazy('project.home')),
         name='project.dash'
         ),
-    url(regex=r'^',
+    url(regex=r'^cms/',
         view=include('cms.urls')
+        ),
+    url(regex=r'^compose/',
+        view=include('compose.urls')
+        ),
+    url(regex=r'^$',
+        view=PageView.as_view(),
+        kwargs=dict(page=PAGE_HOME),
+        name='project.home'
+        ),
+    url(regex=r'^(?P<page>[-\w\d]+)/design/$',
+        view=PageDesignView.as_view(),
+        name='project.page.design'
+        ),
+    url(regex=r'^(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/design/$',
+        view=PageDesignView.as_view(),
+        name='project.page.design'
+        ),
+    url(regex=r'^(?P<page>[-\w\d]+)/$',
+        view=PageView.as_view(),
+        name='project.page'
+        ),
+    url(regex=r'^(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/$',
+        view=PageView.as_view(),
+        name='project.page'
         ),
 )
 

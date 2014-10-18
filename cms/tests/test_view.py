@@ -9,7 +9,7 @@ from login.tests.factories import (
     UserFactory,
 )
 
-from cms.tests.factories import (
+from compose.tests.factories import (
     HoldingFactory,
     TitleFactory,
 )
@@ -26,32 +26,7 @@ class TestView(TestCase):
             )
         )
 
-    def test_publish_content(self):
-        c = HoldingFactory()
-        response = self.client.post(
-            reverse('holding.content.publish', kwargs={'pk': c.pk}),
-        )
-        self.assertEqual(response.status_code, 302)
-
-    def test_publish_footer(self):
-        c = TitleFactory()
-        response = self.client.post(
-            reverse('holding.title.publish', kwargs={'pk': c.pk}),
-        )
-        self.assertEqual(response.status_code, 302)
-
-    def test_update_content(self):
-        c = HoldingFactory()
-        response = self.client.post(
-            reverse('holding.content.update', kwargs={'pk': c.pk}),
-            {'company': 'pkimber.net'}
-        )
-        self.assertEqual(response.status_code, 302)
-
-    def test_update_footer(self):
-        c = TitleFactory()
-        response = self.client.post(
-            reverse('holding.title.update', kwargs={'pk': c.pk}),
-            {'title': 'Hatherleigh'}
-        )
-        self.assertEqual(response.status_code, 302)
+    def test_page_list(self):
+        url = reverse('cms.page.list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)

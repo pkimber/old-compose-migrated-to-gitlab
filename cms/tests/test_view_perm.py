@@ -6,37 +6,26 @@ from django.core.urlresolvers import reverse
 from base.tests.test_utils import PermTestCase
 
 from block.tests.factories import PageFactory
-
-from cms.tests.factories import (
-    HoldingFactory,
-    TitleFactory,
-)
+from login.tests.factories import UserFactory
 
 
 class TestViewPerm(PermTestCase):
 
     def setUp(self):
-        self.setup_users()
+        UserFactory(username='staff', is_staff=True, is_superuser=True)
+        UserFactory(username='web')
 
-    def test_content_publish(self):
-        c = HoldingFactory()
-        url = reverse('holding.content.publish', kwargs={'pk': c.pk})
-        self.assert_staff_only(url)
+    def test_create(self):
+        self.assert_staff_only(reverse('cms.page.create'))
 
-    def test_content_update(self):
-        c = HoldingFactory()
-        url = reverse('holding.content.update', kwargs={'pk': c.pk})
-        self.assert_staff_only(url)
+    def test_list(self):
+        self.assert_staff_only(reverse('cms.page.list'))
 
-    def test_footer_publish(self):
-        c = TitleFactory()
-        url = reverse('holding.title.publish', kwargs={'pk': c.pk})
-        self.assert_staff_only(url)
-
-    def test_footer_update(self):
-        c = TitleFactory()
-        url = reverse('holding.title.update', kwargs={'pk': c.pk})
-        self.assert_staff_only(url)
+    def test_update(self):
+        page = PageFactory()
+        self.assert_staff_only(
+            reverse('cms.page.update', kwargs=dict(pk=page.pk))
+        )
 
     def test_home(self):
         PageFactory(

@@ -1,115 +1,47 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.views.generic import (
+    CreateView,
+    ListView,
+    UpdateView,
+)
+
 from braces.views import (
     LoginRequiredMixin,
     StaffuserRequiredMixin,
 )
 
-from block.views import (
-    ContentPublishView,
-    ContentUpdateView,
-)
+from base.view_utils import BaseMixin
+from block.views import Page
 
 from .forms import (
-    HoldingEmptyForm,
-    HoldingForm,
-    TitleEmptyForm,
-    TitleForm,
-)
-from .models import (
-    Holding,
-    Title,
+    PageForm,
 )
 
 
-#class PageBaseView(ContentPageMixin, TemplateView):
-#
-#    template_name = 'holding/page_content.html'
-#
-#    def _get_body(self):
-#        return Section.objects.get(slug=SECTION_BODY)
-#
-#    def _get_footer(self):
-#        return Section.objects.get(slug=SECTION_FOOTER)
-#
-#    def _get_home_page(self):
-#        return Page.objects.get(slug=PAGE_HOME)
-#
-#
-#class PageDesignView(
-#        LoginRequiredMixin, StaffuserRequiredMixin, PageBaseView):
-#
-#    def get_context_data(self, **kwargs):
-#        context = super(PageDesignView, self).get_context_data(**kwargs)
-#        page = self.get_page()
-#        body = self._get_body()
-#        contents = Holding.objects.pending(page, body)
-#        if contents:
-#            c = contents[0]
-#        else:
-#            raise BlockError('Cannot find pending content for this section.')
-#        context.update(dict(
-#            design=True,
-#            content=c,
-#            footer_content=Title.objects.pending(
-#                self._get_home_page(),
-#                self._get_footer(),
-#            ),
-#        ))
-#        return context
-#
-#
-#class PageView(PageBaseView):
-#
-#    def get_context_data(self, **kwargs):
-#        context = super(PageView, self).get_context_data(**kwargs)
-#        contents = Holding.objects.published(
-#            self.get_page(),
-#            self._get_body(),
-#        )
-#        if contents:
-#            c = contents[0]
-#        else:
-#            c = Holding()
-#        context.update(dict(
-#            design=False,
-#            content=c,
-#            footer_content=Title.objects.published(
-#                self._get_home_page(),
-#                self._get_footer(),
-#            ),
-#        ))
-#        return context
+class PageCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, CreateView):
+
+    form_class = PageForm
+    model = Page
+
+    def get_success_url(self):
+        return reverse('cms.page.list')
 
 
-class HoldingPublishView(
-        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
+class PageListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
 
-    form_class = HoldingEmptyForm
-    model = Holding
-    template_name = 'cms/holding_publish.html'
-
-
-class HoldingUpdateView(
-        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
-
-    form_class = HoldingForm
-    model = Holding
-    template_name = 'cms/holding_update.html'
+    model = Page
+    paginate_by = 15
 
 
-class TitlePublishView(
-        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
+class PageUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
 
-    form_class = TitleEmptyForm
-    model = Title
-    template_name = 'cms/title_publish.html'
+    form_class = PageForm
+    model = Page
 
-
-class TitleUpdateView(
-        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
-
-    form_class = TitleForm
-    model = Title
-    template_name = 'cms/title_update.html'
+    def get_success_url(self):
+        return reverse('cms.page.list')
