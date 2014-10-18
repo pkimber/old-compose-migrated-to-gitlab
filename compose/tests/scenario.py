@@ -93,19 +93,19 @@ def init_app_compose():
         'Home',
         PAGE_HOME,
         0,
-        'compose/page_content.html',
+        'cms/page_content.html',
         is_home=True,
     )
     # layout
     body = init_section(
         SECTION_BODY.capitalize(),
-        'holding',
+        'compose',
         'Holding',
         None,
     )
     footer = init_section(
         SECTION_FOOTER.capitalize(),
-        'holding',
+        'compose',
         'Title',
         None,
     )
