@@ -6,12 +6,6 @@ from django.conf.urls import (
     url,
 )
 
-from block.models import PAGE_HOME
-from block.views import (
-    PageDesignView,
-    PageView,
-)
-
 from .views import (
     HoldingPublishView,
     HoldingUpdateView,

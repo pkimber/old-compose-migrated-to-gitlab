@@ -9,11 +9,6 @@ from login.tests.factories import (
     UserFactory,
 )
 
-from compose.tests.factories import (
-    HoldingFactory,
-    TitleFactory,
-)
-
 
 class TestView(TestCase):
 
