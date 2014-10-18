@@ -10,6 +10,9 @@ from .views import (
     PageCreateView,
     PageListView,
     PageUpdateView,
+    TemplateListView,
+    TemplateCreateView,
+    TemplateUpdateView,
 )
 
 
@@ -26,5 +29,17 @@ urlpatterns = patterns(
     url(regex=r'^page/(?P<pk>\d+)/update/$',
         view=PageUpdateView.as_view(),
         name='cms.page.update'
+        ),
+    url(regex=r'^template/$',
+        view=TemplateListView.as_view(),
+        name='cms.template.list'
+        ),
+    url(regex=r'^template/create/$',
+        view=TemplateCreateView.as_view(),
+        name='cms.template.create'
+        ),
+    url(regex=r'^template/(?P<pk>\d+)/update/$',
+        view=TemplateUpdateView.as_view(),
+        name='cms.template.update'
         ),
 )

@@ -1,11 +1,11 @@
 {% extends "block/base.html" %}
 
 {% block sub_title %}
-  Pages
+  Templates
 {% endblock sub_title %}
 
 {% block sub_heading %}
-  Pages
+  Templates
 {% endblock sub_heading %}
 
 {% block content %}
@@ -36,32 +36,20 @@
         <table class="pure-table pure-table-bordered">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Design</th>
-              <th>Config</th>
+              <th>Template</th>
+              <th>Sections</th>
             </tr>
           </thead>
           <tbody>
             {% for object in object_list %}
               <tr valign="top">
                 <td>
-                  <a href="{{ object.get_absolute_url }}">
-                    {% if object.deleted %}<del>{% endif %}
-                    {{ object.name }}
-                    {% if object.deleted %}</del>{% endif %}
+                  <a href="{% url 'cms.template.update' object.pk %}">
+                    <i class="fa fa-edit"></i>
+                    {{ object.template_name }}
                   </a>
                 </td>
                 <td>
-                  <a href="{{ object.get_design_url }}">
-                    <i class="fa fa-edit"></i>
-                    Edit
-                  </a>
-                </td>
-                <td>
-                  <a href="{% url 'cms.page.update' object.pk %}">
-                    <i class="fa fa-edit"></i>
-                    Config
-                  </a>
                 </td>
               </tr>
             {% endfor %}

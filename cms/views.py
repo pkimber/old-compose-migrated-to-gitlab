@@ -18,7 +18,9 @@ from block.views import Page
 
 from .forms import (
     PageForm,
+    TemplateForm,
 )
+from .models import Template
 
 
 class PageCreateView(
@@ -46,3 +48,30 @@ class PageUpdateView(
 
     def get_success_url(self):
         return reverse('cms.page.list')
+
+
+class TemplateCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, CreateView):
+
+    form_class = TemplateForm
+    model = Template
+
+    def get_success_url(self):
+        return reverse('cms.template.list')
+
+
+class TemplateListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
+
+    model = Template
+    paginate_by = 15
+
+
+class TemplateUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
+
+    form_class = TemplateForm
+    model = Template
+
+    def get_success_url(self):
+        return reverse('cms.template.list')
