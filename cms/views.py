@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
+from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.views.generic import (
     CreateView,
@@ -40,6 +41,13 @@ class PageCreateView(
     form_class = PageForm
     model = Page
 
+    def form_valid(self, form):
+        template = form.cleaned_data.get('template')
+        with transaction.atomic():
+            self.object = form.save()
+            template.setup_page(self.object)
+        return HttpResponseRedirect(self.get_success_url())
+
     def get_success_url(self):
         return reverse('cms.page.list')
 
@@ -56,6 +64,23 @@ class PageUpdateView(
 
     form_class = PageForm
     model = Page
+
+    def get_initial(self):
+        """Returns the initial data to use for forms on this view."""
+        try:
+            template = Template.objects.get(
+                template_name=self.object.template_name
+            )
+            return dict(template=template)
+        except Template.DoesNotExist:
+            return dict()
+
+    def form_valid(self, form):
+        template = form.cleaned_data.get('template')
+        with transaction.atomic():
+            self.object = form.save(commit=False)
+            template.setup_page(self.object)
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
         return reverse('cms.page.list')

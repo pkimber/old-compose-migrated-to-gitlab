@@ -17,6 +17,8 @@ from .models import (
 
 class PageForm(RequiredFieldForm):
 
+    template = forms.ModelChoiceField(Template.objects.all())
+
     class Meta:
         model = Page
         fields = (
@@ -24,9 +26,6 @@ class PageForm(RequiredFieldForm):
             'slug',
             'slug_menu',
             'order',
-            'is_home',
-            'template_name',
-            'deleted',
         )
 
 

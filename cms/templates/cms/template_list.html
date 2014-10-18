@@ -17,23 +17,17 @@
             <i class="fa fa-reply"></i>
           </a>
         </li>
-        <li>
-          <a href="{% url 'cms.page.create' %}">
-            <i class="fa fa-gbp"></i>
-            Create page
-          </a>
-        </li>
         {% if user.is_superuser %}
           <li>
             <a href="{% url 'cms.template.create' %}">
-              <i class="fa fa-gbp"></i>
+              <i class="fa fa-file-code-o"></i>
               Create template
             </a>
           </li>
           <li>
-            <a href="{% url 'cms.section.create' %}">
-              <i class="fa fa-gbp"></i>
-              Create section
+            <a href="{% url 'cms.section.list' %}">
+              <i class="fa fa-file-code-o"></i>
+              Sections
             </a>
           </li>
         {% endif %}

@@ -6,7 +6,10 @@ from django.db import models
 import reversion
 
 from base.model_utils import TimeStampedModel
-from block.models import Section
+from block.models import (
+    PageSection,
+    Section,
+)
 
 
 class Template(TimeStampedModel):
@@ -23,6 +26,17 @@ class Template(TimeStampedModel):
 
     def __str__(self):
         return '{}'.format(self.template_name)
+
+    def setup_page(self, page):
+        page.template_name = self.template_name
+        page.pagesection_set.all().delete()
+        for template_section in self.templatesection_set.all():
+            page_section = PageSection(
+                page=page,
+                section=template_section.section,
+            )
+            page_section.save()
+        page.save()
 
 reversion.register(Template)
 
