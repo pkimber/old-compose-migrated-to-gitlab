@@ -52,7 +52,9 @@
                   <small>{{ object.block_app }}.models.{{ object.block_model }}</small>
                 </td>
                 <td>
-                  {{ object.create_url_name }}
+                  {% if object.create_url_name %}
+                    '{{ object.create_url_name }}'
+                  {% endif %}
                 </td>
               </tr>
             {% endfor %}

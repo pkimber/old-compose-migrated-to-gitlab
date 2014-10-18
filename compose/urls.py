@@ -7,6 +7,7 @@ from django.conf.urls import (
 )
 
 from .views import (
+    HoldingCreateView,
     HoldingPublishView,
     HoldingUpdateView,
     TitlePublishView,
@@ -16,6 +17,14 @@ from .views import (
 
 urlpatterns = patterns(
     '',
+    url(regex=r'^holding/create/(?P<page>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
+        view=HoldingCreateView.as_view(),
+        name='compose.holding.create'
+        ),
+    url(regex=r'^holding/create/(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
+        view=HoldingCreateView.as_view(),
+        name='compose.holding.create'
+        ),
     url(regex=r'^holding/(?P<pk>\d+)/publish/$',
         view=HoldingPublishView.as_view(),
         name='compose.holding.publish'

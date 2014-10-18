@@ -7,6 +7,7 @@ from braces.views import (
 )
 
 from block.views import (
+    ContentCreateView,
     ContentPublishView,
     ContentUpdateView,
 )
@@ -19,6 +20,7 @@ from .forms import (
 )
 from .models import (
     Holding,
+    HoldingBlock,
     Title,
 )
 
@@ -81,6 +83,15 @@ from .models import (
 #            ),
 #        ))
 #        return context
+
+
+class HoldingCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentCreateView):
+
+    block_class = HoldingBlock
+    form_class = HoldingForm
+    model = Holding
+    template_name = 'compose/holding_create.html'
 
 
 class HoldingPublishView(
