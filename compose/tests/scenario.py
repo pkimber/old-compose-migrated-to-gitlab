@@ -13,77 +13,45 @@ from block.service import (
 )
 
 from compose.models import (
-    Holding,
-    HoldingBlock,
+    Article,
+    ArticleBlock,
     SECTION_BODY,
-    SECTION_FOOTER,
-    Title,
-    TitleBlock,
 )
 from compose.tests.model_maker import (
-    make_holding,
-    make_holding_block,
-    make_title,
-    make_title_block,
+    make_article,
+    make_article_block,
 )
 
 
-def get_title_content():
-    result = Title.objects.all()
+def get_article_content():
+    result = Article.objects.all()
     if result:
         return result[0]
     else:
-        raise BlockError("Cannot find any title content")
-
-
-def get_holding_content():
-    result = Holding.objects.all()
-    if result:
-        return result[0]
-    else:
-        raise BlockError("Cannot find any holding content")
+        raise BlockError("Cannot find any article content")
 
 
 def get_page_home():
     return Page.objects.get(slug=PAGE_HOME)
 
 
-def _init_holding_block(page_section):
-    try:
-        result = HoldingBlock.objects.get(page_section=page_section)
-    except HoldingBlock.DoesNotExist:
-        print("make_holding_block: {}".format(page_section))
-        result = make_holding_block(page_section)
-    return result
-
-
-def _init_title_block(page_section):
-    try:
-        result = TitleBlock.objects.get(page_section=page_section)
-    except TitleBlock.DoesNotExist:
-        print("make_title_block: {}".format(page_section))
-        result = make_title_block(page_section)
-    return result
-
-
-def _init_footer(block, title):
-    """Create a footer - if there isn't one already."""
-    result = Title.objects.filter(block=block)
-    if result:
-        return result[0]
-    else:
-        print("make_title: {}".format(title))
-        return make_title(block, 1, title)
-
-
-def _init_holding(block, company):
+def _init_article(block, title):
     """Create a main content section - if there isn't one already."""
-    result = Holding.objects.filter(block=block)
+    result = Article.objects.filter(block=block)
     if result:
         return result[0]
     else:
-        print("make_holding: {}".format(company))
-        return make_holding(block, 1, company)
+        print("make_article: {}".format(title))
+        return make_article(block, 1, title)
+
+
+def _init_article_block(page_section):
+    try:
+        result = ArticleBlock.objects.get(page_section=page_section)
+    except ArticleBlock.DoesNotExist:
+        print("make_article_block: {}".format(page_section))
+        result = make_article_block(page_section)
+    return result
 
 
 def init_app_compose():
@@ -100,20 +68,10 @@ def init_app_compose():
     body = init_section(
         SECTION_BODY.capitalize(),
         'compose',
-        'Holding',
-        None,
-    )
-    footer = init_section(
-        SECTION_FOOTER.capitalize(),
-        'compose',
-        'Title',
+        'Article',
         None,
     )
     home_body = init_page_section(home, body)
-    home_footer = init_page_section(home, footer)
-    # holding
-    holding_block = _init_holding_block(home_body)
-    _init_holding(holding_block, 'Your Company Name')
-    # footer
-    title_block = _init_title_block(home_footer)
-    _init_footer(title_block, 'Please edit this footer...')
+    # article
+    article_block = _init_article_block(home_body)
+    _init_article(article_block, 'Your Company Name')

@@ -5,47 +5,25 @@ import factory
 
 from block.tests.factories import PageSectionFactory
 from compose.models import (
-    Holding,
-    HoldingBlock,
-    Title,
-    TitleBlock,
+    Article,
+    ArticleBlock,
 )
 
 
-class HoldingBlockFactory(factory.django.DjangoModelFactory):
+class ArticleBlockFactory(factory.django.DjangoModelFactory):
 
     page_section = factory.SubFactory(PageSectionFactory)
 
     class Meta:
-        model = HoldingBlock
+        model = ArticleBlock
 
 
-class HoldingFactory(factory.django.DjangoModelFactory):
-
-    class Meta:
-        model = Holding
-
-    block = factory.SubFactory(HoldingBlockFactory)
-
-    @factory.sequence
-    def order(n):
-        return n
-
-
-class TitleBlockFactory(factory.django.DjangoModelFactory):
-
-    page_section = factory.SubFactory(PageSectionFactory)
+class ArticleFactory(factory.django.DjangoModelFactory):
 
     class Meta:
-        model = TitleBlock
+        model = Article
 
-
-class TitleFactory(factory.django.DjangoModelFactory):
-
-    class Meta:
-        model = Title
-
-    block = factory.SubFactory(TitleBlockFactory)
+    block = factory.SubFactory(ArticleBlockFactory)
 
     @factory.sequence
     def order(n):

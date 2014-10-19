@@ -5,62 +5,32 @@ from django import forms
 
 from base.form_utils import RequiredFieldForm
 
-from .models import (
-    Holding,
-    Title,
-)
+from .models import Article
 
 
-class HoldingEmptyForm(forms.ModelForm):
+class ArticleEmptyForm(forms.ModelForm):
 
     class Meta:
-        model = Holding
+        model = Article
         fields = ()
 
 
-class HoldingForm(RequiredFieldForm):
+class ArticleForm(RequiredFieldForm):
 
     def __init__(self, *args, **kwargs):
-        super(HoldingForm, self).__init__(*args, **kwargs)
-        for name in ('company', 'what_we_do', 'description'):
-            self.fields[name].widget.attrs.update(
-                {'class': 'pure-input-2-3'}
-            )
-        self.fields['company'].widget.attrs.update({
-            'rows': '1',
-        })
-
-    class Meta:
-        model = Holding
-        fields = (
-            'company',
-            'what_we_do',
-            'description',
-            'logo',
-        )
-        widgets = {
-            'logo': forms.FileInput,
-        }
-
-
-class TitleEmptyForm(forms.ModelForm):
-
-    class Meta:
-        model = Title
-        fields = ()
-
-
-class TitleForm(RequiredFieldForm):
-
-    def __init__(self, *args, **kwargs):
-        super(TitleForm, self).__init__(*args, **kwargs)
-        for name in ('title',):
+        super(ArticleForm, self).__init__(*args, **kwargs)
+        for name in ('title', 'description'):
             self.fields[name].widget.attrs.update(
                 {'class': 'pure-input-2-3'}
             )
 
     class Meta:
-        model = Title
+        model = Article
         fields = (
             'title',
+            'description',
+            'picture',
         )
+        widgets = {
+            'picture': forms.FileInput,
+        }

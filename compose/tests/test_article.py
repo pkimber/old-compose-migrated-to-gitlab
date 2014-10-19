@@ -5,11 +5,11 @@ from django.test import TestCase
 
 from block.tests.helper import check_content
 
-from compose.tests.factories import HoldingFactory
+from compose.tests.factories import ArticleFactory
 
 
-class TestHolding(TestCase):
+class TestArticle(TestCase):
 
     def test_content_methods(self):
-        c = HoldingFactory()
-        check_content(c, ignore_remove=True)
+        c = ArticleFactory()
+        check_content(c)

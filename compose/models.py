@@ -13,70 +13,40 @@ from block.models import (
 
 
 SECTION_BODY = 'body'
-SECTION_FOOTER = 'footer'
 
 
-class HoldingBlock(BlockModel):
+class ArticleBlock(BlockModel):
     pass
 
-reversion.register(HoldingBlock)
+reversion.register(ArticleBlock)
 
 
-class Holding(ContentModel):
+class Article(ContentModel):
 
-    block = models.ForeignKey(HoldingBlock, related_name='content')
+    block = models.ForeignKey(ArticleBlock, related_name='content')
     order = models.IntegerField()
-    company = models.TextField()
-    what_we_do = models.TextField(blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    logo = models.ImageField(upload_to='holding/%Y/%m/%d', blank=True)
 
-    class Meta:
-        # cannot put 'unique_together' on abstract base class
-        # https://code.djangoproject.com/ticket/16732
-        unique_together = ('block', 'moderate_state')
-        verbose_name = 'Holding content'
-        verbose_name_plural = 'Holding contents'
-
-    def __str__(self):
-        return '{}'.format(self.company)
-
-    def url_publish(self):
-        return reverse('compose.holding.publish', kwargs={'pk': self.pk})
-
-    def url_update(self):
-        return reverse('compose.holding.update', kwargs={'pk': self.pk})
-
-reversion.register(Holding)
-
-
-class TitleBlock(BlockModel):
-    pass
-
-reversion.register(TitleBlock)
-
-
-class Title(ContentModel):
-    """Just a title."""
-
-    block = models.ForeignKey(TitleBlock, related_name='content')
-    order = models.IntegerField()
     title = models.TextField()
+    description = models.TextField(blank=True)
+    picture = models.ImageField(upload_to='compose', blank=True)
 
     class Meta:
         # cannot put 'unique_together' on abstract base class
         # https://code.djangoproject.com/ticket/16732
         unique_together = ('block', 'moderate_state')
-        verbose_name = 'Title'
-        verbose_name_plural = 'Titles'
+        verbose_name = 'Article'
+        verbose_name_plural = 'Articles'
 
     def __str__(self):
-        return '{}'.format(self.title)
+        return '{} {}'.format(self.title, self.moderate_state)
 
     def url_publish(self):
-        return reverse('compose.title.publish', kwargs={'pk': self.pk})
+        return reverse('compose.article.publish', kwargs={'pk': self.pk})
+
+    def url_remove(self):
+        return reverse('compose.article.remove', kwargs={'pk': self.pk})
 
     def url_update(self):
-        return reverse('compose.title.update', kwargs={'pk': self.pk})
+        return reverse('compose.article.update', kwargs={'pk': self.pk})
 
-reversion.register(Title)
+reversion.register(Article)
