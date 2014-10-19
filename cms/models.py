@@ -16,7 +16,7 @@ class Template(TimeStampedModel):
 
     template_name = models.CharField(
         max_length=150,
-        help_text="File name e.g. 'cms/page_content.html'",
+        help_text="File name e.g. 'compose/page_content.html'",
     )
 
     class Meta:

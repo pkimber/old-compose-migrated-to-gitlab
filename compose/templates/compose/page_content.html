@@ -18,9 +18,7 @@
 {% endif %}
 
 {% block sub_heading %}
-  {% for b in body_list %}
-    {{ b.what_we_do }}
-  {% endfor %}
+  {{ page.name }}
 {% endblock sub_heading %}
 
 {% block stylesheets %}
@@ -73,8 +71,8 @@
         </div>
       </div>
     </div>
-    {% if design %}{% block_add body_create_url %}{% endif %}
   {% endfor %}
+  {% if design %}{% block_add body_create_url %}{% endif %}
 {% endblock content %}
 
 {% block footer %}

@@ -12,6 +12,8 @@ from block.service import (
     init_section,
 )
 
+from cms.models import Template
+from cms.tests.model_maker import make_template
 from compose.models import (
     Article,
     ArticleBlock,
@@ -54,6 +56,15 @@ def _init_article_block(page_section):
     return result
 
 
+def _init_template(template_name):
+    result = Template.objects.filter(template_name=template_name)
+    if result:
+        return result[0]
+    else:
+        print("make_template: {}".format(template_name))
+        return make_template(template_name)
+
+
 def init_app_compose():
     # page
     # name, slug_page, order, template_name, is_home=None, slug_menu=None):
@@ -61,15 +72,16 @@ def init_app_compose():
         'Home',
         PAGE_HOME,
         0,
-        'cms/page_content.html',
+        'compose/page_content.html',
         is_home=True,
     )
     # layout
+    _init_template('compose/page_content.html')
     body = init_section(
         SECTION_BODY.capitalize(),
         'compose',
         'Article',
-        None,
+        'compose.article.create',
     )
     home_body = init_page_section(home, body)
     # article
