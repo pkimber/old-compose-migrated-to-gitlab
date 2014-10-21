@@ -18,6 +18,8 @@ class HeaderFooter(SingletonModel):
     header = models.CharField(max_length=150)
     footer_left = models.TextField(blank=True)
     footer_right = models.TextField(blank=True)
+    url_twitter = models.URLField(verbose_name='Twitter URL', blank=True)
+    url_linkedin = models.URLField(verbose_name='LinkedIn URL', blank=True)
 
     class Meta:
         verbose_name = 'Header and footer'

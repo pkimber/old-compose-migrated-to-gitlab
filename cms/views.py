@@ -19,6 +19,8 @@ from braces.views import (
 from base.view_utils import BaseMixin
 from block.views import (
     Page,
+    PageDesignView,
+    PageView,
     Section,
 )
 
@@ -35,6 +37,22 @@ from .models import (
     Template,
     TemplateSection,
 )
+
+
+class CmsPageView(PageView):
+
+    def get_context_data(self, **kwargs):
+        context = super(CmsPageView, self).get_context_data(**kwargs)
+        context.update(dict(header_footer=HeaderFooter.load()))
+        return context
+
+
+class CmsPageDesignView(PageDesignView):
+
+    def get_context_data(self, **kwargs):
+        context = super(CmsPageDesignView, self).get_context_data(**kwargs)
+        context.update(dict(header_footer=HeaderFooter.load()))
+        return context
 
 
 class HeaderFooterUpdateView(

@@ -14,9 +14,9 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
 
 from block.models import PAGE_HOME
-from block.views import (
-    PageDesignView,
-    PageView,
+from cms.views import (
+    CmsPageDesignView,
+    CmsPageView,
 )
 
 
@@ -42,24 +42,24 @@ urlpatterns = patterns(
         view=include('compose.urls')
         ),
     url(regex=r'^$',
-        view=PageView.as_view(),
+        view=CmsPageView.as_view(),
         kwargs=dict(page=PAGE_HOME),
         name='project.home'
         ),
     url(regex=r'^(?P<page>[-\w\d]+)/design/$',
-        view=PageDesignView.as_view(),
+        view=CmsPageDesignView.as_view(),
         name='project.page.design'
         ),
     url(regex=r'^(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/design/$',
-        view=PageDesignView.as_view(),
+        view=CmsPageDesignView.as_view(),
         name='project.page.design'
         ),
     url(regex=r'^(?P<page>[-\w\d]+)/$',
-        view=PageView.as_view(),
+        view=CmsPageView.as_view(),
         name='project.page'
         ),
     url(regex=r'^(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/$',
-        view=PageView.as_view(),
+        view=CmsPageView.as_view(),
         name='project.page'
         ),
 )

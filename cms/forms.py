@@ -20,14 +20,17 @@ class HeaderFooterForm(RequiredFieldForm):
 
     def __init__(self, *args, **kwargs):
         super(HeaderFooterForm, self).__init__(*args, **kwargs)
-        self.fields['header'].widget.attrs.update(
-            {'class': 'pure-input-2-3'}
-        )
+        for name in ('header', 'url_linkedin', 'url_twitter'):
+            self.fields[name].widget.attrs.update(
+                {'class': 'pure-input-2-3'}
+            )
 
     class Meta:
         model = HeaderFooter
         fields = (
             'header',
+            'url_twitter',
+            'url_linkedin',
             'footer_left',
             'footer_right',
         )

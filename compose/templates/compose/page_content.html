@@ -4,18 +4,10 @@
 {% load staticfiles %}
 {% load thumbnail %}
 
-{% if body_list %}
-  {% block title %}
-    {% for b in body_list %}
-      {{ b.company }}
-    {% endfor %}
-  {% endblock title %}
-  {% block heading %}
-    {% for b in body_list %}
-      {{ b.company }}
-    {% endfor %}
-  {% endblock heading %}
-{% endif %}
+
+{% block heading %}
+  {{ header_footer.header }}
+{% endblock heading %}
 
 {% block sub_heading %}
   {{ page.name }}
@@ -78,17 +70,24 @@
 {% block footer %}
   <div class="legal pure-g">
     <div class="pure-u-1 pure-u-md-1-5">
+      {% autoescape off %}
+        {{ header_footer.footer_left }}
+      {% endautoescape %}
     </div>
     <div class="pure-u-1 pure-u-md-3-5">
       <div class="l-box legal-logo">
-        {% for f in footer_list %}
-          <p class="legal-license">
-          {% if f.title %}
-            {{ f.title|linebreaksbr }}
+        <p class="legal-license">
+          {% if header_footer.url_twitter %}
+            <a href="{{ header_footer.url_twitter }}">
+              <i class="fa fa-twitter"></i>
+            </a>
           {% endif %}
-          {% if design %}{% block_moderate f False %}{% endif %}
-          </p>
-        {% endfor %}
+          {% if header_footer.url_linkedin %}
+            <a href="{{ header_footer.url_linkedin }}">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          {% endif %}
+        </p>
         <br />
         <a href="http://yuilibrary.com/">
           <img height="30" width="65" alt="YUI logo" src="{% static "img/holding/yui.png" %}">
@@ -102,6 +101,9 @@
       </div>
     </div>
     <div class="pure-u-1 pure-u-md-1-5">
+      {% autoescape off %}
+        {{ header_footer.footer_right }}
+      {% endautoescape %}
     </div>
   </div>
 {% endblock footer %}
