@@ -1,45 +1,7 @@
 {% extends "cms/base.html" %}
 
 {% load block_tags %}
-{% load staticfiles %}
 {% load thumbnail %}
-
-
-{% block heading %}
-  {{ header_footer.header }}
-{% endblock heading %}
-
-{% block sub_heading %}
-  {{ page.name }}
-{% endblock sub_heading %}
-
-{% block stylesheets %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{% static 'holding/css/holding.css' %}">
-{% endblock stylesheets %}
-
-{% block menu %}
-  {{ block.super }}
-  {% if user.is_authenticated %}
-    <li>
-      <a href="{% if design %}..{% else %}{{ page.get_design_url }}{% endif %}"
-        title="{% if design %}View{% else %}Design{% endif %}" >
-        {% if design %}
-          <i class="fa fa-square-o"></i>
-          View
-        {% else %}
-          <i class="fa fa-edit"></i>
-          Design
-        {% endif %}
-      </a>
-    </li>
-  {% endif %}
-  {% for p in pages %}
-    <li>
-      <a href="{{ p.get_absolute_url }}" title="{{ p.name }}">{{ p.name }}</a>
-    </li>
-  {% endfor %}
-{% endblock menu %}
 
 {% block content %}
   {% for b in body_list %}
@@ -47,7 +9,6 @@
       <div class="pure-g">
         <div class="pure-u-1">
           <div class="l-box">
-            {% block_moderate b False %}
           </div>
         </div>
       </div>
@@ -56,8 +17,11 @@
       <div class="pure-u-1 pure-u-md-3-4">
         <div class="l-box">
           {% if b.description %}
-            {{ b.description|urlize|linebreaksbr }}
+            {% autoescape off %}
+              {{ b.description }}
+            {% endautoescape %}
           {% endif %}
+          {% block_moderate b %}
         </div>
       </div>
       <div class="pure-u-1 pure-u-md-1-4">
@@ -71,44 +35,3 @@
   {% endfor %}
   {% if design %}{% block_add body_create_url %}{% endif %}
 {% endblock content %}
-
-{% block footer %}
-  <div class="legal pure-g">
-    <div class="pure-u-1 pure-u-md-1-5">
-      {% autoescape off %}
-        {{ header_footer.footer_left }}
-      {% endautoescape %}
-    </div>
-    <div class="pure-u-1 pure-u-md-3-5">
-      <div class="l-box legal-logo">
-        <p class="legal-license">
-          {% if header_footer.url_twitter %}
-            <a href="{{ header_footer.url_twitter }}">
-              <i class="fa fa-twitter"></i>
-            </a>
-          {% endif %}
-          {% if header_footer.url_linkedin %}
-            <a href="{{ header_footer.url_linkedin }}">
-              <i class="fa fa-linkedin"></i>
-            </a>
-          {% endif %}
-        </p>
-        <br />
-        <a href="http://yuilibrary.com/">
-          <img height="30" width="65" alt="YUI logo" src="{% static "img/holding/yui.png" %}">
-        </a>
-        <p class="legal-license">
-          This site is built using
-          <a href="http://purecss.io/">
-            Yahoo Pure CSS
-          </a>
-        </p>
-      </div>
-    </div>
-    <div class="pure-u-1 pure-u-md-1-5">
-      {% autoescape off %}
-        {{ header_footer.footer_right }}
-      {% endautoescape %}
-    </div>
-  </div>
-{% endblock footer %}

@@ -26,7 +26,7 @@ class Article(ContentModel):
     block = models.ForeignKey(ArticleBlock, related_name='content')
     order = models.IntegerField()
 
-    title = models.TextField()
+    title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     picture = models.ImageField(upload_to='compose', blank=True)
 
