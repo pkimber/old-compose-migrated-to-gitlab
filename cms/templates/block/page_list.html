@@ -18,6 +18,12 @@
             Create page
           </a>
         </li>
+        <li>
+          <a href="{% url 'cms.header.footer.update' %}">
+            <i class="fa fa-header"></i>
+            Header and footer
+          </a>
+        </li>
         {% if user.is_superuser %}
           <li>
             <a href="{% url 'cms.template.list' %}">

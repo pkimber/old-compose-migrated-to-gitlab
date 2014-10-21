@@ -7,6 +7,7 @@ from django.conf.urls import (
 )
 
 from .views import (
+    HeaderFooterUpdateView,
     PageCreateView,
     PageListView,
     PageUpdateView,
@@ -23,6 +24,10 @@ from .views import (
 
 urlpatterns = patterns(
     '',
+    url(regex=r'^header-footer/$',
+        view=HeaderFooterUpdateView.as_view(),
+        name='cms.header.footer.update'
+        ),
     url(regex=r'^page/$',
         view=PageListView.as_view(),
         name='cms.page.list'

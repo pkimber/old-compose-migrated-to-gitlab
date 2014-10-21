@@ -10,9 +10,27 @@ from block.models import (
 )
 
 from .models import (
+    HeaderFooter,
     Template,
     TemplateSection,
 )
+
+
+class HeaderFooterForm(RequiredFieldForm):
+
+    def __init__(self, *args, **kwargs):
+        super(HeaderFooterForm, self).__init__(*args, **kwargs)
+        self.fields['header'].widget.attrs.update(
+            {'class': 'pure-input-2-3'}
+        )
+
+    class Meta:
+        model = HeaderFooter
+        fields = (
+            'header',
+            'footer_left',
+            'footer_right',
+        )
 
 
 class PageForm(RequiredFieldForm):

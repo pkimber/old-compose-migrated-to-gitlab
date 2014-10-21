@@ -6,10 +6,27 @@ from django.db import models
 import reversion
 
 from base.model_utils import TimeStampedModel
+from base.singleton import SingletonModel
 from block.models import (
     PageSection,
     Section,
 )
+
+
+class HeaderFooter(SingletonModel):
+
+    header = models.CharField(max_length=150)
+    footer_left = models.TextField(blank=True)
+    footer_right = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name = 'Header and footer'
+        verbose_name_plural = 'Header and footers'
+
+    def __str__(self):
+        return '{}'.format(self.header)
+
+reversion.register(HeaderFooter)
 
 
 class Template(TimeStampedModel):

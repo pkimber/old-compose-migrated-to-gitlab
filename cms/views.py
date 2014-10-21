@@ -23,6 +23,7 @@ from block.views import (
 )
 
 from .forms import (
+    HeaderFooterForm,
     PageForm,
     SectionForm,
     TemplateForm,
@@ -30,9 +31,23 @@ from .forms import (
     TemplateSectionForm,
 )
 from .models import (
+    HeaderFooter,
     Template,
     TemplateSection,
 )
+
+
+class HeaderFooterUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
+
+    form_class = HeaderFooterForm
+    model = HeaderFooter
+
+    def get_object(self, queryset=None):
+        return HeaderFooter.load()
+
+    def get_success_url(self):
+        return reverse('cms.page.list')
 
 
 class PageCreateView(
