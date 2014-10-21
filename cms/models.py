@@ -67,6 +67,7 @@ class TemplateSection(TimeStampedModel):
 
     class Meta:
         ordering = ('template__template_name', 'section__name')
+        unique_together = ('template', 'section')
         verbose_name = 'Template section'
         verbose_name_plural = 'Template sections'
 
