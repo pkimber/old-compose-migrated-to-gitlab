@@ -33,7 +33,7 @@ class TestViewPerm(PermTestCase):
     def test_home(self):
         PageFactory(
             slug='home', slug_menu='',
-            template_name='compose/page_content.html',
+            template_name='compose/article_page.html',
         )
         url = reverse('project.home')
         self.assert_any(url)
@@ -41,7 +41,7 @@ class TestViewPerm(PermTestCase):
     def test_page_design_home(self):
         p = PageFactory(
             slug='home', slug_menu='',
-            template_name='compose/page_content.html',
+            template_name='compose/article_page.html',
         )
         url = reverse('project.page.design', kwargs=dict(page=p.slug))
         self.assert_staff_only(url)

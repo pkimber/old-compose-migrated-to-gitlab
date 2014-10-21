@@ -72,11 +72,11 @@ def init_app_compose():
         'Home',
         PAGE_HOME,
         0,
-        'compose/page_content.html',
+        'compose/article_page.html',
         is_home=True,
     )
     # layout
-    _init_template('compose/page_content.html')
+    _init_template('compose/article_page.html')
     body = init_section(
         SECTION_BODY.capitalize(),
         'compose',
