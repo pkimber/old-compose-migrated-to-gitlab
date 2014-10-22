@@ -86,7 +86,7 @@ def init_app_compose():
         'Home',
         PAGE_HOME,
         0,
-        'compose/article_page.html',
+        'compose/page_article.html',
         is_home=True,
     )
     # layout
@@ -98,8 +98,5 @@ def init_app_compose():
     )
     home_body = init_page_section(home, body)
     # template
-    template = _init_template('compose/article_page.html')
+    template = _init_template('compose/page_article.html')
     _init_template_section(template, body)
-    # article
-    article_block = _init_article_block(home_body)
-    _init_article(article_block, 'Your Company Name')

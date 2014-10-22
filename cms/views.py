@@ -91,6 +91,13 @@ class PageListView(
     model = Page
     paginate_by = 15
 
+    def get_context_data(self, **kwargs):
+        context = super(PageListView, self).get_context_data(**kwargs)
+        context.update(dict(
+            pages=Page.objects.menu(),
+        ))
+        return context
+
 
 class PageUpdateView(
         LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):

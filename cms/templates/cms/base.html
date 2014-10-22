@@ -6,82 +6,24 @@
   CMS
 {% endblock title %}
 
+{% block heading %}
+  CMS
+{% endblock heading %}
+
 {% block sub_title %}
 {% endblock sub_title %}
 
-{% block heading %}
-  {{ header_footer.header }}
-{% endblock heading %}
-
-{% block sub_heading %}
-  {{ page.name }}
-{% endblock sub_heading %}
-
-{% block menu %}
-  {{ block.super }}
-  {% if user.is_authenticated %}
-    <li>
-      <a href="{% if design %}..{% else %}{{ page.get_design_url }}{% endif %}"
-        title="{% if design %}View{% else %}Design{% endif %}" >
-        {% if design %}
-          <i class="fa fa-square-o"></i>
-          View
-        {% else %}
-          <i class="fa fa-edit"></i>
-          Design
-        {% endif %}
-      </a>
-    </li>
-  {% endif %}
-  {% for p in pages %}
-    <li>
-      <a href="{{ p.get_absolute_url }}" title="{{ p.name }}">{{ p.name }}</a>
-    </li>
-  {% endfor %}
-{% endblock menu %}
-
 {% block footer %}
   <div class="legal pure-g">
-    <div class="pure-u-1 pure-u-md-1-5">
-      {% autoescape off %}
-        {{ header_footer.footer_left }}
-      {% endautoescape %}
-    </div>
-    <div class="pure-u-1 pure-u-md-3-5">
+    <div class="pure-u-1">
       <div class="l-box legal-logo">
         <p class="legal-license">
-          {% if header_footer.url_twitter %}
-            <a href="{{ header_footer.url_twitter }}">
-              <i class="fa fa-twitter"></i>
-            </a>
-          {% endif %}
-          {% if header_footer.url_linkedin %}
-            <a href="{{ header_footer.url_linkedin }}">
-              <i class="fa fa-linkedin"></i>
-            </a>
-          {% endif %}
-        </p>
-        <br />
-        <a href="http://yuilibrary.com/">
-          <img height="30" width="65" alt="YUI logo" src="{% static "img/holding/yui.png" %}">
-        </a>
-        <p class="legal-license">
-          This site is built using
-          <a href="http://purecss.io/">
-            Yahoo Pure CSS
+          For help and support, please contact Patrick on
+          <a href="mailto:patrick@kbsoftware.co.uk">
+            patrick@kbsoftware.co.uk
           </a>
         </p>
       </div>
     </div>
-    <div class="pure-u-1 pure-u-md-1-5">
-      {% autoescape off %}
-        {{ header_footer.footer_right }}
-      {% endautoescape %}
-    </div>
   </div>
 {% endblock footer %}
-
-{% block stylesheets %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{% static 'cms/css/cms.css' %}">
-{% endblock stylesheets %}

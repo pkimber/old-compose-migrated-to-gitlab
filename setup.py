@@ -20,7 +20,7 @@ def get_readme():
 
 setup(
     name='kb-cms',
-    packages=['cms', 'cms.migrations', 'cms.tests', 'cms.management', 'cms.management.commands'],
+    packages=['cms', 'cms.tests', 'cms.management', 'cms.management.commands'],
     package_data={
         'cms': [
             'static/*.*',
