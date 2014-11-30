@@ -7,23 +7,107 @@
 {% endblock title %}
 
 {% block heading %}
-  CMS
+  {% if header_footer %}
+    {{ header_footer.header }}
+  {% else %}
+    CMS
+  {% endif %}
 {% endblock heading %}
+
+{% block sub_heading %}
+  {% if page %}
+    {{ page.name }}
+  {% else %}
+    CMS
+  {% endif %}
+{% endblock sub_heading %}
 
 {% block sub_title %}
 {% endblock sub_title %}
 
+{% block menu %}
+  {% for p in pages %}
+    {% if p.order %}
+      <li>
+        <a href="{{ p.get_absolute_url }}">
+          {{ p.name }}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+  {% if user.is_staff %}
+    <li>
+      <a href="{% if design %}..{% else %}{{ page.get_design_url }}{% endif %}"
+        title="{% if design %}View{% else %}Design{% endif %}" >
+        {% if design %}
+          <i class="fa fa-square-o"></i>
+          View
+        {% else %}
+          <i class="fa fa-edit"></i>
+          Design
+        {% endif %}
+      </a>
+    </li>
+  {% endif %}
+  {% if user.is_staff %}
+    <li {% if 'dash' in path %}class="pure-menu-selected"{% endif %}>
+      <a href="{% url 'project.dash' %}">
+        Dashboard
+      </a>
+    </li>
+  {% endif %}
+  {{ block.super }}
+{% endblock menu %}
+
 {% block footer %}
   <div class="legal pure-g">
-    <div class="pure-u-1">
+    <div class="pure-u-1 pure-u-md-2-5">
+      <div class="l-box">
+        {% if header_footer.url_linkedin %}
+          <a href="{{ header_footer.url_linkedin }}">
+            <i class="fa fa-linkedin fa-2x"></i>
+          </a>
+        {% endif %}
+        {% if header_footer.url_twitter %}
+          <a href="{{ header_footer.url_twitter }}">
+            <i class="fa fa-twitter fa-2x"></i>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="pure-u-1 pure-u-md-1-5">
       <div class="l-box legal-logo">
+        <a href="http://yuilibrary.com/">
+          <img height="30" width="65" alt="YUI logo" src="{% static "img/project/yui.png" %}">
+        </a>
         <p class="legal-license">
-          For help and support, please contact Patrick on
-          <a href="mailto:patrick@kbsoftware.co.uk">
-            patrick@kbsoftware.co.uk
+          This site is built using
+          <a href="http://purecss.io/">
+            Yahoo Pure CSS
           </a>
         </p>
       </div>
     </div>
+    <div class="pure-u-1 pure-u-md-2-5">
+      <div class="l-box">
+        <ul class="legal-links pure-g">
+          <li class="pure-u-1">
+            For help and support, please contact
+            <a href="mailto:patrick@kbsoftware.co.uk">
+              KB Software Ltd
+            </a>
+          </li>
+          <li class="pure-u-1">
+            <strong>mobile </strong>
+            07840 538 357
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 {% endblock footer %}
+
+{% block stylesheets %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'cms/css/cms.css' %}">
+{% endblock stylesheets %}

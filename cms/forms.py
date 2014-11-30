@@ -31,8 +31,6 @@ class HeaderFooterForm(RequiredFieldForm):
             'header',
             'url_twitter',
             'url_linkedin',
-            'footer_left',
-            'footer_right',
         )
 
 

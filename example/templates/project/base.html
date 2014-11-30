@@ -9,15 +9,5 @@
   CMS
 {% endblock title %}
 
-{% block menu %}
-  {% if user.is_staff %}
-    <li {% if 'dash' in path %}class="pure-menu-selected"{% endif %}>
-      <a href="{% url 'project.dash' %}">
-        Dashboard
-      </a>
-    </li>
-  {% endif %}
-{% endblock menu %}
-
 {% block footer %}
 {% endblock footer %}

@@ -14,10 +14,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='HeaderFooter',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
                 ('header', models.CharField(max_length=150)),
-                ('footer_left', models.TextField(blank=True)),
-                ('footer_right', models.TextField(blank=True)),
                 ('url_twitter', models.URLField(verbose_name='Twitter URL', blank=True)),
                 ('url_linkedin', models.URLField(verbose_name='LinkedIn URL', blank=True)),
             ],
@@ -30,14 +28,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Template',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
-                ('template_name', models.CharField(help_text="File name e.g. 'compose/page_article.html'", max_length=150)),
+                ('template_name', models.CharField(max_length=150, help_text="File name e.g. 'compose/page_article.html'")),
             ],
             options={
-                'verbose_name': 'Template',
                 'ordering': ('template_name',),
+                'verbose_name': 'Template',
                 'verbose_name_plural': 'Templates',
             },
             bases=(models.Model,),
@@ -45,15 +43,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TemplateSection',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
                 ('section', models.ForeignKey(to='block.Section')),
                 ('template', models.ForeignKey(to='cms.Template')),
             ],
             options={
-                'verbose_name': 'Template section',
                 'ordering': ('template__template_name', 'section__name'),
+                'verbose_name': 'Template section',
                 'verbose_name_plural': 'Template sections',
             },
             bases=(models.Model,),
