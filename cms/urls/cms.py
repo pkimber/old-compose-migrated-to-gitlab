@@ -6,7 +6,7 @@ from django.conf.urls import (
     url,
 )
 
-from .views import (
+from cms.views import (
     HeaderFooterUpdateView,
     PageCreateView,
     PageListView,

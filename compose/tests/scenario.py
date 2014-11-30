@@ -96,7 +96,7 @@ def init_app_compose():
         'Article',
         'compose.article.create',
     )
-    home_body = init_page_section(home, body)
+    init_page_section(home, body)
     # template
     template = _init_template('compose/page_article.html')
     _init_template_section(template, body)

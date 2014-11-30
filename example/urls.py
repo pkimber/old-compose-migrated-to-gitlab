@@ -13,12 +13,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
 
-from block.models import PAGE_HOME
-from cms.views import (
-    CmsPageDesignView,
-    CmsPageView,
-)
-
 
 admin.autodiscover()
 
@@ -36,31 +30,14 @@ urlpatterns = patterns(
         name='project.dash'
         ),
     url(regex=r'^cms/',
-        view=include('cms.urls')
+        view=include('cms.urls.cms')
         ),
     url(regex=r'^compose/',
         view=include('compose.urls')
         ),
-    url(regex=r'^$',
-        view=CmsPageView.as_view(),
-        kwargs=dict(page=PAGE_HOME),
-        name='project.home'
-        ),
-    url(regex=r'^(?P<page>[-\w\d]+)/design/$',
-        view=CmsPageDesignView.as_view(),
-        name='project.page.design'
-        ),
-    url(regex=r'^(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/design/$',
-        view=CmsPageDesignView.as_view(),
-        name='project.page.design'
-        ),
-    url(regex=r'^(?P<page>[-\w\d]+)/$',
-        view=CmsPageView.as_view(),
-        name='project.page'
-        ),
-    url(regex=r'^(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/$',
-        view=CmsPageView.as_view(),
-        name='project.page'
+    # this url include should come last
+    url(regex=r'^',
+        view=include('cms.urls.page')
         ),
 )
 

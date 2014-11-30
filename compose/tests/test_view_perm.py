@@ -5,10 +5,7 @@ from django.core.urlresolvers import reverse
 
 from base.tests.test_utils import PermTestCase
 
-from block.tests.factories import (
-    PageFactory,
-    PageSectionFactory,
-)
+from block.tests.factories import PageSectionFactory
 from compose.tests.factories import ArticleFactory
 
 
