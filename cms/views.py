@@ -55,8 +55,18 @@ class CmsPageDesignView(PageDesignView):
         return context
 
 
+class MenuMixin(BaseMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super(MenuMixin, self).get_context_data(**kwargs)
+        context.update(dict(
+            pages=Page.objects.menu(),
+        ))
+        return context
+
+
 class HeaderFooterUpdateView(
-        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
+        LoginRequiredMixin, StaffuserRequiredMixin, MenuMixin, UpdateView):
 
     form_class = HeaderFooterForm
     model = HeaderFooter
@@ -69,7 +79,7 @@ class HeaderFooterUpdateView(
 
 
 class PageCreateView(
-        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, CreateView):
+        LoginRequiredMixin, StaffuserRequiredMixin, MenuMixin, CreateView):
 
     form_class = PageForm
     model = Page
@@ -86,21 +96,14 @@ class PageCreateView(
 
 
 class PageListView(
-        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
+        LoginRequiredMixin, StaffuserRequiredMixin, MenuMixin, ListView):
 
     model = Page
     paginate_by = 15
 
-    def get_context_data(self, **kwargs):
-        context = super(PageListView, self).get_context_data(**kwargs)
-        context.update(dict(
-            pages=Page.objects.menu(),
-        ))
-        return context
-
 
 class PageUpdateView(
-        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
+        LoginRequiredMixin, StaffuserRequiredMixin, MenuMixin, UpdateView):
 
     form_class = PageForm
     model = Page
@@ -127,7 +130,7 @@ class PageUpdateView(
 
 
 class SectionCreateView(
-        LoginRequiredMixin, SuperuserRequiredMixin, BaseMixin, CreateView):
+        LoginRequiredMixin, SuperuserRequiredMixin, MenuMixin, CreateView):
 
     form_class = SectionForm
     model = Section
@@ -137,14 +140,14 @@ class SectionCreateView(
 
 
 class SectionListView(
-        LoginRequiredMixin, SuperuserRequiredMixin, BaseMixin, ListView):
+        LoginRequiredMixin, SuperuserRequiredMixin, MenuMixin, ListView):
 
     model = Section
     paginate_by = 15
 
 
 class SectionUpdateView(
-        LoginRequiredMixin, SuperuserRequiredMixin, BaseMixin, UpdateView):
+        LoginRequiredMixin, SuperuserRequiredMixin, MenuMixin, UpdateView):
 
     form_class = SectionForm
     model = Section
@@ -154,7 +157,7 @@ class SectionUpdateView(
 
 
 class TemplateCreateView(
-        LoginRequiredMixin, SuperuserRequiredMixin, BaseMixin, CreateView):
+        LoginRequiredMixin, SuperuserRequiredMixin, MenuMixin, CreateView):
 
     form_class = TemplateForm
     model = Template
@@ -164,14 +167,14 @@ class TemplateCreateView(
 
 
 class TemplateListView(
-        LoginRequiredMixin, SuperuserRequiredMixin, BaseMixin, ListView):
+        LoginRequiredMixin, SuperuserRequiredMixin, MenuMixin, ListView):
 
     model = Template
     paginate_by = 15
 
 
 class TemplateSectionCreateView(
-        LoginRequiredMixin, SuperuserRequiredMixin, BaseMixin, CreateView):
+        LoginRequiredMixin, SuperuserRequiredMixin, MenuMixin, CreateView):
 
     form_class = TemplateSectionForm
     model = TemplateSection
@@ -198,7 +201,7 @@ class TemplateSectionCreateView(
 
 
 class TemplateSectionRemoveView(
-        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
+        LoginRequiredMixin, StaffuserRequiredMixin, MenuMixin, UpdateView):
 
     form_class = TemplateSectionEmptyForm
     model = TemplateSection
@@ -214,7 +217,7 @@ class TemplateSectionRemoveView(
 
 
 class TemplateUpdateView(
-        LoginRequiredMixin, SuperuserRequiredMixin, BaseMixin, UpdateView):
+        LoginRequiredMixin, SuperuserRequiredMixin, MenuMixin, UpdateView):
 
     form_class = TemplateForm
     model = Template

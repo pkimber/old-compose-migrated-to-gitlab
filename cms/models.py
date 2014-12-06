@@ -31,12 +31,29 @@ class HeaderFooter(SingletonModel):
 reversion.register(HeaderFooter)
 
 
+class TemplateManager(models.Manager):
+
+    def create_template(self, template_name):
+        template = self.model(template_name=template_name)
+        template.save()
+        return template
+
+    def init_template(self, template_name):
+        templates = self.model.objects.filter(template_name=template_name)
+        if templates:
+            result = templates[0]
+        else:
+            result = self.create_template(template_name)
+        return result
+
+
 class Template(TimeStampedModel):
 
     template_name = models.CharField(
         max_length=150,
         help_text="File name e.g. 'compose/page_article.html'",
     )
+    objects = TemplateManager()
 
     class Meta:
         ordering = ('template_name',)
@@ -60,10 +77,29 @@ class Template(TimeStampedModel):
 reversion.register(Template)
 
 
+class TemplateSectionManager(models.Manager):
+
+    def create_template_section(self, template, section):
+        template_section = self.model(template=template, section=section)
+        template_section.save()
+        return template_section
+
+    def init_template_section(self, template, section):
+        try:
+            template_section = self.model.objects.get(
+                template=template,
+                section=section,
+            )
+        except self.model.DoesNotExist:
+            template_section = self.create_template_section(template, section)
+        return template_section
+
+
 class TemplateSection(TimeStampedModel):
 
     template = models.ForeignKey(Template)
     section = models.ForeignKey(Section)
+    objects = TemplateSectionManager()
 
     class Meta:
         ordering = ('template__template_name', 'section__name')
