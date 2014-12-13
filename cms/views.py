@@ -194,7 +194,11 @@ class TemplateSectionCreateView(
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.template = self._get_template()
-        return super(TemplateSectionCreateView, self).form_valid(form)
+        with transaction.atomic():
+            self.object = form.save()
+            # update all the pages with the new sections
+            self.object.template.update_pages()
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
         return reverse('cms.template.list')
@@ -209,7 +213,9 @@ class TemplateSectionRemoveView(
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.delete()
+        with transaction.atomic():
+            self.object.delete()
+            self.object.template.update_pages()
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):

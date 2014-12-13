@@ -65,15 +65,37 @@ class Template(TimeStampedModel):
         return '{}'.format(self.template_name)
 
     def update_page(self, page):
-        page.template_name = self.template_name
-        page.pagesection_set.all().delete()
+        # iterate through existing sections in the page
+        section_slugs = [s.section.slug for s in page.pagesection_set.all()]
+        for slug in section_slugs:
+            try:
+                # if the section is still used on the page, then keep it.
+                template_section = self.templatesection_set.get(
+                    section__slug=slug
+                )
+            except TemplateSection.DoesNotExist:
+                # if the section is not used on the page, then delete it.
+                PageSection.objects.get(page=page, section__slug=slug).delete()
+        # iterate through the new sections
         for template_section in self.templatesection_set.all():
-            page_section = PageSection(
-                page=page,
-                section=template_section.section,
-            )
-            page_section.save()
-        page.save()
+            try:
+                # if the section exists on the page, then keep it.
+                PageSection.objects.get(
+                    page=page, section=template_section.section
+                )
+            except PageSection.DoesNotExist:
+                # if the section is not on the page, then add it.
+                page_section = PageSection(
+                    page=page,
+                    section=template_section.section,
+                )
+                page_section.save()
+        # update the page template name (if it has changed)
+        if page.template_name == self.template_name:
+            pass
+        else:
+            page.template_name = self.template_name
+            page.save()
 
     def update_pages(self):
         for p in Page.objects.filter(template_name=self.template_name):
