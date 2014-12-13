@@ -8,6 +8,7 @@ import reversion
 from base.model_utils import TimeStampedModel
 from base.singleton import SingletonModel
 from block.models import (
+    Page,
     PageSection,
     Section,
 )
@@ -63,7 +64,7 @@ class Template(TimeStampedModel):
     def __str__(self):
         return '{}'.format(self.template_name)
 
-    def setup_page(self, page):
+    def update_page(self, page):
         page.template_name = self.template_name
         page.pagesection_set.all().delete()
         for template_section in self.templatesection_set.all():
@@ -73,6 +74,10 @@ class Template(TimeStampedModel):
             )
             page_section.save()
         page.save()
+
+    def update_pages(self):
+        for p in Page.objects.filter(template_name=self.template_name):
+            self.update_page(p)
 
 reversion.register(Template)
 
