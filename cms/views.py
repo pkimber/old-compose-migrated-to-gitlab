@@ -88,7 +88,7 @@ class PageCreateView(
         template = form.cleaned_data.get('template')
         with transaction.atomic():
             self.object = form.save()
-            template.setup_page(self.object)
+            template.update_page(self.object)
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
@@ -122,7 +122,7 @@ class PageUpdateView(
         template = form.cleaned_data.get('template')
         with transaction.atomic():
             self.object = form.save(commit=False)
-            template.setup_page(self.object)
+            template.update_page(self.object)
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
