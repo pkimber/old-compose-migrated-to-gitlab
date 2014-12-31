@@ -20,19 +20,25 @@ def get_readme():
 
 setup(
     name='kb-cms',
-    packages=['cms', 'cms.tests', 'cms.management', 'cms.management.commands'],
+    packages=['compose', 'compose.management', 'compose.management.commands', 'cms', 'cms.urls', 'cms.migrations', 'cms.tests', 'cms.management', 'cms.management.commands'],
     package_data={
+        'compose': [
+            'templates/*.*',
+            'templates/compose/*.*',
+        ],
+
         'cms': [
             'static/*.*',
             'static/cms/*.*',
             'static/cms/css/*.*',
             'static/img/*.*',
-            'static/img/cms/*.*',
+            'static/img/holding/*.*',
             'templates/*.*',
+            'templates/block/*.*',
             'templates/cms/*.*',
         ],
     },
-    version='0.0.09',
+    version='0.0.10',
     description='cms',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
