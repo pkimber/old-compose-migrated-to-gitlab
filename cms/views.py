@@ -121,7 +121,7 @@ class PageUpdateView(
     def form_valid(self, form):
         template = form.cleaned_data.get('template')
         with transaction.atomic():
-            self.object = form.save(commit=False)
+            self.object = form.save()
             template.update_page(self.object)
         return HttpResponseRedirect(self.get_success_url())
 
