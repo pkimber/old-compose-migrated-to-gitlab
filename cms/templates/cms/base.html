@@ -30,10 +30,17 @@
   {% if page.is_home %}
     {% include 'cms/_design_menu.html' %}
   {% endif %}
-  {% if user.is_staff %}
+  {% if user.is_authenticated %}
     <li {% if 'dash' in path %}class="pure-menu-selected"{% endif %}>
       <a href="{% url 'project.dash' %}">
         Dashboard
+      </a>
+    </li>
+  {% endif %}
+  {% if user.is_staff %}
+    <li {% if 'settings' in path %}class="pure-menu-selected"{% endif %}>
+      <a href="{% url 'project.settings' %}">
+        Settings
       </a>
     </li>
   {% endif %}

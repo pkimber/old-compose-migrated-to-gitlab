@@ -13,6 +13,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
 
+from .views import SettingsView
 
 admin.autodiscover()
 
@@ -28,6 +29,10 @@ urlpatterns = patterns(
     url(r'^home/user/$',
         view=RedirectView.as_view(url=reverse_lazy('cms.page.list')),
         name='project.dash'
+        ),
+    url(r'^settings/$',
+        view=SettingsView.as_view(),
+        name='project.settings'
         ),
     url(regex=r'^cms/',
         view=include('cms.urls.cms')
