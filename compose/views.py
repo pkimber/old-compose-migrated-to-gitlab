@@ -5,7 +5,6 @@ from braces.views import (
     LoginRequiredMixin,
     StaffuserRequiredMixin,
 )
-
 from block.views import (
     ContentCreateView,
     ContentPublishView,

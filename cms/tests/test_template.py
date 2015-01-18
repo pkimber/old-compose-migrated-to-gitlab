@@ -20,7 +20,7 @@ class TestTemplate(TestCase):
         """'setup_page' will update a page with the new sections."""
         page = PageFactory()
         template = TemplateFactory(template_name=page.template_name)
-        template_section = TemplateSectionFactory(template=template)
+        TemplateSectionFactory(template=template)
         self.assertEqual(0, page.pagesection_set.all().count())
         self.assertEqual(1, template.templatesection_set.all().count())
         template.update_page(page)
@@ -32,7 +32,7 @@ class TestTemplate(TestCase):
         page_2 = PageFactory(order=2)
         page_3 = PageFactory(order=3, template_name=page_1.template_name)
         template = TemplateFactory(template_name=page_1.template_name)
-        template_section = TemplateSectionFactory(template=template)
+        TemplateSectionFactory(template=template)
         self.assertEqual(0, page_1.pagesection_set.all().count())
         self.assertEqual(0, page_2.pagesection_set.all().count())
         self.assertEqual(0, page_3.pagesection_set.all().count())
@@ -54,7 +54,7 @@ class TestTemplate(TestCase):
             [p.section.slug for p in page.pagesection_set.all()]
         )
         template = TemplateFactory(template_name=page.template_name)
-        template_section = TemplateSectionFactory(
+        TemplateSectionFactory(
             template=template,
             section=section_b,
         )
