@@ -5,3 +5,8 @@
 .pure-button-small {
     font-size: 85%;
 }
+
+.article-image {
+    float: right;
+    padding-top: 1.6em;
+}
