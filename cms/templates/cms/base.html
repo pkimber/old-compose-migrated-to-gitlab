@@ -5,7 +5,7 @@
 
 {% block title %}
   {% if header_footer %}
-    {{ header_footer.header }}, {{page.name }}
+    {{ header_footer.header }}{% if page %} - {{ page.name }}{% endif %}
   {% else %}
     CMS
   {% endif %}
