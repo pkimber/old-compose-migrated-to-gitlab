@@ -4,7 +4,11 @@
 {% load staticfiles %}
 
 {% block title %}
-  CMS
+  {% if header_footer %}
+    {{ header_footer.header }}{% if page %} - {{ page.name }}{% endif %}
+  {% else %}
+    CMS
+  {% endif %}
 {% endblock title %}
 
 {% block heading %}
