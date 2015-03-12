@@ -38,7 +38,7 @@ setup(
             'templates/cms/*.*',
         ],
     },
-    version='0.0.21',
+    version='0.0.22',
     description='cms',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
