@@ -1,7 +1,7 @@
 {% for p in pages %}
   {% if p.order %}
-    <li {% if p.slug == page.slug and p.slug_menu == page.slug_menu %}class="pure-menu-selected"{% endif %}>
-      <a href="{{ p.get_absolute_url }}">
+    <li class="pure-menu-item{% if p.slug == page.slug and p.slug_menu == page.slug_menu %} pure-menu-selected{% endif %}">
+      <a href="{{ p.get_absolute_url }}" class="pure-menu-link">
         {{ p.name }}
       </a>
     </li>

@@ -1,9 +1,10 @@
 {% if user.is_staff %}
   {% if is_block_page %}
-    <li>
+    <li class="pure-menu-item">
       <a href="{% if design %}..{% else %}{{ page.get_design_url }}{% endif %}"
         title="{% if design %}View{% else %}Design{% endif %}"
-        style="text-align: right; padding: 0.0em 6px 0.0em 0.0em">
+        style="text-align: right; padding: 0.0em 6px 0.0em 0.0em"
+        class="pure-menu-link">
         {% if design %}
           View
           <i class="fa fa-square-o"></i>
