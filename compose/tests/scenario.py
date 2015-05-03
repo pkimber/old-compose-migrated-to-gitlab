@@ -1,17 +1,10 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from block.models import (
     BlockError,
     Page,
-    PAGE_HOME,
+    PageSection,
+    Section,
 )
-from block.service import (
-    init_page,
-    init_page_section,
-    init_section,
-)
-
 from cms.models import (
     Template,
     TemplateSection,
@@ -36,7 +29,7 @@ def get_article_content():
 
 
 def get_page_home():
-    return Page.objects.get(slug=PAGE_HOME)
+    return Page.objects.get(slug=Page.HOME)
 
 
 def _init_article(block, title):
@@ -59,23 +52,23 @@ def _init_article_block(page_section):
 
 
 def init_app_compose():
-    # page
-    # name, slug_page, order, template_name, is_home=None, slug_menu=None):
-    home = init_page(
+    home = Page.objects.init_page(
+        Page.HOME,
+        '',
         'Home',
-        PAGE_HOME,
         0,
         'compose/page_article.html',
         is_home=True,
     )
     # layout
-    body = init_section(
+    body = Section.objects.init_section(
+        SECTION_BODY,
         SECTION_BODY.capitalize(),
         'compose',
         'Article',
         'compose.article.create',
     )
-    init_page_section(home, body)
+    PageSection.objects.init_page_section(home, body)
     # template
     template = Template.objects.init_template('compose/page_article.html')
     TemplateSection.objects.init_template_section(template, body)

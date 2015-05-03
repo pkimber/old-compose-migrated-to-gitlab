@@ -12,34 +12,34 @@
   {% if user.is_staff %}
     <div class="pure-g">
       <div class="pure-u-1">
-        <div class="pure-menu pure-menu-open pure-menu-horizontal">
-          <ul>
-            <li>
-              <a href="{% url 'project.dash' %}">
+        <div class="pure-menu pure-menu-horizontal">
+          <ul class="pure-menu-list">
+            <li class="pure-menu-item">
+              <a href="{% url 'project.dash' %}" class="pure-menu-link">
                 <i class="fa fa-reply"></i>
               </a>
             </li>
-            <li>
-              <a href="{% url 'cms.page.create' %}">
+            <li class="pure-menu-item">
+              <a href="{% url 'cms.page.create' %}" class="pure-menu-link">
                 <i class="fa fa-file-text-o"></i>
                 Create page
               </a>
             </li>
-            <li>
-              <a href="{% url 'cms.header.footer.update' %}">
+            <li class="pure-menu-item">
+              <a href="{% url 'cms.header.footer.update' %}" class="pure-menu-link">
                 <i class="fa fa-header"></i>
                 Header and footer
               </a>
             </li>
             {% if user.is_superuser %}
-              <li>
-                <a href="{% url 'cms.template.list' %}">
+              <li class="pure-menu-item">
+                <a href="{% url 'cms.template.list' %}" class="pure-menu-link">
                   <i class="fa fa-file-code-o"></i>
                   Templates
                 </a>
               </li>
-              <li>
-                <a href="{% url 'cms.section.list' %}">
+              <li class="pure-menu-item">
+                <a href="{% url 'cms.section.list' %}" class="pure-menu-link">
                   <i class="fa fa-file-code-o"></i>
                   Sections
                 </a>

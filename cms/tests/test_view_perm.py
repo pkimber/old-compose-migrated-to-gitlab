@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.core.urlresolvers import reverse
 
 from base.tests.test_utils import PermTestCase
@@ -32,6 +30,7 @@ class TestViewPerm(PermTestCase):
 
     def test_home(self):
         PageFactory(
+            is_home=True,
             slug='home',
             slug_menu='',
             template_name='compose/page_article.html',

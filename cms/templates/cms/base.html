@@ -1,6 +1,5 @@
 {% extends 'base/base.html' %}
 
-{% load cms_tags %}
 {% load staticfiles %}
 
 {% block title %}
@@ -34,9 +33,11 @@
   {% if page.is_home %}
     {% include 'cms/_design_menu.html' %}
   {% endif %}
+  {% include 'cms/_menu_list.html' %}
   {% if user.is_authenticated %}
     <li class="pure-menu-item{% if 'dash' in path %} pure-menu-selected{% endif %}">
       <a href="{% url 'project.dash' %}" class="pure-menu-link">
+        <i class="fa fa-dashboard"></i>
         Dashboard
       </a>
     </li>
@@ -44,13 +45,13 @@
   {% if user.is_staff %}
     <li class="pure-menu-item{% if 'settings' in path %} pure-menu-selected{% endif %}">
       <a href="{% url 'project.settings' %}" class="pure-menu-link">
+        <i class="fa fa-cog"></i>
         Settings
       </a>
     </li>
   {% endif %}
   {% block menu_dash %}
   {% endblock menu_dash %}
-  {% cms_menu %}
   {% block menu_extra %}
   {% endblock menu_extra %}
   {{ block.super }}
