@@ -34,10 +34,11 @@ class Article(ContentModel):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     picture = models.ImageField(upload_to='compose', blank=True)
-    #article_type = models.CharField(
-    #    max_length=12,
-    #    choices=ARTICLE_TYPE_CHOICES
-    #)
+    article_type = models.CharField(
+        max_length=12,
+        choices=ARTICLE_TYPE_CHOICES,
+        default='text_left',
+    )
 
     class Meta:
         # cannot put 'unique_together' on abstract base class
