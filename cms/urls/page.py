@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.conf.urls import (
     patterns,
     url,
@@ -11,14 +9,14 @@ from cms.views import (
     CmsPageView,
 )
 
-from block.models import PAGE_HOME
+from block.models import Page
 
 
 urlpatterns = patterns(
     '',
     url(regex=r'^$',
         view=CmsPageView.as_view(),
-        kwargs=dict(page=PAGE_HOME),
+        kwargs=dict(page=Page.HOME),
         name='project.home'
         ),
     url(regex=r'^(?P<page>[-\w\d]+)/design/$',

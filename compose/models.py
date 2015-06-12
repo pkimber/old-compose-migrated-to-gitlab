@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -23,12 +21,23 @@ reversion.register(ArticleBlock)
 
 class Article(ContentModel):
 
+    ARTICLE_TYPE_CHOICES = (
+        ('text_left', 'Text Left'),
+        ('text_right', 'Text Right'),
+        ('text_only', 'Text Only'),
+        ('picture_only', 'Picture Only'),
+    )
+
     block = models.ForeignKey(ArticleBlock, related_name='content')
     order = models.IntegerField()
 
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     picture = models.ImageField(upload_to='compose', blank=True)
+    #article_type = models.CharField(
+    #    max_length=12,
+    #    choices=ARTICLE_TYPE_CHOICES
+    #)
 
     class Meta:
         # cannot put 'unique_together' on abstract base class

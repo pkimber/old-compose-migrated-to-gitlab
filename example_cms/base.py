@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 """ Django settings """
 from django.core.urlresolvers import reverse_lazy
 
@@ -124,10 +122,11 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     'base',
     'block',
+    'cms',
     'compose',
     'example_cms',
-    'cms',
     'login',
+    'mail',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
