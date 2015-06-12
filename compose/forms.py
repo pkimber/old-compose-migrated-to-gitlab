@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django import forms
 
 from base.form_utils import RequiredFieldForm
@@ -30,6 +28,7 @@ class ArticleForm(RequiredFieldForm):
             'title',
             'description',
             'picture',
+            'article_type',
         )
         widgets = {
             'picture': forms.FileInput,

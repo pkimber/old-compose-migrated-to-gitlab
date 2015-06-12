@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -36,7 +34,13 @@ class TestView(TestCase):
                 section=p.section.slug,
             )
         )
-        response = self.client.post(url, {'title': 'pkimber.net'})
+        response = self.client.post(
+            url,
+            {
+                'title': 'pkimber.net',
+                'article_type': 'text_only',
+            }
+        )
         self.assertEqual(response.status_code, 302)
 
     def test_article_create_page_and_menu(self):
@@ -49,7 +53,13 @@ class TestView(TestCase):
                 section=p.section.slug,
             )
         )
-        response = self.client.post(url, {'title': 'pkimber.net'})
+        response = self.client.post(
+            url,
+            {
+                'title': 'pkimber.net',
+                'article_type': 'text_only',
+            }
+        )
         self.assertEqual(response.status_code, 302)
 
     def test_article_publish(self):
@@ -63,7 +73,10 @@ class TestView(TestCase):
         c = ArticleFactory()
         response = self.client.post(
             reverse('compose.article.update', kwargs={'pk': c.pk}),
-            {'title': 'pkimber.net'}
+            {
+                'title': 'pkimber.net',
+                'article_type': 'text_only',
+            }
         )
         self.assertEqual(response.status_code, 302)
 
