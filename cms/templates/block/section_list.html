@@ -10,15 +10,15 @@
 
 {% block content %}
   {% if user.is_staff %}
-    <div class="pure-menu pure-menu-open pure-menu-horizontal">
-      <ul>
-        <li>
-          <a href="{% url 'project.dash' %}">
+    <div class="pure-menu pure-menu-horizontal">
+      <ul class="pure-menu-list">
+        <li class="pure-menu-item">
+          <a href="{% url 'project.dash' %}" class="pure-menu-link">
             <i class="fa fa-reply"></i>
           </a>
         </li>
         <li>
-          <a href="{% url 'cms.section.create' %}">
+          <a href="{% url 'cms.section.create' %}" class="pure-menu-link">
             <i class="fa fa-file-code-o"></i>
             Create section
           </a>
