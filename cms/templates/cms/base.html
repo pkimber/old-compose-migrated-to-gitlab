@@ -35,7 +35,7 @@
   {% endif %}
   {% include 'cms/_menu_list.html' %}
   {% if user.is_authenticated %}
-    <li class="pure-menu-item{% if 'dash' in path %} pure-menu-selected{% endif %}">
+    <li class="pure-menu-item{% if path == '/dash/' %} pure-menu-selected{% endif %}">
       <a href="{% url 'project.dash' %}" class="pure-menu-link">
         <i class="fa fa-dashboard"></i>
         Dashboard
