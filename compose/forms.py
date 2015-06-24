@@ -1,7 +1,10 @@
 # -*- encoding: utf-8 -*-
 from django import forms
 
-from base.form_utils import RequiredFieldForm
+from base.form_utils import (
+    bleach_clean,
+    RequiredFieldForm,
+)
 
 from .models import Article
 
@@ -21,6 +24,10 @@ class ArticleForm(RequiredFieldForm):
             self.fields[name].widget.attrs.update(
                 {'class': 'pure-input-2-3'}
             )
+
+    def clean_description(self):
+        data = self.cleaned_data['description']
+        return bleach_clean(data)
 
     class Meta:
         model = Article
