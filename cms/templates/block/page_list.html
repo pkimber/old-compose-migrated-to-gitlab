@@ -60,6 +60,7 @@
               <th>Name</th>
               <th>Design</th>
               <th>Config</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -82,6 +83,11 @@
                   <a href="{% url 'cms.page.update' object.pk %}">
                     <i class="fa fa-edit"></i>
                     Config
+                  </a>
+                </td>
+                <td>
+                  <a href="{% url 'cms.page.delete' object.pk %}">
+                    <i class="fa fa-trash-o"></i>
                   </a>
                 </td>
               </tr>

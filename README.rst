@@ -1,5 +1,5 @@
-Holding
-*******
+CMS
+***
 
 Django application for a simple CMS site
 
