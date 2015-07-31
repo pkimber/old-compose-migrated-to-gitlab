@@ -50,6 +50,7 @@ class PageForm(RequiredFieldForm):
             'slug',
             'slug_menu',
             'order',
+            'is_home',
             'template',
         )
 
