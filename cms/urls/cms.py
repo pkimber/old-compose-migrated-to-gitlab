@@ -7,6 +7,7 @@ from django.conf.urls import (
 from cms.views import (
     HeaderFooterUpdateView,
     PageCreateView,
+    PageDeleteView,
     PageListView,
     PageUpdateView,
     SectionCreateView,
@@ -33,6 +34,10 @@ urlpatterns = patterns(
     url(regex=r'^page/create/$',
         view=PageCreateView.as_view(),
         name='cms.page.create'
+        ),
+    url(regex=r'^page/(?P<pk>\d+)/delete/$',
+        view=PageDeleteView.as_view(),
+        name='cms.page.delete'
         ),
     url(regex=r'^page/(?P<pk>\d+)/update/$',
         view=PageUpdateView.as_view(),

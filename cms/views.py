@@ -24,6 +24,7 @@ from block.views import (
 
 from .forms import (
     HeaderFooterForm,
+    PageEmptyForm,
     PageForm,
     SectionForm,
     TemplateForm,
@@ -93,11 +94,30 @@ class PageCreateView(
         return reverse('cms.page.list')
 
 
+class PageDeleteView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
+
+    form_class = PageEmptyForm
+    model = Page
+    template_name = 'cms/page_delete_form.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.deleted = True
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('cms.page.list')
+
+
 class PageListView(
         LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
 
     model = Page
     paginate_by = 15
+
+    def get_queryset(self):
+        return Page.objects.page_list()
 
 
 class PageUpdateView(

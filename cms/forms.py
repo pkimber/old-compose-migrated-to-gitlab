@@ -33,9 +33,16 @@ class HeaderFooterForm(RequiredFieldForm):
         )
 
 
+class PageEmptyForm(forms.ModelForm):
+
+    class Meta:
+        model = Page
+        fields = ()
+
+
 class PageForm(RequiredFieldForm):
 
-    template = forms.ModelChoiceField(Template.objects.all())
+    template = forms.ModelChoiceField(queryset=Template.objects.all())
 
     class Meta:
         model = Page
@@ -44,6 +51,7 @@ class PageForm(RequiredFieldForm):
             'slug',
             'slug_menu',
             'order',
+            'template',
         )
 
 

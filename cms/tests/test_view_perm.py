@@ -16,6 +16,12 @@ class TestViewPerm(PermTestCase):
     def test_create(self):
         self.assert_staff_only(reverse('cms.page.create'))
 
+    def test_delete(self):
+        page = PageFactory()
+        self.assert_staff_only(
+            reverse('cms.page.delete', kwargs=dict(pk=page.pk))
+        )
+
     def test_header_footer_update(self):
         self.assert_staff_only(reverse('cms.header.footer.update'))
 
