@@ -18,7 +18,7 @@ class HeaderFooterForm(RequiredFieldForm):
 
     def __init__(self, *args, **kwargs):
         super(HeaderFooterForm, self).__init__(*args, **kwargs)
-        for name in ('header', 'url_linkedin', 'url_twitter'):
+        for name in ('header', 'url_facebook', 'url_linkedin', 'url_twitter'):
             self.fields[name].widget.attrs.update(
                 {'class': 'pure-input-2-3'}
             )
@@ -27,8 +27,9 @@ class HeaderFooterForm(RequiredFieldForm):
         model = HeaderFooter
         fields = (
             'header',
-            'url_twitter',
+            'url_facebook',
             'url_linkedin',
+            'url_twitter',
         )
 
 
