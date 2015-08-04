@@ -15,7 +15,7 @@
         <div class="pure-menu pure-menu-horizontal">
           <ul class="pure-menu-list">
             <li class="pure-menu-item">
-              <a href="{% url 'project.dash' %}" class="pure-menu-link">
+              <a href="{% url 'project.settings' %}" class="pure-menu-link">
                 <i class="fa fa-reply"></i>
               </a>
             </li>
@@ -25,26 +25,6 @@
                 Create page
               </a>
             </li>
-            <li class="pure-menu-item">
-              <a href="{% url 'cms.header.footer.update' %}" class="pure-menu-link">
-                <i class="fa fa-header"></i>
-                Header and footer
-              </a>
-            </li>
-            {% if user.is_superuser %}
-              <li class="pure-menu-item">
-                <a href="{% url 'cms.template.list' %}" class="pure-menu-link">
-                  <i class="fa fa-file-code-o"></i>
-                  Templates
-                </a>
-              </li>
-              <li class="pure-menu-item">
-                <a href="{% url 'cms.section.list' %}" class="pure-menu-link">
-                  <i class="fa fa-file-code-o"></i>
-                  Sections
-                </a>
-              </li>
-            {% endif %}
           </ul>
         </div>
       </div>
@@ -59,7 +39,9 @@
             <tr>
               <th>Name</th>
               <th>Design</th>
+              <th>Type</th>
               <th>Config</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -68,6 +50,9 @@
                 <td>
                   <a href="{{ object.get_absolute_url }}">
                     {% if object.deleted %}<del>{% endif %}
+                    {% if object.order %}
+                      {{ object.order }})
+                    {% endif %}
                     {{ object.name }}
                     {% if object.deleted %}</del>{% endif %}
                   </a>
@@ -75,13 +60,25 @@
                 <td>
                   <a href="{{ object.get_design_url }}">
                     <i class="fa fa-edit"></i>
-                    Edit
+                    Design
                   </a>
                 </td>
                 <td>
+                  {% if object.is_home %}
+                    Home
+                  {% endif %}
+                  {% if object.is_custom %}
+                    Custom
+                  {% endif %}
+                </td>
+                <td>
                   <a href="{% url 'cms.page.update' object.pk %}">
-                    <i class="fa fa-edit"></i>
-                    Config
+                    <i class="fa fa-cog"></i>
+                  </a>
+                </td>
+                <td>
+                  <a href="{% url 'cms.page.delete' object.pk %}">
+                    <i class="fa fa-trash-o"></i>
                   </a>
                 </td>
               </tr>

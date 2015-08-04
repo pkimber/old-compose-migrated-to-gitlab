@@ -15,17 +15,6 @@
       <h4>CMS</h4>
     </div>
   </div>
-  <div class="pure-g">
-    {% if user.is_staff %}
-      <div class="pure-u-1 pure-u-md-1-4">
-        <div class="l-box">
-          <a href="{% url 'cms.page.list' %}" class="pure-menu-link">
-            <i class="fa fa-file-text-o"></i>
-            Pages
-          </a>
-        </div>
-      </div>
-      {% include 'compose/_settings.html' %}
-    {% endif %}
-  </div>
+  {% include 'cms/_settings.html' %}
+  {% include 'compose/_settings.html' %}
 {% endblock content %}
