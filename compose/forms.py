@@ -40,12 +40,12 @@ class ArticleForm(RequiredFieldForm):
         fields = (
             'title',
             'description',
-            'picture',
+            #'picture',
             'article_type',
         )
-        widgets = {
-            'picture': forms.FileInput,
-        }
+        #widgets = {
+        #    'picture': forms.FileInput,
+        #}
 
 
 class FeatureForm(RequiredFieldForm):
