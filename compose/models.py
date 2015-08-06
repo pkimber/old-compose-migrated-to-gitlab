@@ -7,6 +7,7 @@ import reversion
 from block.models import (
     BlockModel,
     ContentModel,
+    LinkImage,
 )
 
 
@@ -41,9 +42,9 @@ class Article(ContentModel):
     )
     # this will keep the database cleaner and easier to understand
     # (better than using 'content_object')
-    image = models.ForeignKey(LinkImage)
-    carousel = models.ManyToManyField(LinkImage)
-    document = models.ForeignKey(LinkDocument)
+    link_image = models.ForeignKey(LinkImage, blank=True, null=True)
+    #carousel = models.ManyToManyField(LinkImage)
+    link_document = models.ForeignKey(LinkDocument, blank=True, null=True)
 
     class Meta:
         # cannot put 'unique_together' on abstract base class
