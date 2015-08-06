@@ -33,12 +33,17 @@ class Article(ContentModel):
 
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    picture = models.ImageField(upload_to='compose', blank=True)
+    #picture = models.ImageField(upload_to='compose', blank=True)
     article_type = models.CharField(
         max_length=12,
         choices=ARTICLE_TYPE_CHOICES,
         default='text_left',
     )
+    # this will keep the database cleaner and easier to understand
+    # (better than using 'content_object')
+    image = models.ForeignKey(LinkImage)
+    carousel = models.ManyToManyField(LinkImage)
+    document = models.ForeignKey(LinkDocument)
 
     class Meta:
         # cannot put 'unique_together' on abstract base class
