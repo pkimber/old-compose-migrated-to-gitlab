@@ -27,7 +27,7 @@ urlpatterns = patterns(
         view=include(admin.site.urls)
         ),
     url(r'^home/user/$',
-        view=RedirectView.as_view(url=reverse_lazy('cms.page.list')),
+        view=RedirectView.as_view(url=reverse_lazy('cms.page.list'), permanent=False),
         name='project.dash'
         ),
     url(r'^settings/$',
