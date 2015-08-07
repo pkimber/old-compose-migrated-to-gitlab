@@ -28,7 +28,7 @@ class Article(ContentModel):
         ('picture_only', 'Picture Only'),
     )
 
-    IMAGE_POSITION = (
+    IMAGE_SIZE = (
         ('1-2', 'Half Width'),
         ('1-3', 'Third Width'),
         ('1-4', 'Quarter Width'),
@@ -45,9 +45,9 @@ class Article(ContentModel):
         choices=ARTICLE_TYPE_CHOICES,
         default='text_left',
     )
-    image_position = models.CharField(
+    image_size = models.CharField(
         max_length=3,
-        choices=IMAGE_POSITION,
+        choices=IMAGE_SIZE,
         default='1-2',
     )
 
