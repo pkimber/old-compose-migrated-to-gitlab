@@ -7,7 +7,7 @@ import reversion
 from block.models import (
     BlockModel,
     ContentModel,
-    LinkDocument,
+    Link,
     LinkImage,
 )
 
@@ -41,27 +41,20 @@ class Article(ContentModel):
         choices=ARTICLE_TYPE_CHOICES,
         default='text_left',
     )
-    # this will keep the database cleaner and easier to understand
-    # (better than using 'content_object')
-    link_image = models.ForeignKey(LinkImage, blank=True, null=True)
-    #carousel = models.ManyToManyField(LinkImage)
-    link_document = models.ForeignKey(LinkDocument, blank=True, null=True)
-    link_url = models.ForeignKey(LinkUrl, blank=True, null=True)
-    link_page = models.ForeignKey(LinkPage, blank=True, null=True)
-
-    link = models.ForeignKey(Link, blank=True, null=True)
-    links = models.ManyToManyField(Links, blank=True, null=True)
-    image = models.ForeignKey(LinkImage, blank=True, null=True)
+    # link wizard fields
+    link = models.ForeignKey(
+        Link,
+        related_name='article_link',
+        blank=True, null=True
+    )
+    links = models.ManyToManyField(Link)
+    link_image = models.ForeignKey(
+        LinkImage,
+        related_name='article_link_image',
+        blank=True, null=True
+    )
     # this would be a carousel or a list of images in the article
-    images = models.ManyToManyField(LinkImage, blank=True, null=True)
-
-    def get_link_url(self):
-        if link_document:
-            return link_document.url
-        elif link_url:
-            return link_url.url
-        elif link_page:
-            return link_page.url
+    link_images = models.ManyToManyField(LinkImage)
 
     class Meta:
         # cannot put 'unique_together' on abstract base class
