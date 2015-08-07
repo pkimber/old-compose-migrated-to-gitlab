@@ -7,8 +7,8 @@ import reversion
 from block.models import (
     BlockModel,
     ContentModel,
+    Image,
     Link,
-    LinkImage,
 )
 
 
@@ -50,13 +50,13 @@ class Article(ContentModel):
         blank=True, null=True
     )
     links = models.ManyToManyField(Link)
-    link_image = models.ForeignKey(
-        LinkImage,
-        related_name='article_link_image',
+    picture = models.ForeignKey(
+        Image,
+        related_name='picture',
         blank=True, null=True
     )
     # this would be a carousel or a list of images in the article
-    link_images = models.ManyToManyField(LinkImage)
+    carousel = models.ManyToManyField(Image)
 
     class Meta:
         # cannot put 'unique_together' on abstract base class

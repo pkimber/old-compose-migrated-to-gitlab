@@ -13,10 +13,10 @@
         {% endif %}
         {% if b.link %}
           <p>
-            <a href="{{ MEDIA_URL }}{{ b.link.document }}" target="_blank">
+            <a href="{{ MEDIA_URL }}{{ b.link.url }}" target="_blank">
               <i class="fa fa-external-link"></i>
               {{ b.link.title }},
-              {{ b.link.document_file_name }}
+              {{ b.link.file_name }}
             </a>
           </p>
         {% endif %}
