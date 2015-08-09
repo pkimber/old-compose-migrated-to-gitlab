@@ -49,7 +49,7 @@ class Article(ContentModel):
         related_name='article_link',
         blank=True, null=True
     )
-    links = models.ManyToManyField(Link)
+    references = models.ManyToManyField(Link)
     picture = models.ForeignKey(
         Image,
         related_name='picture',
@@ -76,6 +76,16 @@ class Article(ContentModel):
 
     def url_update(self):
         return reverse('compose.article.update', kwargs={'pk': self.pk})
+
+    @property
+    def wizard_fields(self):
+        return {
+            'carousel': Image.MULTI,
+            'link': Link.SINGLE,
+            'picture': Image.SINGLE,
+            'references': Link.MULTI,
+        }
+
 
 reversion.register(Article)
 

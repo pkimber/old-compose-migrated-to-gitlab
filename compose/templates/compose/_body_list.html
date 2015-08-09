@@ -23,6 +23,16 @@
             </a>
           </p>
         {% endif %}
+
+        {% for picture in b.carousel.all %}
+          <img
+            class="article-image pure-img"
+            src="{% thumbnail picture.image 200x200 autocrop %}"
+            alt="{{ picture.alt }}"
+            title="{{ picture.title }}" />
+          <br />
+        {% endfor %}
+
         {% if design %}
           {% block_moderate b %}
         {% endif %}
@@ -31,8 +41,11 @@
     <div class="pure-u-1 pure-u-md-1-2">
       <div class="l-box">
         {% if b.picture %}
-          <p>{{ b.picture.title }}</p>
-          <img class="article-image pure-img" src="{% thumbnail b.picture.image 533x300 autocrop %}" alt="{{ b.picture.alt }}" />
+          <img
+            class="article-image pure-img"
+            src="{% thumbnail b.picture.image 533x300 autocrop %}"
+            alt="{{ b.picture.alt }}"
+            title="{{ b.picture.title }}" />
         {% endif %}
       </div>
     </div>
