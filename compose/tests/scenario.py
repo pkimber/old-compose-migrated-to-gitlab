@@ -4,11 +4,9 @@ from block.models import (
     Page,
     PageSection,
     Section,
-    Url,
-)
-from cms.models import (
     Template,
     TemplateSection,
+    Url,
 )
 from compose.models import (
     Article,

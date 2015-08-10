@@ -2,15 +2,15 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-from django.conf import settings
 import block.models
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('block', '0004_auto_20150809_2112'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('block', '0004_auto_20150810_0757'),
         ('compose', '0001_initial'),
     ]
 
@@ -18,88 +18,88 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Feature',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
-                ('date_moderated', models.DateTimeField(null=True, blank=True)),
+                ('date_moderated', models.DateTimeField(blank=True, null=True)),
                 ('order', models.IntegerField()),
                 ('title', models.TextField()),
                 ('description', models.TextField(blank=True)),
-                ('picture', models.ImageField(upload_to='block', blank=True)),
-                ('url', models.URLField(null=True, blank=True)),
+                ('picture', models.ImageField(blank=True, upload_to='block')),
+                ('url', models.URLField(blank=True, null=True)),
             ],
             options={
-                'verbose_name_plural': 'Feature blocks',
                 'verbose_name': 'Feature block',
+                'verbose_name_plural': 'Feature blocks',
             },
         ),
         migrations.CreateModel(
             name='FeatureBlock',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
                 ('page_section', models.ForeignKey(to='block.PageSection')),
             ],
             options={
                 'verbose_name_plural': 'Blocks',
-                'abstract': False,
                 'verbose_name': 'Block',
+                'abstract': False,
             },
         ),
         migrations.CreateModel(
             name='FeatureStyle',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=100)),
                 ('css_class_name', models.CharField(max_length=100)),
             ],
             options={
+                'verbose_name': 'Feature Style',
                 'verbose_name_plural': 'Feature Styles',
                 'ordering': ('name',),
-                'verbose_name': 'Feature Style',
             },
         ),
         migrations.CreateModel(
             name='Header',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
-                ('date_moderated', models.DateTimeField(null=True, blank=True)),
+                ('date_moderated', models.DateTimeField(blank=True, null=True)),
                 ('order', models.IntegerField()),
                 ('title', models.TextField()),
             ],
             options={
-                'verbose_name_plural': 'Headers',
                 'verbose_name': 'Header',
+                'verbose_name_plural': 'Headers',
             },
         ),
         migrations.CreateModel(
             name='HeaderBlock',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
                 ('page_section', models.ForeignKey(to='block.PageSection')),
             ],
             options={
                 'verbose_name_plural': 'Blocks',
-                'abstract': False,
                 'verbose_name': 'Block',
+                'abstract': False,
             },
         ),
         migrations.CreateModel(
             name='HeaderStyle',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=100)),
                 ('css_class_name', models.CharField(max_length=100)),
             ],
             options={
+                'verbose_name': 'Header style',
                 'verbose_name_plural': 'Header styles',
                 'ordering': ('name',),
-                'verbose_name': 'Header style',
             },
         ),
         migrations.AddField(
@@ -110,7 +110,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='article',
             name='link',
-            field=models.ForeignKey(to='block.Link', null=True, related_name='article_link', blank=True),
+            field=models.ForeignKey(related_name='article_link', blank=True, null=True, to='block.Link'),
         ),
         migrations.AddField(
             model_name='article',
@@ -120,7 +120,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='article',
             name='picture',
-            field=models.ForeignKey(to='block.Image', null=True, related_name='picture', blank=True),
+            field=models.ForeignKey(related_name='picture', blank=True, null=True, to='block.Image'),
         ),
         migrations.AddField(
             model_name='header',
@@ -130,22 +130,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='header',
             name='edit_state',
-            field=models.ForeignKey(default=block.models._default_edit_state, to='block.EditState'),
+            field=models.ForeignKey(to='block.EditState', default=block.models._default_edit_state),
         ),
         migrations.AddField(
             model_name='header',
             name='moderate_state',
-            field=models.ForeignKey(default=block.models._default_moderate_state, to='block.ModerateState'),
+            field=models.ForeignKey(to='block.ModerateState', default=block.models._default_moderate_state),
         ),
         migrations.AddField(
             model_name='header',
             name='style',
-            field=models.ForeignKey(to='compose.HeaderStyle', null=True, blank=True),
+            field=models.ForeignKey(blank=True, null=True, to='compose.HeaderStyle'),
         ),
         migrations.AddField(
             model_name='header',
             name='user_moderated',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True, related_name='+', blank=True),
+            field=models.ForeignKey(related_name='+', blank=True, null=True, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='feature',
@@ -155,22 +155,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='feature',
             name='edit_state',
-            field=models.ForeignKey(default=block.models._default_edit_state, to='block.EditState'),
+            field=models.ForeignKey(to='block.EditState', default=block.models._default_edit_state),
         ),
         migrations.AddField(
             model_name='feature',
             name='moderate_state',
-            field=models.ForeignKey(default=block.models._default_moderate_state, to='block.ModerateState'),
+            field=models.ForeignKey(to='block.ModerateState', default=block.models._default_moderate_state),
         ),
         migrations.AddField(
             model_name='feature',
             name='style',
-            field=models.ForeignKey(to='compose.FeatureStyle', null=True, blank=True),
+            field=models.ForeignKey(blank=True, null=True, to='compose.FeatureStyle'),
         ),
         migrations.AddField(
             model_name='feature',
             name='user_moderated',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True, related_name='+', blank=True),
+            field=models.ForeignKey(related_name='+', blank=True, null=True, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterUniqueTogether(
             name='header',

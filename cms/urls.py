@@ -4,7 +4,7 @@ from django.conf.urls import (
     url,
 )
 
-from cms.views import (
+from block.views import (
     CmsPageDesignView,
     CmsPageView,
 )

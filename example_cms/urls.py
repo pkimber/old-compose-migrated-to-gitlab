@@ -37,15 +37,12 @@ urlpatterns = patterns(
     url(regex=r'^block/',
         view=include('block.urls')
         ),
-    url(regex=r'^cms/',
-        view=include('cms.urls.cms')
-        ),
     url(regex=r'^compose/',
         view=include('compose.urls')
         ),
     # this url include should come last
-    url(regex=r'^',
-        view=include('cms.urls.page')
+    url(regex=r'^cms/',
+        view=include('cms.urls')
         ),
 )
 
