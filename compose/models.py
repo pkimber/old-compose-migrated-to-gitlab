@@ -30,18 +30,27 @@ class Article(ContentModel):
         ('picture_only', 'Picture Only'),
     )
 
+    IMAGE_SIZE = (
+        ('1-2', 'Half Width'),
+        ('1-3', 'Third Width'),
+        ('1-4', 'Quarter Width'),
+    )
+
     block = models.ForeignKey(ArticleBlock, related_name='content')
     order = models.IntegerField()
 
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    #picture = models.ImageField(upload_to='compose', blank=True)
     article_type = models.CharField(
         max_length=12,
         choices=ARTICLE_TYPE_CHOICES,
         default='text_left',
     )
-    # link wizard fields
+    image_size = models.CharField(
+        max_length=3,
+        choices=IMAGE_SIZE,
+        default='1-2',
+    )
     link = models.ForeignKey(
         Link,
         related_name='article_link',
@@ -53,7 +62,6 @@ class Article(ContentModel):
         related_name='picture',
         blank=True, null=True
     )
-    # this would be a carousel or a list of images in the article
     carousel = models.ManyToManyField(Image)
 
     class Meta:
