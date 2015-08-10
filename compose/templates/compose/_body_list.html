@@ -28,7 +28,7 @@
           <img
             class="article-image pure-img"
             src="{% thumbnail picture.image 200x200 autocrop %}"
-            alt="{{ picture.alt }}"
+            alt="{{ picture.title }}"
             title="{{ picture.title }}" />
           <br />
         {% endfor %}
@@ -44,7 +44,7 @@
           <img
             class="article-image pure-img"
             src="{% thumbnail b.picture.image 533x300 autocrop %}"
-            alt="{{ b.picture.alt }}"
+            alt="{{ b.picture.title }}"
             title="{{ b.picture.title }}" />
         {% endif %}
       </div>
