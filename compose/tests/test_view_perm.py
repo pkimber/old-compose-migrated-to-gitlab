@@ -3,7 +3,10 @@ from django.core.urlresolvers import reverse
 
 from base.tests.test_utils import PermTestCase
 
-from block.tests.factories import PageSectionFactory
+from block.tests.factories import (
+    PageFactory,
+    PageSectionFactory,
+)
 from compose.tests.factories import ArticleFactory
 
 
@@ -37,4 +40,23 @@ class TestViewPerm(PermTestCase):
     def test_article_update(self):
         c = ArticleFactory()
         url = reverse('compose.article.update', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_home(self):
+        PageFactory(
+            is_home=True,
+            slug='home',
+            slug_menu='',
+            template_name='compose/page_article.html',
+        )
+        url = reverse('project.home')
+        self.assert_any(url)
+
+    def test_page_design_home(self):
+        p = PageFactory(
+            slug='home',
+            slug_menu='',
+            template_name='compose/page_article.html',
+        )
+        url = reverse('project.page.design', kwargs=dict(page=p.slug))
         self.assert_staff_only(url)
