@@ -12,6 +12,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RemoveField(
+            model_name='article',
+            name='picture',
+        ),
         migrations.AddField(
             model_name='article',
             name='carousel',
@@ -19,13 +23,18 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='article',
+            name='image',
+            field=models.ForeignKey(blank=True, null=True, related_name='picture', to='block.Image'),
+        ),
+        migrations.AddField(
+            model_name='article',
             name='image_size',
-            field=models.CharField(choices=[('1-2', 'Half Width'), ('1-3', 'Third Width'), ('1-4', 'Quarter Width')], default='1-2', max_length=3),
+            field=models.CharField(max_length=3, default='1-2', choices=[('1-2', 'Half Width'), ('1-3', 'Third Width'), ('1-4', 'Quarter Width')]),
         ),
         migrations.AddField(
             model_name='article',
             name='link',
-            field=models.ForeignKey(blank=True, null=True, to='block.Link', related_name='article_link'),
+            field=models.ForeignKey(blank=True, null=True, related_name='article_link', to='block.Link'),
         ),
         migrations.AddField(
             model_name='article',
@@ -35,11 +44,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='article',
             name='article_type',
-            field=models.CharField(choices=[('text_left', 'Text Left'), ('text_right', 'Text Right'), ('text_top', 'Text Top'), ('text_bottom', 'Text Bottom'), ('text_only', 'Text Only'), ('picture_only', 'Picture Only')], default='text_left', max_length=12),
-        ),
-        migrations.AlterField(
-            model_name='article',
-            name='picture',
-            field=models.ForeignKey(blank=True, null=True, to='block.Image', related_name='picture'),
+            field=models.CharField(max_length=12, default='text_left', choices=[('text_left', 'Text Left'), ('text_right', 'Text Right'), ('text_top', 'Text Top'), ('text_bottom', 'Text Bottom'), ('text_only', 'Text Only'), ('picture_only', 'Picture Only')]),
         ),
     ]

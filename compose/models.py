@@ -59,7 +59,7 @@ class Article(ContentModel):
         blank=True, null=True
     )
     references = models.ManyToManyField(Link)
-    picture = models.ForeignKey(
+    image = models.ForeignKey(
         Image,
         related_name='picture',
         blank=True, null=True
@@ -90,7 +90,7 @@ class Article(ContentModel):
         return {
             'carousel': Image.MULTI,
             'link': Link.SINGLE,
-            'picture': Image.SINGLE,
+            'image': Image.SINGLE,
             'references': Link.MULTI,
         }
 
