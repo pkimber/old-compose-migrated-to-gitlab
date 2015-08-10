@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.conf import settings
 from django.conf.urls import (
     include,
@@ -27,7 +25,7 @@ urlpatterns = patterns(
         view=include(admin.site.urls)
         ),
     url(r'^home/user/$',
-        view=RedirectView.as_view(url=reverse_lazy('cms.page.list'), permanent=False),
+        view=RedirectView.as_view(url=reverse_lazy('block.page.list'), permanent=False),
         name='project.dash'
         ),
     url(r'^settings/$',
@@ -41,7 +39,7 @@ urlpatterns = patterns(
         view=include('compose.urls.compose')
         ),
     # this url include should come last
-    url(regex=r'^cms/',
+    url(regex=r'^',
         view=include('compose.urls.cms')
         ),
 )
