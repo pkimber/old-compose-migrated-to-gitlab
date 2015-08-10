@@ -9,6 +9,7 @@ from block.models import (
     ContentModel,
     Image,
     Link,
+    Wizard,
 )
 
 
@@ -59,9 +60,9 @@ class Article(ContentModel):
         blank=True, null=True
     )
     references = models.ManyToManyField(Link)
-    image = models.ForeignKey(
+    picture = models.ForeignKey(
         Image,
-        related_name='picture',
+        related_name='article_picture',
         blank=True, null=True
     )
     carousel = models.ManyToManyField(Image)
@@ -87,12 +88,12 @@ class Article(ContentModel):
 
     @property
     def wizard_fields(self):
-        return {
-            'carousel': Image.MULTI,
-            'link': Link.SINGLE,
-            'image': Image.SINGLE,
-            'references': Link.MULTI,
-        }
+        return [
+            Wizard('picture', Wizard.IMAGE, Wizard.SINGLE),
+            Wizard('link', Wizard.LINK, Wizard.SINGLE),
+            Wizard('carousel', Wizard.IMAGE, Wizard.MULTI),
+            Wizard('references', Wizard.LINK, Wizard.MULTI),
+        ]
 
 reversion.register(Article)
 
