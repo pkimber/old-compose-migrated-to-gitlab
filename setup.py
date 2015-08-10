@@ -19,30 +19,30 @@ def get_readme():
 
 
 setup(
-    name='kb-cms',
-    packages=['compose', 'compose.migrations', 'compose.tests', 'compose.management', 'compose.management.commands', 'cms', 'cms.templatetags', 'cms.urls', 'cms.migrations', 'cms.tests', 'cms.management', 'cms.management.commands'],
+    name='kb-compose',
+    packages=['compose', 'compose.migrations', 'compose.tests', 'compose.management', 'compose.management.commands'],
     package_data={
         'compose': [
             'templates/*.*',
             'templates/compose/*.*',
         ],
 
-        'cms': [
+        'compose': [
             'static/*.*',
-            'static/cms/*.*',
-            'static/cms/css/*.*',
+            'static/compose/*.*',
+            'static/compose/css/*.*',
             'static/img/*.*',
             'static/img/holding/*.*',
             'templates/*.*',
             'templates/block/*.*',
-            'templates/cms/*.*',
+            'templates/compose/*.*',
         ],
     },
     version='0.0.27',
-    description='cms',
+    description='compose',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
-    url='git@github.com:pkimber/cms.git',
+    url='git@github.com:pkimber/compose.git',
     classifiers=[
         'Development Status :: 1 - Planning',
         'Environment :: Console',
