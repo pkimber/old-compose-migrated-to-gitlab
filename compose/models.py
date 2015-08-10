@@ -84,7 +84,6 @@ class Article(ContentModel):
             'references': Link.MULTI,
         }
 
-
 reversion.register(Article)
 
 
