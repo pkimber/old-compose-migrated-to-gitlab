@@ -38,11 +38,11 @@ urlpatterns = patterns(
         view=include('block.urls')
         ),
     url(regex=r'^compose/',
-        view=include('compose.urls')
+        view=include('compose.urls.compose')
         ),
     # this url include should come last
     url(regex=r'^cms/',
-        view=include('cms.urls')
+        view=include('compose.urls.cms')
         ),
 )
 

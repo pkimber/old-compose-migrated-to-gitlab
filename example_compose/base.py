@@ -133,7 +133,6 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     'base',
     'block',
-    'cms',
     'compose',
     'example_compose',
     'login',
