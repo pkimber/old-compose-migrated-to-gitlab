@@ -86,10 +86,10 @@ MIDDLEWARE_CLASSES = (
     'reversion.middleware.RevisionMiddleware',
 )
 
-ROOT_URLCONF = 'example_cms.urls'
+ROOT_URLCONF = 'example_compose.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'example_cms.wsgi.application'
+WSGI_APPLICATION = 'example_compose.wsgi.application'
 
 TEMPLATES = [
     {
@@ -135,7 +135,7 @@ LOCAL_APPS = (
     'block',
     'cms',
     'compose',
-    'example_cms',
+    'example_compose',
     'login',
     'mail',
 )

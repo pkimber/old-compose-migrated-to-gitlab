@@ -16,14 +16,12 @@ SECTION_BODY = 'body'
 
 
 class ArticleBlock(BlockModel):
-    """Move to ``cms`` (not ``compose``)."""
     pass
 
 reversion.register(ArticleBlock)
 
 
 class Article(ContentModel):
-    """Move to ``cms`` (not ``compose``)."""
 
     ARTICLE_TYPE_CHOICES = (
         ('text_left', 'Text Left'),
@@ -91,18 +89,13 @@ reversion.register(Article)
 
 
 class FeatureBlock(BlockModel):
-    """Move to ``cms`` (not ``compose``)."""
     pass
 
 reversion.register(FeatureBlock)
 
 
 class FeatureStyle(models.Model):
-    """Select Feature CSS class.
-
-    Move to ``cms`` (not ``compose``).
-
-    """
+    """Select Feature CSS class."""
 
     name = models.CharField(max_length=100)
     css_class_name = models.CharField(max_length=100)
@@ -123,8 +116,6 @@ class Feature(ContentModel):
     type
 
     Used where we are providing a some links that we want to feature.
-
-    Move to ``cms`` (not ``compose``).
 
     """
     block = models.ForeignKey(FeatureBlock, related_name='content')
@@ -181,11 +172,8 @@ reversion.register(Feature)
 
 
 class HeaderStyle(models.Model):
-    """Select Header CSS class.
+    """Select Header CSS class."""
 
-    Move to ``cms`` (not ``compose``).
-
-    """
     name = models.CharField(max_length=100)
     css_class_name = models.CharField(max_length=100)
 
@@ -201,18 +189,15 @@ reversion.register(HeaderStyle)
 
 
 class HeaderBlock(BlockModel):
-    """Move to ``cms`` (not ``compose``)."""
     pass
 
 reversion.register(HeaderBlock)
 
 
 class Header(ContentModel):
-    """
-    Header Block - title, description (rich text), picture and URL.
-    Used for heading for a section.
+    """Header Block - title, description (rich text), picture and URL.
 
-    Move to ``cms`` (not ``compose``).
+    Used for heading for a section.
 
     """
     block = models.ForeignKey(HeaderBlock, related_name='content')

@@ -1,8 +1,8 @@
-CMS
-***
+Compose
+*******
 
-Django application for a simple CMS site.  For documentation, see
-https://www.pkimber.net/open/app-cms.html
+Django application containing a couple of models for use with the block app
+when building a simple CMS site.
 
 Install
 =======
@@ -12,8 +12,8 @@ Virtual Environment
 
 ::
 
-  pyvenv-3.4 --without-pip venv-cms
-  source venv-cms/bin/activate
+  pyvenv-3.4 --without-pip venv-compose
+  source venv-compose/bin/activate
   wget https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
   python get-pip.py
 
