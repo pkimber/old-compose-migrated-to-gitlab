@@ -26,6 +26,8 @@ class Article(ContentModel):
     ARTICLE_TYPE_CHOICES = (
         ('text_left', 'Text Left'),
         ('text_right', 'Text Right'),
+        ('text_top', 'Text Top'),
+        ('text_bottom', 'Text Bottom'),
         ('text_only', 'Text Only'),
         ('picture_only', 'Picture Only'),
     )
@@ -95,147 +97,147 @@ class Article(ContentModel):
 reversion.register(Article)
 
 
-class FeatureBlock(BlockModel):
-    pass
-
-reversion.register(FeatureBlock)
-
-
-class FeatureStyle(models.Model):
-    """Select Feature CSS class."""
-
-    name = models.CharField(max_length=100)
-    css_class_name = models.CharField(max_length=100)
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name = 'Feature Style'
-        verbose_name_plural = 'Feature Styles'
-
-    def __str__(self):
-        return '{}'.format(self.name)
-
-reversion.register(FeatureStyle)
-
-
-class Feature(ContentModel):
-    """Feature Block title, description (plain text), picture, URL and link
-    type
-
-    Used where we are providing a some links that we want to feature.
-
-    """
-    block = models.ForeignKey(FeatureBlock, related_name='content')
-    order = models.IntegerField()
-
-    title = models.TextField()
-    description = models.TextField(blank=True)
-    picture = models.ImageField(upload_to='block', blank=True)
-    url = models.URLField(blank=True, null=True)
-    style = models.ForeignKey(FeatureStyle, blank=True, null=True)
-
-    class Meta:
-        # cannot put 'unique_together' on abstract base class
-        # https://code.djangoproject.com/ticket/16732
-        unique_together = ('block', 'moderate_state')
-        verbose_name = 'Feature block'
-        verbose_name_plural = 'Feature blocks'
-
-    def __str__(self):
-        return '{} {}'.format(self.title, self.moderate_state)
-
-    #def has_url(self):
-    #    return True
-
-    def set_url(self, url_link, url_text):
-        self.url = url_link
-
-    def get_url_link(self):
-        return self.url
-
-    def get_url_text(self):
-        return None
-
-    #def url_urledit(self):
-    #  return reverse('compose.feature.urledit',
-    #      kwargs={'pk': self.pk, 'block': 'Feature'})
-
-    def url_publish(self):
-        return reverse('compose.feature.publish', kwargs={'pk': self.pk})
-
-    def url_remove(self):
-        return reverse('compose.feature.remove', kwargs={'pk': self.pk})
-
-    def url_update(self):
-        return reverse('compose.feature.update', kwargs={'pk': self.pk})
-
-    def css_class_name(self):
-        if self.style:
-            return self.style.css_class_name
-        else:
-            return ''
-
-reversion.register(Feature)
-
-
-class HeaderStyle(models.Model):
-    """Select Header CSS class."""
-
-    name = models.CharField(max_length=100)
-    css_class_name = models.CharField(max_length=100)
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name = 'Header style'
-        verbose_name_plural = 'Header styles'
-
-    def __str__(self):
-        return '{}'.format(self.name)
-
-reversion.register(HeaderStyle)
-
-
-class HeaderBlock(BlockModel):
-    pass
-
-reversion.register(HeaderBlock)
-
-
-class Header(ContentModel):
-    """Header Block - title, description (rich text), picture and URL.
-
-    Used for heading for a section.
-
-    """
-    block = models.ForeignKey(HeaderBlock, related_name='content')
-    order = models.IntegerField()
-
-    title = models.TextField()
-    style = models.ForeignKey(HeaderStyle, blank=True, null=True)
-
-    class Meta:
-        # cannot put 'unique_together' on abstract base class
-        # https://code.djangoproject.com/ticket/16732
-        unique_together = ('block', 'moderate_state')
-        verbose_name = 'Header'
-        verbose_name_plural = 'Headers'
-
-    def __str__(self):
-        return '{} {}'.format(self.title, self.moderate_state)
-
-    def url_publish(self):
-        return reverse('compose.header.publish', kwargs={'pk': self.pk})
-
-    def url_remove(self):
-        return reverse('compose.header.remove', kwargs={'pk': self.pk})
-
-    def url_update(self):
-        return reverse('compose.header.update', kwargs={'pk': self.pk})
-
-    def css_class_name(self):
-        if self.style:
-            return self.style.css_class_name
-        else:
-            return ''
-
-reversion.register(Header)
+#class FeatureBlock(BlockModel):
+#    pass
+#
+#reversion.register(FeatureBlock)
+#
+#
+#class FeatureStyle(models.Model):
+#    """Select Feature CSS class."""
+#
+#    name = models.CharField(max_length=100)
+#    css_class_name = models.CharField(max_length=100)
+#
+#    class Meta:
+#        ordering = ('name',)
+#        verbose_name = 'Feature Style'
+#        verbose_name_plural = 'Feature Styles'
+#
+#    def __str__(self):
+#        return '{}'.format(self.name)
+#
+#reversion.register(FeatureStyle)
+#
+#
+#class Feature(ContentModel):
+#    """Feature Block title, description (plain text), picture, URL and link
+#    type
+#
+#    Used where we are providing a some links that we want to feature.
+#
+#    """
+#    block = models.ForeignKey(FeatureBlock, related_name='content')
+#    order = models.IntegerField()
+#
+#    title = models.TextField()
+#    description = models.TextField(blank=True)
+#    picture = models.ImageField(upload_to='block', blank=True)
+#    url = models.URLField(blank=True, null=True)
+#    style = models.ForeignKey(FeatureStyle, blank=True, null=True)
+#
+#    class Meta:
+#        # cannot put 'unique_together' on abstract base class
+#        # https://code.djangoproject.com/ticket/16732
+#        unique_together = ('block', 'moderate_state')
+#        verbose_name = 'Feature block'
+#        verbose_name_plural = 'Feature blocks'
+#
+#    def __str__(self):
+#        return '{} {}'.format(self.title, self.moderate_state)
+#
+#    #def has_url(self):
+#    #    return True
+#
+#    def set_url(self, url_link, url_text):
+#        self.url = url_link
+#
+#    def get_url_link(self):
+#        return self.url
+#
+#    def get_url_text(self):
+#        return None
+#
+#    #def url_urledit(self):
+#    #  return reverse('compose.feature.urledit',
+#    #      kwargs={'pk': self.pk, 'block': 'Feature'})
+#
+#    def url_publish(self):
+#        return reverse('compose.feature.publish', kwargs={'pk': self.pk})
+#
+#    def url_remove(self):
+#        return reverse('compose.feature.remove', kwargs={'pk': self.pk})
+#
+#    def url_update(self):
+#        return reverse('compose.feature.update', kwargs={'pk': self.pk})
+#
+#    def css_class_name(self):
+#        if self.style:
+#            return self.style.css_class_name
+#        else:
+#            return ''
+#
+#reversion.register(Feature)
+#
+#
+#class HeaderStyle(models.Model):
+#    """Select Header CSS class."""
+#
+#    name = models.CharField(max_length=100)
+#    css_class_name = models.CharField(max_length=100)
+#
+#    class Meta:
+#        ordering = ('name',)
+#        verbose_name = 'Header style'
+#        verbose_name_plural = 'Header styles'
+#
+#    def __str__(self):
+#        return '{}'.format(self.name)
+#
+#reversion.register(HeaderStyle)
+#
+#
+#class HeaderBlock(BlockModel):
+#    pass
+#
+#reversion.register(HeaderBlock)
+#
+#
+#class Header(ContentModel):
+#    """Header Block - title, description (rich text), picture and URL.
+#
+#    Used for heading for a section.
+#
+#    """
+#    block = models.ForeignKey(HeaderBlock, related_name='content')
+#    order = models.IntegerField()
+#
+#    title = models.TextField()
+#    style = models.ForeignKey(HeaderStyle, blank=True, null=True)
+#
+#    class Meta:
+#        # cannot put 'unique_together' on abstract base class
+#        # https://code.djangoproject.com/ticket/16732
+#        unique_together = ('block', 'moderate_state')
+#        verbose_name = 'Header'
+#        verbose_name_plural = 'Headers'
+#
+#    def __str__(self):
+#        return '{} {}'.format(self.title, self.moderate_state)
+#
+#    def url_publish(self):
+#        return reverse('compose.header.publish', kwargs={'pk': self.pk})
+#
+#    def url_remove(self):
+#        return reverse('compose.header.remove', kwargs={'pk': self.pk})
+#
+#    def url_update(self):
+#        return reverse('compose.header.update', kwargs={'pk': self.pk})
+#
+#    def css_class_name(self):
+#        if self.style:
+#            return self.style.css_class_name
+#        else:
+#            return ''
+#
+#reversion.register(Header)
