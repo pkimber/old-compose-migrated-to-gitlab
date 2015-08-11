@@ -12,6 +12,7 @@ from compose.models import (
     Article,
     ArticleBlock,
     SECTION_BODY,
+    SECTION_SLIDESHOW,
 )
 from compose.tests.model_maker import (
     make_article,
@@ -59,13 +60,22 @@ def init_app_compose():
         'compose/page_article.html',
         is_home=True,
     )
-    # layout
+    # layout - body
     body = Section.objects.init_section(
         SECTION_BODY,
         SECTION_BODY.capitalize(),
         'compose',
         'Article',
         'compose.article.create',
+    )
+    PageSection.objects.init_page_section(home, body)
+    # layout - slideshow
+    body = Section.objects.init_section(
+        SECTION_SLIDESHOW,
+        SECTION_SLIDESHOW.capitalize(),
+        'compose',
+        'Slideshow',
+        'compose.slideshow.create',
     )
     PageSection.objects.init_page_section(home, body)
     # template

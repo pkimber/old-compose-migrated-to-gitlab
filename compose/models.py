@@ -14,6 +14,7 @@ from block.models import (
 
 
 SECTION_BODY = 'body'
+SECTION_SLIDESHOW = 'slideshow'
 
 
 class ArticleBlock(BlockModel):
