@@ -35,14 +35,6 @@
                 <td>{{ object.style }}</td>
               </tr>
             {% endif %}
-            {% if object.picture %}
-              <tr valign="top">
-                <td><strong>Picture</strong></td>
-                <td>
-                  <img src="{% thumbnail object.picture 100x60 crop %}" />
-                </td>
-              </tr>
-            {% endif %}
           </tbody>
         </table>
         <div class="pure-u-1">

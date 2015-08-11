@@ -22,6 +22,7 @@ class ArticleBlock(BlockModel):
 reversion.register(ArticleBlock)
 
 
+
 class Article(ContentModel):
 
     ARTICLE_TYPE_CHOICES = (
@@ -59,13 +60,11 @@ class Article(ContentModel):
         related_name='article_link',
         blank=True, null=True
     )
-    references = models.ManyToManyField(Link)
     picture = models.ForeignKey(
         Image,
         related_name='article_picture',
         blank=True, null=True
     )
-    carousel = models.ManyToManyField(Image)
 
     class Meta:
         # cannot put 'unique_together' on abstract base class
@@ -91,11 +90,52 @@ class Article(ContentModel):
         return [
             Wizard('picture', Wizard.IMAGE, Wizard.SINGLE),
             Wizard('link', Wizard.LINK, Wizard.SINGLE),
-            Wizard('carousel', Wizard.IMAGE, Wizard.MULTI),
-            Wizard('references', Wizard.LINK, Wizard.MULTI),
         ]
 
 reversion.register(Article)
+
+
+class SlideshowBlock(BlockModel):
+    pass
+
+reversion.register(SlideshowBlock)
+
+
+class Slideshow(ContentModel):
+
+    block = models.ForeignKey(SlideshowBlock, related_name='content')
+    order = models.IntegerField()
+
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    slideshow = models.ManyToManyField(Image)
+
+    class Meta:
+        # cannot put 'unique_together' on abstract base class
+        # https://code.djangoproject.com/ticket/16732
+        unique_together = ('block', 'moderate_state')
+        verbose_name = 'Slideshow'
+        verbose_name_plural = 'Slideshow'
+
+    def __str__(self):
+        return '{} {}'.format(self.title, self.moderate_state)
+
+    def url_publish(self):
+        return reverse('compose.slideshow.publish', kwargs={'pk': self.pk})
+
+    def url_remove(self):
+        return reverse('compose.slideshow.remove', kwargs={'pk': self.pk})
+
+    def url_update(self):
+        return reverse('compose.slideshow.update', kwargs={'pk': self.pk})
+
+    @property
+    def wizard_fields(self):
+        return [
+            Wizard('slideshow', Wizard.IMAGE, Wizard.MULTI),
+        ]
+
+reversion.register(Slideshow)
 
 
 #class FeatureBlock(BlockModel):

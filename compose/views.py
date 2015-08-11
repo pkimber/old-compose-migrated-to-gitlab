@@ -21,6 +21,8 @@ from block.views import (
 from .forms import (
     ArticleEmptyForm,
     ArticleForm,
+    SlideshowEmptyForm,
+    SlideshowForm,
     #FeatureForm,
     #FeatureStyleForm,
     #HeaderForm,
@@ -29,6 +31,8 @@ from .forms import (
 from .models import (
     Article,
     ArticleBlock,
+    Slideshow,
+    SlideshowBlock,
     #Feature,
     #FeatureBlock,
     #FeatureStyle,
@@ -69,6 +73,39 @@ class ArticleUpdateView(
     form_class = ArticleForm
     model = Article
     template_name = 'compose/article_update.html'
+
+
+class SlideshowCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentCreateView):
+
+    block_class = SlideshowBlock
+    form_class = SlideshowForm
+    model = Slideshow
+    template_name = 'compose/slideshow_create.html'
+
+
+class SlideshowPublishView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
+
+    form_class = ContentEmptyForm
+    model = Slideshow
+    template_name = 'compose/slideshow_publish.html'
+
+
+class SlideshowRemoveView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentRemoveView):
+
+    form_class = ContentEmptyForm
+    model = Slideshow
+    template_name = 'compose/slideshow_remove.html'
+
+
+class SlideshowUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
+
+    form_class = SlideshowForm
+    model = Slideshow
+    template_name = 'compose/slideshow_update.html'
 
 
 #class FeatureCreateView(

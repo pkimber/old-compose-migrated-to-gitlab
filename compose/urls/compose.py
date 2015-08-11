@@ -10,6 +10,10 @@ from compose.views import (
     ArticlePublishView,
     ArticleRemoveView,
     ArticleUpdateView,
+    SlideshowCreateView,
+    SlideshowPublishView,
+    SlideshowRemoveView,
+    SlideshowUpdateView,
     ## Feature
     #FeatureCreateView,
     #FeaturePublishView,
@@ -51,6 +55,26 @@ urlpatterns = patterns(
     url(regex=r'^article/(?P<pk>\d+)/update/$',
         view=ArticleUpdateView.as_view(),
         name='compose.article.update'
+        ),
+    url(regex=r'^slideshow/create/(?P<page>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
+        view=SlideshowCreateView.as_view(),
+        name='compose.slideshow.create'
+        ),
+    url(regex=r'^slideshow/create/(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
+        view=SlideshowCreateView.as_view(),
+        name='compose.slideshow.create'
+        ),
+    url(regex=r'^slideshow/(?P<pk>\d+)/publish/$',
+        view=SlideshowPublishView.as_view(),
+        name='compose.slideshow.publish'
+        ),
+    url(regex=r'^slideshow/(?P<pk>\d+)/remove/$',
+        view=SlideshowRemoveView.as_view(),
+        name='compose.slideshow.remove'
+        ),
+    url(regex=r'^slideshow/(?P<pk>\d+)/update/$',
+        view=SlideshowUpdateView.as_view(),
+        name='compose.slideshow.update'
         ),
     ## Feature
     #url(regex=r'^feature/create/(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/(?P<section>[-\w\d]+)/$',

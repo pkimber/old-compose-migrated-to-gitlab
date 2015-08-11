@@ -11,7 +11,10 @@ from block.tests.factories import (
     PageFactory,
     PageSectionFactory,
 )
-from compose.tests.factories import ArticleFactory
+from compose.tests.factories import (
+    ArticleFactory,
+    SlideshowFactory,
+)
 
 
 class TestView(TestCase):
@@ -87,5 +90,70 @@ class TestView(TestCase):
         c = ArticleFactory()
         response = self.client.post(
             reverse('compose.article.remove', kwargs={'pk': c.pk}),
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_slideshow_create(self):
+        p = PageSectionFactory(page=PageFactory(slug_menu=''))
+        url = reverse(
+            'compose.slideshow.create',
+            kwargs=dict(
+                page=p.page.slug,
+                section=p.section.slug,
+            )
+        )
+        response = self.client.post(
+            url,
+            {
+                'title': 'pkimber.net',
+                'slideshow_type': 'text_only',
+                'image_size': '1-3',
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_slideshow_create_page_and_menu(self):
+        p = PageSectionFactory()
+        url = reverse(
+            'compose.slideshow.create',
+            kwargs=dict(
+                page=p.page.slug,
+                menu=p.page.slug_menu,
+                section=p.section.slug,
+            )
+        )
+        response = self.client.post(
+            url,
+            {
+                'title': 'pkimber.net',
+                'slideshow_type': 'text_only',
+                'image_size': '1-4',
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_slideshow_publish(self):
+        c = SlideshowFactory()
+        response = self.client.post(
+            reverse('compose.slideshow.publish', kwargs={'pk': c.pk}),
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_slideshow_update(self):
+        c = SlideshowFactory()
+        response = self.client.post(
+            reverse('compose.slideshow.update', kwargs={'pk': c.pk}),
+            {
+                'title': 'pkimber.net',
+                'slideshow_type': 'text_only',
+                'image_size': '1-2',
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_slideshow_remove(self):
+        c = SlideshowFactory()
+        response = self.client.post(
+            reverse('compose.slideshow.remove', kwargs={'pk': c.pk}),
         )
         self.assertEqual(response.status_code, 302)

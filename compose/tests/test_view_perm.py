@@ -7,7 +7,10 @@ from block.tests.factories import (
     PageFactory,
     PageSectionFactory,
 )
-from compose.tests.factories import ArticleFactory
+from compose.tests.factories import (
+    ArticleFactory,
+    SlideshowFactory,
+)
 
 
 class TestViewPerm(PermTestCase):
@@ -59,4 +62,31 @@ class TestViewPerm(PermTestCase):
             template_name='compose/page_article.html',
         )
         url = reverse('project.page.design', kwargs=dict(page=p.slug))
+        self.assert_staff_only(url)
+
+    def test_slideshow_create(self):
+        p = PageSectionFactory()
+        url = reverse(
+            'compose.slideshow.create',
+            kwargs=dict(
+                page=p.page.slug,
+                menu=p.page.slug_menu,
+                section=p.section.slug,
+            )
+        )
+        self.assert_staff_only(url)
+
+    def test_slideshow_publish(self):
+        c = SlideshowFactory()
+        url = reverse('compose.slideshow.publish', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_slideshow_remove(self):
+        c = SlideshowFactory()
+        url = reverse('compose.slideshow.remove', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_slideshow_update(self):
+        c = SlideshowFactory()
+        url = reverse('compose.slideshow.update', kwargs={'pk': c.pk})
         self.assert_staff_only(url)

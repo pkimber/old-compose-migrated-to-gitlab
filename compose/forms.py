@@ -8,6 +8,7 @@ from base.form_utils import (
 
 from .models import (
     Article,
+    Slideshow,
     #Feature,
     #FeatureStyle,
     #Header,
@@ -44,9 +45,34 @@ class ArticleForm(RequiredFieldForm):
             'article_type',
             'image_size',
         )
-        #widgets = {
-        #    'picture': forms.FileInput,
-        #}
+
+
+class SlideshowEmptyForm(forms.ModelForm):
+
+    class Meta:
+        model = Slideshow
+        fields = ()
+
+
+class SlideshowForm(RequiredFieldForm):
+
+    def __init__(self, *args, **kwargs):
+        super(SlideshowForm, self).__init__(*args, **kwargs)
+        for name in ('title', 'description'):
+            self.fields[name].widget.attrs.update(
+                {'class': 'pure-input-2-3'}
+            )
+
+    def clean_description(self):
+        data = self.cleaned_data['description']
+        return bleach_clean(data)
+
+    class Meta:
+        model = Slideshow
+        fields = (
+            'title',
+            'description',
+        )
 
 
 #class FeatureForm(RequiredFieldForm):

@@ -5,6 +5,8 @@ from block.tests.factories import PageSectionFactory
 from compose.models import (
     Article,
     ArticleBlock,
+    Slideshow,
+    SlideshowBlock,
     #Feature,
     #FeatureBlock,
     #Header,
@@ -26,6 +28,26 @@ class ArticleFactory(factory.django.DjangoModelFactory):
         model = Article
 
     block = factory.SubFactory(ArticleBlockFactory)
+
+    @factory.sequence
+    def order(n):
+        return n
+
+
+class SlideshowBlockFactory(factory.django.DjangoModelFactory):
+
+    page_section = factory.SubFactory(PageSectionFactory)
+
+    class Meta:
+        model = SlideshowBlock
+
+
+class SlideshowFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = Slideshow
+
+    block = factory.SubFactory(SlideshowBlockFactory)
 
     @factory.sequence
     def order(n):
