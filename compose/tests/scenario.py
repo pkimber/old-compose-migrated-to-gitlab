@@ -70,7 +70,7 @@ def init_app_compose():
     )
     PageSection.objects.init_page_section(home, body)
     # layout - slideshow
-    body = Section.objects.init_section(
+    slideshow = Section.objects.init_section(
         SECTION_SLIDESHOW,
         SECTION_SLIDESHOW.capitalize(),
         'compose',
