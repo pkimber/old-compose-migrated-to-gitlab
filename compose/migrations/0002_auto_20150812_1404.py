@@ -9,8 +9,8 @@ import block.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('block', '0004_auto_20150810_1651'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('block', '0004_auto_20150810_1651'),
         ('compose', '0001_initial'),
     ]
 
@@ -18,10 +18,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Slideshow',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
-                ('date_moderated', models.DateTimeField(blank=True, null=True)),
+                ('date_moderated', models.DateTimeField(null=True, blank=True)),
                 ('order', models.IntegerField()),
                 ('title', models.CharField(max_length=200)),
                 ('description', models.TextField(blank=True)),
@@ -34,36 +34,21 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='SlideshowBlock',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
                 ('page_section', models.ForeignKey(to='block.PageSection')),
             ],
             options={
-                'abstract': False,
                 'verbose_name': 'Block',
+                'abstract': False,
                 'verbose_name_plural': 'Blocks',
             },
         ),
-        migrations.AddField(
+        migrations.RenameField(
             model_name='article',
-            name='image_size',
-            field=models.CharField(default='1-2', choices=[('1-2', 'Half Width'), ('1-3', 'Third Width'), ('1-4', 'Quarter Width')], max_length=3),
-        ),
-        migrations.AddField(
-            model_name='article',
-            name='link',
-            field=models.ForeignKey(to='block.Link', related_name='article_link', blank=True, null=True),
-        ),
-        migrations.AlterField(
-            model_name='article',
-            name='article_type',
-            field=models.CharField(default='text_left', choices=[('text_left', 'Text Left'), ('text_right', 'Text Right'), ('text_top', 'Text Top'), ('text_bottom', 'Text Bottom'), ('text_only', 'Text Only'), ('picture_only', 'Picture Only')], max_length=12),
-        ),
-        migrations.AlterField(
-            model_name='article',
-            name='picture',
-            field=models.ForeignKey(to='block.Image', related_name='article_picture', blank=True, null=True),
+            old_name='picture',
+            new_name='picture_old',
         ),
         migrations.AddField(
             model_name='slideshow',
@@ -88,7 +73,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='slideshow',
             name='user_moderated',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='+', blank=True, null=True),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='+', null=True, blank=True),
         ),
         migrations.AlterUniqueTogether(
             name='slideshow',
