@@ -12,7 +12,12 @@ def move_picture(apps, schema_editor):
     for pk in pks:
         article = article_model.objects.get(pk=pk)
         # create an 'Image' instance
-        image = image_model(**dict(title='Image Title', image=article.picture_old))
+        image = image_model(**dict(
+            title='Image Title',
+            image=article.picture_old,
+            original_file_name=os.path.basename(article.picture_old.name),
+        ))
+
         image.save()
         article.picture = image
         article.save()

@@ -49,6 +49,16 @@ class SlideshowFactory(factory.django.DjangoModelFactory):
 
     block = factory.SubFactory(SlideshowBlockFactory)
 
+    @factory.post_generation
+    def slideshow(self, create, extracted, **kwargs):
+        if not create:
+            # Simple build, do nothing.
+            return
+        if extracted:
+            # A list of products were passed in, use them
+            for image in extracted:
+                self.slideshow.add(image)
+
     @factory.sequence
     def order(n):
         return n

@@ -4,6 +4,7 @@ from django.db import models
 
 import reversion
 
+from base.model_utils import copy_model_instance
 from block.models import (
     BlockModel,
     ContentModel,
@@ -120,6 +121,11 @@ class Slideshow(ContentModel):
 
     def __str__(self):
         return '{} {}'.format(self.title, self.moderate_state)
+
+    def copy_related_data(self, published_instance):
+        """Copy slideshow images."""
+        for image in self.slideshow.all():
+            published_instance.slideshow.add(image)
 
     def url_publish(self):
         return reverse('compose.slideshow.publish', kwargs={'pk': self.pk})
