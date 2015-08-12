@@ -1,4 +1,4 @@
-{% extends 'project/base.html' %}
+{% extends 'block/base.html' %}
 {% load staticfiles %}
 
 {% block heading %}
@@ -8,10 +8,6 @@
 {% block sub_heading %}
   {{ page.name }}
 {% endblock sub_heading %}
-
-{% block menu %}
-  {% include 'block/_pure_menu.html' %}
-{% endblock menu %}
 
 {% block footer %}
   <div class="legal pure-g">
