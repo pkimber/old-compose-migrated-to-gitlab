@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import os
+
 from django.db import models, migrations
 
 
@@ -11,16 +13,16 @@ def move_picture(apps, schema_editor):
     pks = [obj.pk for obj in article_model.objects.all()]
     for pk in pks:
         article = article_model.objects.get(pk=pk)
-        # create an 'Image' instance
-        image = image_model(**dict(
-            title='Image Title',
-            image=article.picture_old,
-            original_file_name=os.path.basename(article.picture_old.name),
-        ))
-
-        image.save()
-        article.picture = image
-        article.save()
+        if article.picture_old:
+            # create an 'Image' instance
+            image = image_model(**dict(
+                title='Image Title',
+                image=article.picture_old,
+                original_file_name=os.path.basename(article.picture_old.name),
+            ))
+            image.save()
+            article.picture = image
+            article.save()
 
 
 class Migration(migrations.Migration):
