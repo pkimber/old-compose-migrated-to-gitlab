@@ -77,7 +77,7 @@ def init_app_compose():
         'Slideshow',
         'compose.slideshow.create',
     )
-    PageSection.objects.init_page_section(home, body)
+    PageSection.objects.init_page_section(home, slideshow)
     # template
     template = Template.objects.init_template('compose/page_article.html')
     TemplateSection.objects.init_template_section(template, body)
