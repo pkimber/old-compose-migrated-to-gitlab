@@ -104,6 +104,14 @@ reversion.register(SlideshowBlock)
 
 
 class Slideshow(ContentModel):
+    """Slideshow/carousel.
+
+    Note from Tim: In the future you can extend slideshow model to include some
+    basic slideshow options - like "Show controls" / "Speed" / "Auto Start"....
+    even if we didn't use the same slider each time these properties would
+    apply.
+
+    """
 
     block = models.ForeignKey(SlideshowBlock, related_name='content')
     order = models.IntegerField()
