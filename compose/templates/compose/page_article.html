@@ -1,7 +1,5 @@
 <!doctype html>
 {% load static %}
-{% load block_tags %}
-{% load thumbnail %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -70,10 +68,7 @@
       </div>
       <div>
         <div class="header">
-          <img class="article-image-header pure-img" src="{% static 'web/img/header.png' %}" />
-          <h1>
-            {{ header_footer.header }}
-          </h1>
+          {% include 'compose/_header.html' %}
         </div>
       </div>
       <div class="content">
@@ -99,7 +94,7 @@
                 <i class="fa fa-twitter fa-2x"></i>
               </a>
               {% endif %}
-              &nbsp; &copy; Chidesters 2015
+              &nbsp; &copy; {{ header_footer.footer_left }} {% now 'Y' %}
             </div>
           </div>
           <div class="pure-u-1 pure-u-md-8-24">

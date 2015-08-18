@@ -12,6 +12,7 @@ from compose.models import (
     Article,
     ArticleBlock,
     SECTION_BODY,
+    SECTION_CARD,
     SECTION_SLIDESHOW,
 )
 from compose.tests.model_maker import (
@@ -69,6 +70,15 @@ def init_app_compose():
         'compose.article.create',
     )
     PageSection.objects.init_page_section(home, body)
+    # layout - card
+    card = Section.objects.init_section(
+        SECTION_CARD,
+        SECTION_CARD.capitalize(),
+        'compose',
+        'Article',
+        'compose.article.create',
+    )
+    PageSection.objects.init_page_section(home, card)
     # layout - slideshow
     slideshow = Section.objects.init_section(
         SECTION_SLIDESHOW,
@@ -81,7 +91,9 @@ def init_app_compose():
     # template
     template = Template.objects.init_template('compose/page_article.html')
     TemplateSection.objects.init_template_section(template, body)
+    TemplateSection.objects.init_template_section(template, card)
+    TemplateSection.objects.init_template_section(template, slideshow)
     Url.objects.init_pages()
     # we wouldn't normally put protected views in the list of URLs
-    Url.objects.init_reverse_url('Dashboard', 'project.dash')
-    Url.objects.init_reverse_url('Settings', 'project.settings')
+    # Url.objects.init_reverse_url('Dashboard', 'project.dash')
+    # Url.objects.init_reverse_url('Settings', 'project.settings')

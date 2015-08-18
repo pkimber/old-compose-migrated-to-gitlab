@@ -36,7 +36,7 @@ urlpatterns = patterns(
         view=include('block.urls.block')
         ),
     url(regex=r'^compose/',
-        view=include('compose.urls')
+        view=include('compose.urls.compose')
         ),
     # this url include should come last
     url(regex=r'^',
