@@ -1,0 +1,21 @@
+{% load block_tags %}
+{% load thumbnail %}
+{% for b in slideshow_list %}
+  {% for picture in b.slideshow.all %}
+    {% if forloop.first %}
+    <ul class="bxslider">
+    {% endif %}
+    <li>
+      <img src="{% thumbnail picture.image 1024x185 autocrop %}" title="{{ picture.title }}" class="pure-img" />
+    </li>
+    {% if forloop.last %}
+    </ul>
+    {% endif %}
+  {% endfor %}
+  {% if design %}{% block_moderate b %}{% endif %}
+{% empty %}
+  {% if design %}{% block_add slideshow_create_url 'Slideshow' %}{% endif %}
+{% endfor %}
+<h1>
+  {{ header_footer.header }}
+</h1>
