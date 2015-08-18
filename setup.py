@@ -20,25 +20,17 @@ def get_readme():
 
 setup(
     name='kb-compose',
-    packages=['compose', 'compose.migrations', 'compose.tests', 'compose.management', 'compose.management.commands'],
+    packages=['compose', 'compose.urls', 'compose.migrations', 'compose.tests', 'compose.management', 'compose.management.commands'],
     package_data={
-        'compose': [
-            'templates/*.*',
-            'templates/compose/*.*',
-        ],
-
         'compose': [
             'static/*.*',
             'static/compose/*.*',
             'static/compose/css/*.*',
-            'static/img/*.*',
-            'static/img/holding/*.*',
             'templates/*.*',
-            'templates/block/*.*',
             'templates/compose/*.*',
         ],
     },
-    version='0.0.27',
+    version='0.0.02',
     description='compose',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
