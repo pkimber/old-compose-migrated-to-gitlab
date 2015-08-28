@@ -4,13 +4,13 @@
   {% for b in body_list %}
     {% if b.article_type == 'text_right' %}
       {% include 'compose/_image_width.html' %}
-        <div class="l-box">
-          {% if b.picture %}
-            <img class="article-image-left pure-img" src="{% thumbnail b.picture.image 700x525 autocrop %}" />
-          {% endif %}
-        </div>
+      <div class="l-box">
+        {% if b.picture %}
+          <img class="article-image-left pure-img" src="{% thumbnail b.picture.image 700x525 autocrop %}" />
+        {% endif %}
       </div>
-      {% include 'compose/_text_width.html' %}
+      </div>
+        {% include 'compose/_text_width.html' %}
         <div class="l-box">
           <h4>{{ b.title }}</h4>
           {% if b.description %}
@@ -24,7 +24,7 @@
         </div>
       </div>
     {% elif b.article_type == 'text_top' %}
-    <div class="pure-u-1">
+      <div class="pure-u-1">
         <div class="l-box">
           <h4>{{ b.title }}</h4>
           {% if b.description %}
@@ -33,8 +33,8 @@
             {% endautoescape %}
           {% endif %}
         </div>
-      </div>  
-    <div class="pure-u-1">
+      </div>
+      <div class="pure-u-1">
         <div class="l-box">
           {% if b.picture %}
             <img class="article-image-center pure-img" src="{% thumbnail b.picture.image 700x525 autocrop %}" />
@@ -48,7 +48,7 @@
           {% endif %}
         </div>
       </div>
-      {% elif b.article_type == 'text_bottom' %}
+    {% elif b.article_type == 'text_bottom' %}
       <div class="pure-u-1">
         <div class="l-box">
           {% if b.picture %}
@@ -68,7 +68,7 @@
             {% block_moderate b %}
           {% endif %}
         </div>
-      </div>  
+      </div>
     {% elif b.article_type == 'picture_only' %}
       <div class="pure-u-1">
         <div class="l-box">
@@ -100,22 +100,22 @@
       </div>
     {% else %}
       {% include 'compose/_text_width.html' %}
-        <div class="l-box">
-          <h4>{{ b.title }}</h4>
-          {% if b.description %}
-            {% autoescape off %}
-              {{ b.description }}
-            {% endautoescape %}
-          {% endif %}
-          {% if design %}
-            {% block_moderate b %}
-          {% endif %}
-        </div>
+      <div class="l-box">
+        <h4>{{ b.title }}</h4>
+        {% if b.description %}
+          {% autoescape off %}
+            {{ b.description }}
+          {% endautoescape %}
+        {% endif %}
+        {% if design %}
+          {% block_moderate b %}
+        {% endif %}
       </div>
-      {% include 'compose/_image_width.html' %}
+      </div>
+        {% include 'compose/_image_width.html' %}
         <div class="l-box">
           {% if b.picture %}
-            <img class="article-image-right pure-img" src="{% thumbnail b.picture.image 700x525 autocrop %}" />
+            <img alt="{{ b.picture.title }}" title="{{ b.picture.title }}" class="article-image-right pure-img" src="{% thumbnail b.picture.image 700x525 autocrop %}" />
           {% endif %}
         </div>
       </div>
