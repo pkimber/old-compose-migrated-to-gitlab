@@ -23,22 +23,22 @@ from .forms import (
     ArticleForm,
     SlideshowEmptyForm,
     SlideshowForm,
-    #FeatureForm,
-    #FeatureStyleForm,
-    #HeaderForm,
-    #HeaderStyleForm,
+    FeatureForm,
+    FeatureStyleForm,
+    HeaderForm,
+    HeaderStyleForm,
 )
 from .models import (
     Article,
     ArticleBlock,
     Slideshow,
     SlideshowBlock,
-    #Feature,
-    #FeatureBlock,
-    #FeatureStyle,
-    #Header,
-    #HeaderBlock,
-    #HeaderStyle,
+    Feature,
+    FeatureBlock,
+    FeatureStyle,
+    Header,
+    HeaderBlock,
+    HeaderStyle,
 )
 
 
@@ -108,111 +108,111 @@ class SlideshowUpdateView(
     template_name = 'compose/slideshow_update.html'
 
 
-#class FeatureCreateView(
-#        LoginRequiredMixin, StaffuserRequiredMixin, ContentCreateView):
-#
-#    block_class = FeatureBlock
-#    form_class = FeatureForm
-#    model = Feature
-#    template_name = 'compose/feature_create_update.html'
-#
-#
-#class FeaturePublishView(
-#        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
-#
-#    form_class = ContentEmptyForm
-#    model = Feature
-#    template_name = 'compose/feature_publish.html'
-#
-#
-#class FeatureRemoveView(
-#        LoginRequiredMixin, StaffuserRequiredMixin, ContentRemoveView):
-#
-#    form_class = ContentEmptyForm
-#    model = Feature
-#    template_name = 'compose/feature_remove.html'
-#
-#
-#class FeatureUpdateView(
-#        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
-#
-#    form_class = FeatureForm
-#    model = Feature
-#    template_name = 'compose/feature_create_update.html'
-#
-#
-#class FeatureStyleCreateView (LoginRequiredMixin, StaffuserRequiredMixin, CreateView):
-#    form_class = FeatureStyleForm
-#    model = FeatureStyle
-#    template_name = 'compose/style_create_update.html'
-#
-#    def get_success_url(self):
-#        return reverse('compose.feature.style.list')
-#
-#
-#class FeatureStyleUpdateView (LoginRequiredMixin, StaffuserRequiredMixin, UpdateView):
-#    form_class = FeatureStyleForm
-#    model = FeatureStyle
-#    template_name = 'compose/style_create_update.html'
-#
-#    def get_success_url(self):
-#        return reverse('compose.feature.style.list')
-#
-#
-#class HeaderCreateView(
-#        LoginRequiredMixin, StaffuserRequiredMixin, ContentCreateView):
-#
-#    block_class = HeaderBlock
-#    form_class = HeaderForm
-#    model = Header
-#    template_name = 'compose/header_create_update.html'
-#
-#
-#class HeaderPublishView(
-#        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
-#
-#    form_class = ContentEmptyForm
-#    model = Header
-#    template_name = 'compose/header_publish.html'
-#
-#
-#class HeaderUpdateView(
-#        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
-#
-#    form_class = HeaderForm
-#    model = Header
-#    template_name = 'compose/header_create_update.html'
-#
-#
-#class HeaderRemoveView(
-#        LoginRequiredMixin, StaffuserRequiredMixin, ContentRemoveView):
-#
-#    form_class = ContentEmptyForm
-#    model = Header
-#    template_name = 'compose/header_remove.html'
-#
-#
-#class HeaderStyleCreateView (LoginRequiredMixin, StaffuserRequiredMixin, CreateView):
-#    form_class = HeaderStyleForm
-#    model = HeaderStyle
-#    template_name = 'compose/style_create_update.html'
-#
-#    def get_success_url(self):
-#        return reverse('compose.header.style.list')
-#
-#
-#class HeaderStyleUpdateView (LoginRequiredMixin, StaffuserRequiredMixin, UpdateView):
-#    form_class = HeaderStyleForm
-#    model = HeaderStyle
-#    template_name = 'compose/style_create_update.html'
-#
-#    def get_success_url(self):
-#        return reverse('compose.header.style.list')
-#
-#
-#class FeatureStyleListView(LoginRequiredMixin, StaffuserRequiredMixin, ListView):
-#    model = FeatureStyle
-#
-#
-#class HeaderStyleListView(LoginRequiredMixin, StaffuserRequiredMixin, ListView):
-#    model = HeaderStyle
+class FeatureCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentCreateView):
+
+    block_class = FeatureBlock
+    form_class = FeatureForm
+    model = Feature
+    template_name = 'compose/feature_create_update.html'
+
+
+class FeaturePublishView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
+
+    form_class = ContentEmptyForm
+    model = Feature
+    template_name = 'compose/feature_publish.html'
+
+
+class FeatureRemoveView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentRemoveView):
+
+    form_class = ContentEmptyForm
+    model = Feature
+    template_name = 'compose/feature_remove.html'
+
+
+class FeatureUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
+
+    form_class = FeatureForm
+    model = Feature
+    template_name = 'compose/feature_create_update.html'
+
+
+class FeatureStyleCreateView (LoginRequiredMixin, StaffuserRequiredMixin, CreateView):
+    form_class = FeatureStyleForm
+    model = FeatureStyle
+    template_name = 'compose/style_create_update.html'
+
+    def get_success_url(self):
+        return reverse('compose.feature.style.list')
+
+
+class FeatureStyleUpdateView (LoginRequiredMixin, StaffuserRequiredMixin, UpdateView):
+    form_class = FeatureStyleForm
+    model = FeatureStyle
+    template_name = 'compose/style_create_update.html'
+
+    def get_success_url(self):
+        return reverse('compose.feature.style.list')
+
+
+class HeaderCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentCreateView):
+
+    block_class = HeaderBlock
+    form_class = HeaderForm
+    model = Header
+    template_name = 'compose/header_create_update.html'
+
+
+class HeaderPublishView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
+
+    form_class = ContentEmptyForm
+    model = Header
+    template_name = 'compose/header_publish.html'
+
+
+class HeaderUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
+
+    form_class = HeaderForm
+    model = Header
+    template_name = 'compose/header_create_update.html'
+
+
+class HeaderRemoveView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentRemoveView):
+
+    form_class = ContentEmptyForm
+    model = Header
+    template_name = 'compose/header_remove.html'
+
+
+class HeaderStyleCreateView (LoginRequiredMixin, StaffuserRequiredMixin, CreateView):
+    form_class = HeaderStyleForm
+    model = HeaderStyle
+    template_name = 'compose/style_create_update.html'
+
+    def get_success_url(self):
+        return reverse('compose.header.style.list')
+
+
+class HeaderStyleUpdateView (LoginRequiredMixin, StaffuserRequiredMixin, UpdateView):
+    form_class = HeaderStyleForm
+    model = HeaderStyle
+    template_name = 'compose/style_create_update.html'
+
+    def get_success_url(self):
+        return reverse('compose.header.style.list')
+
+
+class FeatureStyleListView(LoginRequiredMixin, StaffuserRequiredMixin, ListView):
+    model = FeatureStyle
+
+
+class HeaderStyleListView(LoginRequiredMixin, StaffuserRequiredMixin, ListView):
+    model = HeaderStyle
