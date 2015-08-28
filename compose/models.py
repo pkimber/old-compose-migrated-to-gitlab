@@ -186,7 +186,11 @@ class Feature(ContentModel):
     title = models.TextField()
     description = models.TextField(blank=True)
     picture = models.ImageField(upload_to='block', blank=True)
-    url = models.URLField(blank=True, null=True)
+    link = models.ForeignKey(
+        Link,
+        related_name='feature_link',
+        blank=True, null=True
+    )
     style = models.ForeignKey(FeatureStyle, blank=True, null=True)
 
     class Meta:
@@ -227,7 +231,7 @@ class Feature(ContentModel):
     def wizard_fields(self):
         return [
             Wizard('picture', Wizard.IMAGE, Wizard.SINGLE),
-            Wizard('url', Wizard.LINK, Wizard.SINGLE),
+            Wizard('link', Wizard.LINK, Wizard.SINGLE),
         ]
 
 reversion.register(Feature)
