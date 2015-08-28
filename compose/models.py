@@ -180,6 +180,12 @@ class Feature(ContentModel):
     """Feature Block title, description (plain text), picture, URL style
     Used where we are providing a some links that we want to feature.
     """
+
+    SECTION_A='feature_a'
+    SECTION_B='feature_b'
+    SECTION_C='feature_c'
+    SECTION_D='feature_d'
+
     block = models.ForeignKey(FeatureBlock, related_name='content')
     order = models.IntegerField()
 
@@ -264,6 +270,11 @@ class Header(ContentModel):
     """Header Block - title and style
     Used for heading for a section.
     """
+    SECTION_A='header_a'
+    SECTION_B='header_b'
+    SECTION_C='header_c'
+    SECTION_D='header_d'
+
     block = models.ForeignKey(HeaderBlock, related_name='content')
     order = models.IntegerField()
 
