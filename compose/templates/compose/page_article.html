@@ -21,7 +21,9 @@
 {% block content %}
   {% include 'compose/_body.html' %}
   {% if form %}
-    {% include '_form.html' %}
+    <div class="l-box">
+      {% include '_form.html' %}
+    </div>
   {% endif %}
   {% include 'compose/_card.html' %}
 {% endblock content %}
