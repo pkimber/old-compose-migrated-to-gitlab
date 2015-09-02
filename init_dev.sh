@@ -10,5 +10,7 @@ django-admin.py migrate --noinput
 django-admin.py demo_data_login
 django-admin.py init_app_block
 django-admin.py init_app_compose
+# for the 'css' code snippet
+django-admin.py demo_data_compose
 
 django-admin.py runserver

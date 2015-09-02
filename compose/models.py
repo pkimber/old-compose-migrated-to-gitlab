@@ -4,7 +4,10 @@ from django.db import models
 
 import reversion
 
-from base.model_utils import copy_model_instance
+from base.model_utils import (
+    copy_model_instance,
+    TimeStampedModel,
+)
 from block.models import (
     BlockModel,
     ContentModel,
@@ -95,6 +98,41 @@ class Article(ContentModel):
         ]
 
 reversion.register(Article)
+
+
+class CodeSnippetManager(models.Manager):
+
+    def create_code_snippet(self, slug, snippet):
+        obj = self.model(slug=slug, code=snippet)
+        obj.save()
+        return obj
+
+    def init_code_snippet(self, slug, snippet):
+        try:
+            obj = self.model.objects.get(slug=slug)
+            obj.snippet = snippet
+            obj.save()
+        except ObjectDoesNotExist:
+            obj = self.create_code_snippet(slug, snippet)
+        return obj
+
+
+class CodeSnippet(TimeStampedModel):
+
+    CSS = 'css'
+
+    slug = models.SlugField(unique=True)
+    code = models.TextField(blank=True)
+    objects = CodeSnippetManager()
+
+    class Meta:
+        verbose_name = 'Code Snippet'
+        verbose_name_plural = 'Code Snippets'
+
+    def __str__(self):
+        return '{}'.format(self.slug)
+
+reversion.register(CodeSnippet)
 
 
 class SlideshowBlock(BlockModel):

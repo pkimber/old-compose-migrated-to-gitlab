@@ -11,7 +11,10 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
 
-from .views import SettingsView
+from .views import (
+    DashView,
+    SettingsView,
+)
 
 admin.autodiscover()
 
@@ -28,6 +31,10 @@ urlpatterns = patterns(
         view=RedirectView.as_view(url=reverse_lazy('block.page.list'), permanent=False),
         name='project.dash'
         ),
+    url(r'^dash/$',
+        view=DashView.as_view(),
+        name='project.dash'
+        ),
     url(r'^settings/$',
         view=SettingsView.as_view(),
         name='project.settings'
@@ -37,6 +44,9 @@ urlpatterns = patterns(
         ),
     url(regex=r'^compose/',
         view=include('compose.urls.compose')
+        ),
+    url(regex=r'^snippet/',
+        view=include('compose.urls.snippet')
         ),
     # this url include should come last
     url(regex=r'^',

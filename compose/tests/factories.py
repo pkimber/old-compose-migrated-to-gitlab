@@ -5,6 +5,7 @@ from block.tests.factories import PageSectionFactory
 from compose.models import (
     Article,
     ArticleBlock,
+    CodeSnippet,
     Slideshow,
     SlideshowBlock,
     #Feature,
@@ -32,6 +33,16 @@ class ArticleFactory(factory.django.DjangoModelFactory):
     @factory.sequence
     def order(n):
         return n
+
+
+class CodeSnippetFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = CodeSnippet
+
+    @factory.sequence
+    def slug(n):
+        return 'slug_{:02d}'.format(n)
 
 
 class SlideshowBlockFactory(factory.django.DjangoModelFactory):

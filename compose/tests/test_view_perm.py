@@ -9,6 +9,7 @@ from block.tests.factories import (
 )
 from compose.tests.factories import (
     ArticleFactory,
+    CodeSnippetFactory,
     SlideshowFactory,
 )
 
@@ -43,6 +44,19 @@ class TestViewPerm(PermTestCase):
     def test_article_update(self):
         c = ArticleFactory()
         url = reverse('compose.article.update', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_code_snippet_list(self):
+        url = reverse('compose.code.snippet.list')
+        self.assert_staff_only(url)
+
+    def test_code_snippet_create(self):
+        url = reverse('compose.code.snippet.create')
+        self.assert_staff_only(url)
+
+    def test_code_snippet_update(self):
+        snippet = CodeSnippetFactory()
+        url = reverse('compose.code.snippet.update', args=[snippet.slug])
         self.assert_staff_only(url)
 
     def test_home(self):

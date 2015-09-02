@@ -10,6 +10,8 @@ from braces.views import (
     LoginRequiredMixin,
     StaffuserRequiredMixin,
 )
+
+from base.view_utils import BaseMixin
 from block.forms import ContentEmptyForm
 from block.views import (
     ContentCreateView,
@@ -21,6 +23,8 @@ from block.views import (
 from .forms import (
     ArticleEmptyForm,
     ArticleForm,
+    CodeSnippetCreateForm,
+    CodeSnippetUpdateForm,
     SlideshowEmptyForm,
     SlideshowForm,
     FeatureForm,
@@ -31,6 +35,7 @@ from .forms import (
 from .models import (
     Article,
     ArticleBlock,
+    CodeSnippet,
     Slideshow,
     SlideshowBlock,
     Feature,
@@ -73,6 +78,33 @@ class ArticleUpdateView(
     form_class = ArticleForm
     model = Article
     template_name = 'compose/article_update.html'
+
+
+class CodeSnippetCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, CreateView):
+
+    form_class = CodeSnippetCreateForm
+    model = CodeSnippet
+
+    def get_success_url(self):
+        return reverse('compose.code.snippet.list')
+
+
+class CodeSnippetListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
+
+    model = CodeSnippet
+    paginate_by = 15
+
+
+class CodeSnippetUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
+
+    form_class = CodeSnippetUpdateForm
+    model = CodeSnippet
+
+    def get_success_url(self):
+        return reverse('compose.code.snippet.list')
 
 
 class SlideshowCreateView(

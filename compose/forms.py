@@ -8,6 +8,7 @@ from base.form_utils import (
 
 from .models import (
     Article,
+    CodeSnippet,
     Slideshow,
     Feature,
     FeatureStyle,
@@ -44,6 +45,25 @@ class ArticleForm(RequiredFieldForm):
             #'picture',
             'article_type',
             'image_size',
+        )
+
+
+class CodeSnippetCreateForm(RequiredFieldForm):
+
+    class Meta:
+        model = CodeSnippet
+        fields = (
+            'slug',
+            'code',
+        )
+
+
+class CodeSnippetUpdateForm(CodeSnippetCreateForm):
+
+    class Meta:
+        model = CodeSnippet
+        fields = (
+            'code',
         )
 
 

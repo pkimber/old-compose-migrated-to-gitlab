@@ -13,6 +13,7 @@ from block.tests.factories import (
 )
 from compose.tests.factories import (
     ArticleFactory,
+    CodeSnippetFactory,
     SlideshowFactory,
 )
 
@@ -92,6 +93,22 @@ class TestView(TestCase):
             reverse('compose.article.remove', kwargs={'pk': c.pk}),
         )
         self.assertEqual(response.status_code, 302)
+
+    def test_code_snippet_list(self):
+        url = reverse('compose.code.snippet.list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_code_snippet_create(self):
+        url = reverse('compose.code.snippet.create')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_code_snippet_update(self):
+        snippet = CodeSnippetFactory()
+        url = reverse('compose.code.snippet.update', args=[snippet.slug])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
 
     def test_slideshow_create(self):
         p = PageSectionFactory(page=PageFactory(slug_menu=''))
