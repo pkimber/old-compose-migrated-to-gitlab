@@ -11,7 +11,6 @@ class DashView(BaseMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        dash_css = ''
         try:
             obj = CodeSnippet.objects.get(slug=CodeSnippet.CSS)
             snippet = obj.code
