@@ -31,7 +31,7 @@ setup(
             'templates/compose/*.*',
         ],
     },
-    version='0.0.09',
+    version='0.0.10',
     description='compose',
     author='Malcolm Dinsmore',
     author_email='m.dinsmore@talk21.com',
