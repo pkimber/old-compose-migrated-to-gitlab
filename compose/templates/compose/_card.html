@@ -1,7 +1,9 @@
 {% load block_tags %}
 {% load thumbnail %}
-<div class="pure-g">
 {% for b in card_list %}
+  {% if forloop.first %}
+    <div class="pure-g">
+  {% endif %}
   {% if b.article_type == 'text_only' or not b.picture %}
     <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3">
       <div class="l-box">
@@ -42,6 +44,8 @@
       </div> 
     </div>         
   {% endif %}
+  {% if forloop.last %}
+    </div>
+  {% endif %}
 {% endfor %}
-</div>
 {% if design %}{% block_add card_create_url 'Card' %}{% endif %}

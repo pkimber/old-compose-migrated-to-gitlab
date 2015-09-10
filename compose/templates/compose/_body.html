@@ -1,7 +1,9 @@
 {% load block_tags %}
 {% load thumbnail %}
-<div class="pure-g">
   {% for b in body_list %}
+  {% if forloop.first %}
+    <div class="pure-g">
+  {% endif %}
     {% if b.article_type == 'text_right' %}
       <!-- opening div inside this include -->
       {% include 'compose/_image_width.html' %}
@@ -131,5 +133,7 @@
         </div>
       {% endif %}
   {% endfor %}
-</div>
+  {% if forloop.last %}
+    </div>
+  {% endif %}
 {% if design %}{% block_add body_create_url 'Article' %}{% endif %}
