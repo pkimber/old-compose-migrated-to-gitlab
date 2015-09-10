@@ -132,8 +132,8 @@
           </div>
         </div>
       {% endif %}
-  {% endfor %}
   {% if forloop.last %}
     </div>
   {% endif %}
+  {% endfor %}
 {% if design %}{% block_add body_create_url 'Article' %}{% endif %}
