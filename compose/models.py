@@ -48,7 +48,7 @@ class Article(ContentModel):
     block = models.ForeignKey(ArticleBlock, related_name='content')
     order = models.IntegerField()
 
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
     article_type = models.CharField(
         max_length=12,
@@ -154,7 +154,7 @@ class Slideshow(ContentModel):
     block = models.ForeignKey(SlideshowBlock, related_name='content')
     order = models.IntegerField()
 
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
     slideshow = models.ManyToManyField(Image)
 
