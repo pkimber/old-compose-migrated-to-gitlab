@@ -4,7 +4,6 @@
 -e ../block
 -e ../login
 -e ../mail
-beautifulsoup4
 devpi-client
 django-debug-toolbar
 django_extensions
@@ -21,4 +20,3 @@ pytest-pep8
 pytest-sugar
 pytest-watch
 pyyaml
-walkdir
