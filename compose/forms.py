@@ -1,11 +1,8 @@
 # -*- encoding: utf-8 -*-
-from django import forms
-
 from base.form_utils import (
     bleach_clean,
     RequiredFieldForm,
 )
-
 from .models import (
     Article,
     CodeSnippet,
@@ -15,13 +12,6 @@ from .models import (
     Header,
     HeaderStyle,
 )
-
-
-class ArticleEmptyForm(forms.ModelForm):
-
-    class Meta:
-        model = Article
-        fields = ()
 
 
 class ArticleForm(RequiredFieldForm):
@@ -65,13 +55,6 @@ class CodeSnippetUpdateForm(CodeSnippetCreateForm):
         fields = (
             'code',
         )
-
-
-class SlideshowEmptyForm(forms.ModelForm):
-
-    class Meta:
-        model = Slideshow
-        fields = ()
 
 
 class SlideshowForm(RequiredFieldForm):

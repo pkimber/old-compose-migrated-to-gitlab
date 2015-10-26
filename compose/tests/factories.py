@@ -8,6 +8,7 @@ from compose.models import (
     CodeSnippet,
     Slideshow,
     SlideshowBlock,
+    SlideshowImage,
     #Feature,
     #FeatureBlock,
     #Header,
@@ -53,22 +54,18 @@ class SlideshowBlockFactory(factory.django.DjangoModelFactory):
         model = SlideshowBlock
 
 
+class SlideshowImageFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = SlideshowImage
+
+
 class SlideshowFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Slideshow
 
     block = factory.SubFactory(SlideshowBlockFactory)
-
-    @factory.post_generation
-    def slideshow(self, create, extracted, **kwargs):
-        if not create:
-            # Simple build, do nothing.
-            return
-        if extracted:
-            # A list of products were passed in, use them
-            for image in extracted:
-                self.slideshow.add(image)
 
     @factory.sequence
     def order(n):

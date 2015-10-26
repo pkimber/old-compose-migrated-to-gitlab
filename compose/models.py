@@ -1,13 +1,11 @@
 # -*- encoding: utf-8 -*-
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db import models
 
 import reversion
 
-from base.model_utils import (
-    copy_model_instance,
-    TimeStampedModel,
-)
+from base.model_utils import TimeStampedModel
 from block.models import (
     BlockModel,
     ContentModel,
@@ -180,9 +178,17 @@ class Slideshow(ContentModel):
         return '{} {}'.format(self.title, self.moderate_state)
 
     def copy_related_data(self, published_instance):
-        """Copy slideshow images."""
-        for image in self.slideshow.all():
-            published_instance.slideshow.add(image)
+        """Copy slideshow images and links for the references."""
+        for item in self.ordered_slideshow():
+            obj = self.slideshow.through(
+                content=published_instance,
+                image=item.image,
+                order=item.order,
+            )
+            obj.save()
+
+    def ordered_slideshow(self):
+        return self.slideshow.through.objects.filter(content=self)
 
     def url_publish(self):
         return reverse('compose.slideshow.publish', kwargs={'pk': self.pk})

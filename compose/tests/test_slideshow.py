@@ -6,6 +6,7 @@ from block.tests.factories import ImageFactory
 from compose.tests.factories import (
     SlideshowBlockFactory,
     SlideshowFactory,
+    SlideshowImageFactory,
 )
 from login.tests.factories import UserFactory
 
@@ -19,10 +20,9 @@ def test_content_methods():
 @pytest.mark.django_db
 def test_publish():
     block = SlideshowBlockFactory()
-    c = SlideshowFactory(
-        block=block,
-        slideshow=(ImageFactory(), ImageFactory()),
-    )
+    c = SlideshowFactory(block=block)
+    SlideshowImageFactory(content=c, image=ImageFactory(), order=1)
+    SlideshowImageFactory(content=c, image=ImageFactory(), order=2)
     block.publish(UserFactory())
     assert 2 == block.get_pending().slideshow.count()
     assert 2 == block.get_published().slideshow.count()

@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
-from django.test import TestCase
+# from django.test import TestCase
 
-from block.tests.helper import check_content
+# from block.tests.helper import check_content
 
-#from compose.tests.factories import HeaderFactory
+# from compose.tests.factories import HeaderFactory
 
 
-#class TestHeader(TestCase):
+# class TestHeader(TestCase):
 #
-#    def test_content_methods(self):
-#        c = HeaderFactory()
-#        check_content(c)
+#     def test_content_methods(self):
+#         c = HeaderFactory()
+#         check_content(c)
