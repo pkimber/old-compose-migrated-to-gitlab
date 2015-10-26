@@ -149,6 +149,13 @@ class Slideshow(ContentModel):
     even if we didn't use the same slider each time these properties would
     apply.
 
+    Slideshow           Interim             Image
+    ------------------- ------------------- -------------------
+                        FK Slideshow        Order
+                        FK Image            Image
+
+    Use https://docs.djangoproject.com/en/1.8/topics/db/models/#intermediary-manytomany
+
     """
 
     block = models.ForeignKey(SlideshowBlock, related_name='content')
@@ -156,7 +163,11 @@ class Slideshow(ContentModel):
 
     title = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
-    slideshow = models.ManyToManyField(Image)
+    slideshow = models.ManyToManyField(
+        Image,
+        related_name='slideshow',
+        through='SlideshowImage'
+    )
 
     class Meta:
         # cannot put 'unique_together' on abstract base class
@@ -189,6 +200,27 @@ class Slideshow(ContentModel):
         ]
 
 reversion.register(Slideshow)
+
+
+class SlideshowImage(models.Model):
+    """Slideshow images for the slideshow.
+
+    This is the model that is used to govern the many-to-many relationship
+    between ``Title`` and ``Image``.
+
+    https://docs.djangoproject.com/en/1.8/topics/db/models/#extra-fields-on-many-to-many-relationships
+
+    """
+    content = models.ForeignKey(Slideshow)
+    image = models.ForeignKey(Image)
+    order = models.IntegerField()
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'Slideshow Image'
+        verbose_name_plural = 'Slideshow Images'
+
+reversion.register(SlideshowImage)
 
 
 class FeatureBlock(BlockModel):
