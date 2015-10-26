@@ -11,15 +11,15 @@
     </li>
     {% if forloop.last %}
       </ul>
-      <h1>
-        {% if b.title %}
-          {{ b.title }}
-        {% else %}
-          {{ header_footer.header }}
-        {% endif %}
-      </h1>
     {% endif %}
   {% endfor %}
+  <h1>
+    {% if b.title %}
+      {{ b.title }}
+    {% else %}
+      {{ header_footer.header }}
+    {% endif %}
+  </h1>
   {% if design %}{% block_moderate b %}{% endif %}
 {% empty %}
   {% if design %}{% block_add slideshow_create_url 'Slideshow' %}{% endif %}
