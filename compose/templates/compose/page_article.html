@@ -25,6 +25,20 @@
       {% include '_form.html' %}
     </div>
   {% endif %}
+  {# calendar from the booking app #}
+  {% if calendar %}
+    {% for c in calendar %}
+      <div class="pure-g">
+        {% for month in c %}
+          <div class="pure-u-1 pure-u-md-1-3">
+            <div class="l-box">
+              {{ month }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  {% endif %}
   {% include 'compose/_card.html' %}
 {% endblock content %}
 

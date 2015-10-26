@@ -27,7 +27,7 @@
                 {% endautoescape %}
               </td>
             </tr>
-            {% for slide in object.slideshow.all %}
+            {% for item in object.ordered_slideshow %}
               <tr valign="top">
                 <td>
                   {% if forloop.first %}
@@ -35,7 +35,9 @@
                   {% endif %}
                 </td>
                 <td>
-                  <img class="pure-img" src="{% thumbnail slide.image 200x150 crop='smart' %}" />
+                  {{ item.order }}.
+                  {{ item.image.title }}
+                  <img class="pure-img" src="{% thumbnail item.image.image 200x150 crop='smart' %}" />
                 </td>
               </tr>
             {% endfor %}
