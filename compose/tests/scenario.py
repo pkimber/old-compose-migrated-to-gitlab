@@ -13,6 +13,7 @@ from compose.models import (
     ArticleBlock,
     SECTION_BODY,
     SECTION_CARD,
+    SECTION_GALLERY,
     SECTION_SLIDESHOW,
 )
 from compose.tests.model_maker import (
@@ -61,6 +62,13 @@ def init_app_compose():
         'compose/page_article.html',
         is_home=True,
     )
+    page_gallery = Page.objects.init_page(
+        'gallery',
+        '',
+        'Gallery',
+        1,
+        'compose/page_gallery.html',
+    )
     # layout - body
     body = Section.objects.init_section(
         SECTION_BODY,
@@ -79,6 +87,14 @@ def init_app_compose():
         'compose.article.create',
     )
     PageSection.objects.init_page_section(home, card)
+    # layout - gallery
+    gallery = Section.objects.init_section(
+        SECTION_GALLERY,
+        SECTION_GALLERY.capitalize(),
+        'compose',
+        'Slideshow',
+        'compose.slideshow.create',
+    )
     # layout - slideshow
     slideshow = Section.objects.init_section(
         SECTION_SLIDESHOW,
@@ -88,10 +104,16 @@ def init_app_compose():
         'compose.slideshow.create',
     )
     PageSection.objects.init_page_section(home, slideshow)
-    # template
+    PageSection.objects.init_page_section(page_gallery, gallery)
+    PageSection.objects.init_page_section(page_gallery, slideshow)
+    # template - article
     template = Template.objects.init_template('compose/page_article.html')
     TemplateSection.objects.init_template_section(template, body)
     TemplateSection.objects.init_template_section(template, card)
+    TemplateSection.objects.init_template_section(template, slideshow)
+    # template - gallery
+    template = Template.objects.init_template('compose/page_gallery.html')
+    TemplateSection.objects.init_template_section(template, gallery)
     TemplateSection.objects.init_template_section(template, slideshow)
     Url.objects.init_pages()
     # we wouldn't normally put protected views in the list of URLs

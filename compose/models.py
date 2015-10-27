@@ -17,6 +17,7 @@ from block.models import (
 
 SECTION_BODY = 'body'
 SECTION_CARD = 'card'
+SECTION_GALLERY = 'gallery'
 SECTION_SLIDESHOW = 'slideshow'
 
 

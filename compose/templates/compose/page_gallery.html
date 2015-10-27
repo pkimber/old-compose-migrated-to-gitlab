@@ -22,32 +22,31 @@
 {% endblock header %}
 
 {% block content %}
-  {% for g in gallery_list %}
-    {{ g }}
-    {% if design %}
-      {% block_moderate g %}
-    {% endif %}
-  {% empty %}
-    {% if design %}
-      <div class="pure-g">
-        <div class="pure-u-1">
-          {% block_add gallery_create_url 'Gallery' %}
-        </div>
-      </div>
-    {% endif %}
-  {% endfor g in body_list %}
-  <div class="my-gallery" itemscope itemtype="http://schema.org/imagegallery">
-    {% for g in gallery_list %}
-      {% for item in g.ordered_slideshow %}
-        <figure itemprop="associatedmedia" itemscope itemtype="http://schema.org/imageobject">
-          <a href="{% thumbnail item.image.image 600x400 autocrop background %}" itemprop="contenturl" data-size="600x400">
-            <img src="{% thumbnail item.image.image 150x100 autocrop background %}" itemprop="thumbnail" alt="image description" />
-          </a>
-          <figcaption itemprop="caption description">image caption</figcaption>
-        </figure>
+  <div class="pure-g">
+    <div class="my-gallery" itemscope itemtype="http://schema.org/imagegallery">
+      {% for g in gallery_list %}
+        {% for item in g.ordered_slideshow %}
+          <figure itemprop="associatedmedia" itemscope itemtype="http://schema.org/imageobject">
+            <a href="{% thumbnail item.image.image 600x400 crop %}" itemprop="contenturl" data-size="600x400">
+              <img src="{% thumbnail item.image.image 150x100 crop %}" itemprop="thumbnail" alt="image description" />
+            </a>
+            <figcaption itemprop="caption description">image caption</figcaption>
+          </figure>
+        {% endfor %}
       {% endfor %}
-    {% endfor %}
+    </div>
   </div>
+  {% if design %}
+    <div class="pure-g">
+      <div class="pure-u-1">
+        {% for g in gallery_list %}
+          {% block_moderate g %}
+        {% empty %}
+          {% block_add gallery_create_url 'Gallery' %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
   {% include 'base/_photoswipe.html' %}
 {% endblock content %}
 
