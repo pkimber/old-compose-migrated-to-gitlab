@@ -7,6 +7,15 @@
       {{ b.description }}
     {% endautoescape %}
   {% endif %}
+  {% if not b.picture %}
+    {% if b.link %}
+      <a href="{{ b.link.url }}" target="_blank">
+        <i class="fa fa-external-link"></i>
+        {{ b.link.title }}
+      </a>
+      <br>
+    {% endif %}
+  {% endif %}
   {% if design %}
     {% block_moderate b %}
   {% endif %}
