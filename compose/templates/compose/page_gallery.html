@@ -27,10 +27,10 @@
       {% for g in gallery_list %}
         {% for item in g.ordered_slideshow %}
           <figure itemprop="associatedmedia" itemscope itemtype="http://schema.org/imageobject">
-            <a href="{% thumbnail item.image.image 600x400 crop %}" itemprop="contenturl" data-size="600x400">
-              <img src="{% thumbnail item.image.image 150x100 crop %}" itemprop="thumbnail" alt="image description" />
+            <a href="{{ MEDIA_URL }}{{ item.image.image }}" itemprop="contenturl" data-size="{{ item.image.image.width }}x{{ item.image.image.height }}">
+              <img src="{% thumbnail item.image.image '200x0' crop='auto' %}" itemprop="thumbnail" alt="{{ item.image.title }}" />
             </a>
-            <figcaption itemprop="caption description">image caption</figcaption>
+            <figcaption itemprop="caption description">{{ item.image.title }}</figcaption>
           </figure>
         {% endfor %}
       {% endfor %}
