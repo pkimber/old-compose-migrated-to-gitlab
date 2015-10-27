@@ -42,6 +42,9 @@ urlpatterns = patterns(
     url(regex=r'^block/',
         view=include('block.urls.block')
         ),
+    url(regex=r'^wizard/',
+        view=include('block.urls.wizard')
+        ),
     url(regex=r'^compose/',
         view=include('compose.urls.compose')
         ),
