@@ -1,0 +1,13 @@
+{% load thumbnail %}
+
+<div class="l-box">
+  {% if b.picture %}
+    {% if b.link %}
+      <a href="{{ b.link.url }}" target="_blank">
+    {% endif %}
+    <img alt="{{ b.picture.title }}" title="{{ b.picture.title }}" class="{{ image_class }} pure-img" src="{% thumbnail b.picture.image 700x525 autocrop %}">
+    {% if b.link %}
+      </a>
+    {% endif %}
+  {% endif %}
+</div>

@@ -6,17 +6,7 @@
   {% endif %}
   {% if b.article_type == 'text_only' or not b.picture %}
     <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3">
-      <div class="l-box">
-        <h4>{{ b.title }}</h4>
-        {% if b.description %}
-          {% autoescape off %}
-            {{ b.description }}
-          {% endautoescape %}
-        {% endif %}
-        {% if design %}
-          {% block_moderate b %}
-        {% endif %}
-      </div>
+      {% include 'compose/_text.html' with text_class='l-box' %}
     </div>
   {% else %}
     <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3">
@@ -24,25 +14,21 @@
         <div class="pure-u-1-3">
           <div class="l-box">
             {% if b.picture %}
-              <img class="article-image-right pure-img" src="{% thumbnail b.picture.image 100x200 crop='smart' %}" />
+              {% if b.link %}
+                <a href="{{ b.link.url }}" target="_blank">
+              {% endif %}
+              <img alt="{{ b.picture.title }}" title="{{ b.picture.title }}" class="{{ image_class }} pure-img" src="{% thumbnail b.picture.image 100x200 crop='smart' %}">
+              {% if b.link %}
+                </a>
+              {% endif %}
             {% endif %}
           </div>
         </div>
         <div class="pure-u-2-3">
-          <div class="t-box">
-            <h4>{{ b.title }}</h4>
-            {% if b.description %}
-              {% autoescape off %}
-                {{ b.description }}
-              {% endautoescape %}
-            {% endif %}
-            {% if design %}
-              {% block_moderate b %}
-            {% endif %}
-          </div>
-        </div>  
-      </div> 
-    </div>         
+          {% include 'compose/_text.html' with text_class='t-box' %}
+        </div>
+      </div>
+    </div>
   {% endif %}
   {% if forloop.last %}
     </div>

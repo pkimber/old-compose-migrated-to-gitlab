@@ -1,0 +1,13 @@
+{% load block_tags %}
+
+<div class="{{ text_class }}">
+  <h4>{{ b.title }}</h4>
+  {% if b.description %}
+    {% autoescape off %}
+      {{ b.description }}
+    {% endautoescape %}
+  {% endif %}
+  {% if design %}
+    {% block_moderate b %}
+  {% endif %}
+</div>
