@@ -23,8 +23,8 @@
     float: left;
 }
 .my-gallery img {
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 100px;
 }
 .my-gallery figure {
     display: block;
