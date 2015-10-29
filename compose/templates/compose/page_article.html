@@ -2,22 +2,6 @@
 
 {% load static %}
 
-{% block title %}
-  {{ page.name}}
-{% endblock title %}
-
-{% block stylesheets_extra %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{% static 'compose/css/compose.css' %}">
-  <link rel="stylesheet" href="{% static 'web/css/web.css' %}">
-{% endblock stylesheets_extra %}
-
-{% block header %}
-  <div class="header">
-    {% include 'compose/_header_slideshow.html' %}
-  </div>
-{% endblock header %}
-
 {% block content %}
   {% include 'compose/_body.html' %}
   {% if form %}
