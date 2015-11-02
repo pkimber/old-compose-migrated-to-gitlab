@@ -104,12 +104,12 @@ def init_app_compose():
         article_template,
         is_home=True,
     )
-    # page - gallery
+    # page - gallery - hidden on init
     page_gallery = Page.objects.init_page(
         'gallery',
         '',
         'Gallery',
-        1,
+        0,
         gallery_template,
     )
     PageSection.objects.init_page_section(home, body)
