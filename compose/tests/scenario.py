@@ -54,22 +54,7 @@ def _init_article_block(page_section):
 
 
 def init_app_compose():
-    home = Page.objects.init_page(
-        Page.HOME,
-        '',
-        'Home',
-        0,
-        'compose/page_article.html',
-        is_home=True,
-    )
-    page_gallery = Page.objects.init_page(
-        'gallery',
-        '',
-        'Gallery',
-        1,
-        'compose/page_gallery.html',
-    )
-    # layout - body
+    # section - body
     body = Section.objects.init_section(
         SECTION_BODY,
         SECTION_BODY.capitalize(),
@@ -77,8 +62,7 @@ def init_app_compose():
         'Article',
         'compose.article.create',
     )
-    PageSection.objects.init_page_section(home, body)
-    # layout - card
+    # section - card
     card = Section.objects.init_section(
         SECTION_CARD,
         SECTION_CARD.capitalize(),
@@ -86,8 +70,7 @@ def init_app_compose():
         'Article',
         'compose.article.create',
     )
-    PageSection.objects.init_page_section(home, card)
-    # layout - gallery
+    # section - gallery
     gallery = Section.objects.init_section(
         SECTION_GALLERY,
         SECTION_GALLERY.capitalize(),
@@ -95,7 +78,7 @@ def init_app_compose():
         'Slideshow',
         'compose.slideshow.create',
     )
-    # layout - slideshow
+    # section - slideshow
     slideshow = Section.objects.init_section(
         SECTION_SLIDESHOW,
         SECTION_SLIDESHOW.capitalize(),
@@ -103,19 +86,36 @@ def init_app_compose():
         'Slideshow',
         'compose.slideshow.create',
     )
+    # template - article
+    article_template = Template.objects.init_template('Article', 'compose/page_article.html')
+    TemplateSection.objects.init_template_section(article_template, body)
+    TemplateSection.objects.init_template_section(article_template, card)
+    TemplateSection.objects.init_template_section(article_template, slideshow)
+    # template - gallery
+    gallery_template = Template.objects.init_template('Gallery', 'compose/page_gallery.html')
+    TemplateSection.objects.init_template_section(gallery_template, gallery)
+    TemplateSection.objects.init_template_section(gallery_template, slideshow)
+    # page - home
+    home = Page.objects.init_page(
+        Page.HOME,
+        '',
+        'Home',
+        0,
+        article_template,
+        is_home=True,
+    )
+    # page - gallery
+    page_gallery = Page.objects.init_page(
+        'gallery',
+        '',
+        'Gallery',
+        1,
+        gallery_template,
+    )
+    PageSection.objects.init_page_section(home, body)
+    PageSection.objects.init_page_section(home, card)
     PageSection.objects.init_page_section(home, slideshow)
     PageSection.objects.init_page_section(page_gallery, gallery)
     PageSection.objects.init_page_section(page_gallery, slideshow)
-    # template - article
-    template = Template.objects.init_template('compose/page_article.html')
-    TemplateSection.objects.init_template_section(template, body)
-    TemplateSection.objects.init_template_section(template, card)
-    TemplateSection.objects.init_template_section(template, slideshow)
-    # template - gallery
-    template = Template.objects.init_template('compose/page_gallery.html')
-    TemplateSection.objects.init_template_section(template, gallery)
-    TemplateSection.objects.init_template_section(template, slideshow)
+    # Link wizard
     Url.objects.init_pages()
-    # we wouldn't normally put protected views in the list of URLs
-    # Url.objects.init_reverse_url('Dashboard', 'project.dash')
-    # Url.objects.init_reverse_url('Settings', 'project.settings')
