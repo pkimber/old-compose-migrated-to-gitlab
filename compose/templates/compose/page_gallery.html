@@ -23,7 +23,7 @@
     <div class="pure-g">
       <div class="my-gallery" itemscope itemtype="http://schema.org/imagegallery">
         {% for item in g.ordered_slideshow %}
-          <div class="pure-u-1 pure-u-md-1-3">
+          <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3">
             <figure itemprop="associatedmedia" itemscope itemtype="http://schema.org/imageobject">
               <a href="{{ MEDIA_URL }}{{ item.image.image }}" itemprop="contenturl" data-size="{{ item.image.image.width }}x{{ item.image.image.height }}">
                 <img src="{% thumbnail item.image.image '200x0' crop='auto' %}" itemprop="thumbnail" alt="{{ item.image.title }}" />
