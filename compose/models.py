@@ -258,17 +258,21 @@ class Feature(ContentModel):
     Used where we are providing a some links that we want to feature.
     """
 
-    SECTION_A='feature_a'
-    SECTION_B='feature_b'
-    SECTION_C='feature_c'
-    SECTION_D='feature_d'
+    SECTION_A = 'feature_a'
+    SECTION_B = 'feature_b'
+    SECTION_C = 'feature_c'
+    SECTION_D = 'feature_d'
 
     block = models.ForeignKey(FeatureBlock, related_name='content')
     order = models.IntegerField()
 
     title = models.TextField()
     description = models.TextField(blank=True)
-    picture = models.ImageField(upload_to='block', blank=True)
+    picture = models.ForeignKey(
+        Image,
+        related_name='feature_picture',
+        blank=True, null=True
+    )
     link = models.ForeignKey(
         Link,
         related_name='feature_link',
