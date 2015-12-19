@@ -31,7 +31,7 @@ setup(
             'templates/compose/*.*',
         ],
     },
-    version='0.0.17',
+    version='0.0.18',
     description='compose',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
