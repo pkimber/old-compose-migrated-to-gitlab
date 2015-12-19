@@ -10,7 +10,6 @@ from block.models import (
     TemplateSection,
 )
 from compose.models import SECTION_NEWS
-from compose.tests.scenario import init_app_compose
 
 
 class Command(BaseCommand):
