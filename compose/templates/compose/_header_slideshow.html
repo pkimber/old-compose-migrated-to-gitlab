@@ -22,5 +22,12 @@
   </h1>
   {% if design %}{% block_moderate b %}{% endif %}
 {% empty %}
+  <h1>
+    {% if b.title %}
+      {{ b.title }}
+    {% else %}
+      {{ header_footer.header }}
+    {% endif %}
+  </h1>
   {% if design %}{% block_add slideshow_create_url 'Slideshow' %}{% endif %}
 {% endfor %}
