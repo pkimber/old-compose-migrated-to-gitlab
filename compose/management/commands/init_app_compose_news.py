@@ -17,8 +17,11 @@ class Command(BaseCommand):
     help = "Initialise 'compose' application... add news section..."
 
     def handle(self, *args, **options):
+        paginated = PaginatedSection.objects.init_paginated_section(
+            3,
+            '-block__created',
+        )
         # section - news
-        paginated = PaginatedSection.objects.init_paginated_section(3, '-created')
         news = Section.objects.init_section(
             SECTION_NEWS,
             SECTION_NEWS.capitalize(),
