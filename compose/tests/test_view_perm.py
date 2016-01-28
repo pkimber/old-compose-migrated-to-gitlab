@@ -6,6 +6,7 @@ from base.tests.test_utils import PermTestCase
 from block.tests.factories import (
     PageFactory,
     PageSectionFactory,
+    TemplateFactory,
 )
 from compose.tests.factories import (
     ArticleFactory,
@@ -60,21 +61,14 @@ class TestViewPerm(PermTestCase):
         self.assert_staff_only(url)
 
     def test_home(self):
-        PageFactory(
-            is_home=True,
-            slug='home',
-            slug_menu='',
-            template_name='compose/page_article.html',
-        )
+        template = TemplateFactory(template_name='compose/page_article.html')
+        PageFactory(is_home=True, slug='home', slug_menu='', template=template)
         url = reverse('project.home')
         self.assert_any(url)
 
     def test_page_design_home(self):
-        p = PageFactory(
-            slug='home',
-            slug_menu='',
-            template_name='compose/page_article.html',
-        )
+        template = TemplateFactory(template_name='compose/page_article.html')
+        p = PageFactory(slug='home', slug_menu='', template=template)
         url = reverse('project.page.design', kwargs=dict(page=p.slug))
         self.assert_staff_only(url)
 

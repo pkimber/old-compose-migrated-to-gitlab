@@ -2,25 +2,28 @@
 {% load thumbnail %}
 
 {% for b in slideshow_list %}
-  {% for picture in b.slideshow.all %}
+  {% for item in b.ordered_slideshow %}
     {% if forloop.first %}
       <ul class="bxslider">
     {% endif %}
     <li>
-      <img src="{% thumbnail picture.image 3681x664 autocrop %}" title="{{ picture.title }}" class="pure-img" />
+      <img src="{% thumbnail item.image.image 3681x664 autocrop background %}" title="{{ item.content.title }}" class="pure-img" />
     </li>
     {% if forloop.last %}
       </ul>
-      <h1>
-        {% if b.title %}
-          {{ b.title }}
-        {% else %}
-          {{ header_footer.header }}
-        {% endif %}
-      </h1>
     {% endif %}
   {% endfor %}
+  <h1>
+    {% if b.title %}
+      {{ b.title }}
+    {% else %}
+      {{ header_footer.header }}
+    {% endif %}
+  </h1>
   {% if design %}{% block_moderate b %}{% endif %}
 {% empty %}
+  <h1>
+    {{ header_footer.header }}
+  </h1>
   {% if design %}{% block_add slideshow_create_url 'Slideshow' %}{% endif %}
 {% endfor %}

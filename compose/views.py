@@ -21,11 +21,9 @@ from block.views import (
 )
 
 from .forms import (
-    ArticleEmptyForm,
     ArticleForm,
     CodeSnippetCreateForm,
     CodeSnippetUpdateForm,
-    SlideshowEmptyForm,
     SlideshowForm,
     FeatureForm,
     FeatureStyleForm,

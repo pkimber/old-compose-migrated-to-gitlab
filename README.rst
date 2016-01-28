@@ -4,6 +4,8 @@ Compose
 Django application containing a couple of models for use with the block app
 when building a simple CMS site.
 
+.. important:: We will put the panel system into this app.
+
 Install
 =======
 

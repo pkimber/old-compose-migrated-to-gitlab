@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
-from django.test import TestCase
+# from django.test import TestCase
 
-from block.tests.helper import check_content
+# from block.tests.helper import check_content
 
-#from compose.tests.factories import FeatureFactory
+# from compose.tests.factories import FeatureFactory
 
 
-#class TestFeature(TestCase):
+# class TestFeature(TestCase):
 #
 #    def test_content_methods(self):
 #        c = FeatureFactory()

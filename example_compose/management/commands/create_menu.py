@@ -1,18 +1,15 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.core.management.base import BaseCommand
 
 from block.models import (
-        Link,
-        Menu,
-        MenuItem,
-        Page,
-        PageSection,
-        Section,
-        Template,
-        TemplateSection,
-        Url,
+    Link,
+    Menu,
+    MenuItem,
+    Page,
+    PageSection,
+    Section,
+    Template,
+    Url,
 )
 
 class Command(BaseCommand):
@@ -35,8 +32,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         print ("Creating pages...")
-        template_article = Template.objects.init_template('compose/page_article.html')
-        template_feature = Template.objects.init_template('compose/page_feature.html')
+        Template.objects.init_template('compose/page_article.html')
+        Template.objects.init_template('compose/page_feature.html')
         section_body = Section.objects.get(slug='body')
         section_header = Section.objects.init_section(
             'header',

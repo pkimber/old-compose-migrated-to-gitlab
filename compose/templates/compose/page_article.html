@@ -2,22 +2,6 @@
 
 {% load static %}
 
-{% block title %}
-  {{ page.name}}
-{% endblock title %}
-
-{% block stylesheets_extra %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{% static 'compose/css/compose.css' %}">
-  <link rel="stylesheet" href="{% static 'web/css/web.css' %}">
-{% endblock stylesheets_extra %}
-
-{% block header %}
-  <div class="header">
-    {% include 'compose/_header_slideshow.html' %}
-  </div>
-{% endblock header %}
-
 {% block content %}
   {% include 'compose/_body.html' %}
   {% if form %}
@@ -25,6 +9,21 @@
       {% include '_form.html' %}
     </div>
   {% endif %}
+  {# calendar from the booking app #}
+  {% if calendar %}
+    {% for c in calendar %}
+      <div class="pure-g">
+        {% for month in c %}
+          <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3">
+            <div class="l-box">
+              {{ month }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  {% endif %}
+  {% include 'compose/_news.html' %}
   {% include 'compose/_card.html' %}
 {% endblock content %}
 

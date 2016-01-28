@@ -1,13 +1,11 @@
 # -*- encoding: utf-8 -*-
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db import models
 
 import reversion
 
-from base.model_utils import (
-    copy_model_instance,
-    TimeStampedModel,
-)
+from base.model_utils import TimeStampedModel
 from block.models import (
     BlockModel,
     ContentModel,
@@ -19,6 +17,8 @@ from block.models import (
 
 SECTION_BODY = 'body'
 SECTION_CARD = 'card'
+SECTION_GALLERY = 'gallery'
+SECTION_NEWS = 'news'
 SECTION_SLIDESHOW = 'slideshow'
 
 
@@ -149,6 +149,13 @@ class Slideshow(ContentModel):
     even if we didn't use the same slider each time these properties would
     apply.
 
+    Slideshow           Interim             Image
+    ------------------- ------------------- -------------------
+                        FK Slideshow        Order
+                        FK Image            Image
+
+    Use https://docs.djangoproject.com/en/1.8/topics/db/models/#intermediary-manytomany
+
     """
 
     block = models.ForeignKey(SlideshowBlock, related_name='content')
@@ -156,7 +163,11 @@ class Slideshow(ContentModel):
 
     title = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
-    slideshow = models.ManyToManyField(Image)
+    slideshow = models.ManyToManyField(
+        Image,
+        related_name='slideshow',
+        through='SlideshowImage'
+    )
 
     class Meta:
         # cannot put 'unique_together' on abstract base class
@@ -169,9 +180,17 @@ class Slideshow(ContentModel):
         return '{} {}'.format(self.title, self.moderate_state)
 
     def copy_related_data(self, published_instance):
-        """Copy slideshow images."""
-        for image in self.slideshow.all():
-            published_instance.slideshow.add(image)
+        """Copy slideshow images and links for the references."""
+        for item in self.ordered_slideshow():
+            obj = self.slideshow.through(
+                content=published_instance,
+                image=item.image,
+                order=item.order,
+            )
+            obj.save()
+
+    def ordered_slideshow(self):
+        return self.slideshow.through.objects.filter(content=self)
 
     def url_publish(self):
         return reverse('compose.slideshow.publish', kwargs={'pk': self.pk})
@@ -189,6 +208,27 @@ class Slideshow(ContentModel):
         ]
 
 reversion.register(Slideshow)
+
+
+class SlideshowImage(models.Model):
+    """Slideshow images for the slideshow.
+
+    This is the model that is used to govern the many-to-many relationship
+    between ``Title`` and ``Image``.
+
+    https://docs.djangoproject.com/en/1.8/topics/db/models/#extra-fields-on-many-to-many-relationships
+
+    """
+    content = models.ForeignKey(Slideshow)
+    image = models.ForeignKey(Image)
+    order = models.IntegerField()
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'Slideshow Image'
+        verbose_name_plural = 'Slideshow Images'
+
+reversion.register(SlideshowImage)
 
 
 class FeatureBlock(BlockModel):
@@ -219,17 +259,21 @@ class Feature(ContentModel):
     Used where we are providing a some links that we want to feature.
     """
 
-    SECTION_A='feature_a'
-    SECTION_B='feature_b'
-    SECTION_C='feature_c'
-    SECTION_D='feature_d'
+    SECTION_A = 'feature_a'
+    SECTION_B = 'feature_b'
+    SECTION_C = 'feature_c'
+    SECTION_D = 'feature_d'
 
     block = models.ForeignKey(FeatureBlock, related_name='content')
     order = models.IntegerField()
 
     title = models.TextField()
     description = models.TextField(blank=True)
-    picture = models.ImageField(upload_to='block', blank=True)
+    picture = models.ForeignKey(
+        Image,
+        related_name='feature_picture',
+        blank=True, null=True
+    )
     link = models.ForeignKey(
         Link,
         related_name='feature_link',
