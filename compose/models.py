@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db import models
 
-import reversion
+from reversion import revisions as reversion
 
 from base.model_utils import TimeStampedModel
 from block.models import (
@@ -20,6 +20,7 @@ SECTION_CARD = 'card'
 SECTION_GALLERY = 'gallery'
 SECTION_NEWS = 'news'
 SECTION_SLIDESHOW = 'slideshow'
+SECTION_SIDEBAR = 'sidebar'
 
 
 class ArticleBlock(BlockModel):
@@ -389,3 +390,41 @@ class Header(ContentModel):
             return ''
 
 reversion.register(Header)
+
+class SidebarBlock(BlockModel):
+    pass
+
+reversion.register(SidebarBlock)
+
+
+class Sidebar(ContentModel):
+    """Sidebar Block - title and style
+    Used for heading for a section.
+    """
+    SECTION='sidebar'
+
+    block = models.ForeignKey(SidebarBlock, related_name='content')
+    order = models.IntegerField()
+
+    title = models.TextField()
+
+    class Meta:
+        # cannot put 'unique_together' on abstract base class
+        # https://code.djangoproject.com/ticket/16732
+        unique_together = ('block', 'moderate_state')
+        verbose_name = 'Sidebar'
+        verbose_name_plural = 'Sidebars'
+
+    def __str__(self):
+        return '{} {}'.format(self.title, self.moderate_state)
+
+    def url_publish(self):
+        return reverse('compose.sidebar.publish', kwargs={'pk': self.pk})
+
+    def url_remove(self):
+        return reverse('compose.sidebar.remove', kwargs={'pk': self.pk})
+
+    def url_update(self):
+        return reverse('compose.sidebar.update', kwargs={'pk': self.pk})
+
+reversion.register(Sidebar)
