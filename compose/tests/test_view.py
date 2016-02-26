@@ -14,6 +14,7 @@ from block.tests.factories import (
 from compose.tests.factories import (
     ArticleFactory,
     CodeSnippetFactory,
+    SidebarFactory,
     SlideshowFactory,
 )
 
@@ -109,6 +110,65 @@ class TestView(TestCase):
         url = reverse('compose.code.snippet.update', args=[snippet.slug])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+
+    def test_sidebar_create(self):
+        p = PageSectionFactory(page=PageFactory(slug_menu=''))
+        url = reverse(
+            'compose.sidebar.create',
+            kwargs=dict(
+                page=p.page.slug,
+                section=p.section.slug,
+            )
+        )
+        response = self.client.post(
+            url,
+            {
+                'title': 'TITLE',
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_sidebar_create_page_and_menu(self):
+        p = PageSectionFactory()
+        url = reverse(
+            'compose.sidebar.create',
+            kwargs=dict(
+                page=p.page.slug,
+                menu=p.page.slug_menu,
+                section=p.section.slug,
+            )
+        )
+        response = self.client.post(
+            url,
+            {
+                'title': 'TITLE',
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_sidebar_publish(self):
+        c = SidebarFactory()
+        response = self.client.post(
+            reverse('compose.sidebar.publish', kwargs={'pk': c.pk}),
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_sidebar_update(self):
+        c = SidebarFactory()
+        response = self.client.post(
+            reverse('compose.sidebar.update', kwargs={'pk': c.pk}),
+            {
+                'title': 'TITLE',
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_sidebar_remove(self):
+        c = SidebarFactory()
+        response = self.client.post(
+            reverse('compose.sidebar.remove', kwargs={'pk': c.pk}),
+        )
+        self.assertEqual(response.status_code, 302)
 
     def test_slideshow_create(self):
         p = PageSectionFactory(page=PageFactory(slug_menu=''))

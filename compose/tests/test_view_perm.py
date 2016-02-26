@@ -11,6 +11,7 @@ from block.tests.factories import (
 from compose.tests.factories import (
     ArticleFactory,
     CodeSnippetFactory,
+    SidebarFactory,
     SlideshowFactory,
 )
 
@@ -70,6 +71,33 @@ class TestViewPerm(PermTestCase):
         template = TemplateFactory(template_name='compose/page_article.html')
         p = PageFactory(slug='home', slug_menu='', template=template)
         url = reverse('project.page.design', kwargs=dict(page=p.slug))
+        self.assert_staff_only(url)
+
+    def test_sidebar_create(self):
+        p = PageSectionFactory()
+        url = reverse(
+            'compose.sidebar.create',
+            kwargs=dict(
+                page=p.page.slug,
+                menu=p.page.slug_menu,
+                section=p.section.slug,
+            )
+        )
+        self.assert_staff_only(url)
+
+    def test_sidebar_publish(self):
+        c = SidebarFactory()
+        url = reverse('compose.sidebar.publish', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_sidebar_remove(self):
+        c = SidebarFactory()
+        url = reverse('compose.sidebar.remove', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_sidebar_update(self):
+        c = SidebarFactory()
+        url = reverse('compose.sidebar.update', kwargs={'pk': c.pk})
         self.assert_staff_only(url)
 
     def test_slideshow_create(self):

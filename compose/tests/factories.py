@@ -6,6 +6,8 @@ from compose.models import (
     Article,
     ArticleBlock,
     CodeSnippet,
+    Sidebar,
+    SidebarBlock,
     Slideshow,
     SlideshowBlock,
     SlideshowImage,
@@ -44,6 +46,26 @@ class CodeSnippetFactory(factory.django.DjangoModelFactory):
     @factory.sequence
     def slug(n):
         return 'slug_{:02d}'.format(n)
+
+
+class SidebarBlockFactory(factory.django.DjangoModelFactory):
+
+    page_section = factory.SubFactory(PageSectionFactory)
+
+    class Meta:
+        model = SidebarBlock
+
+
+class SidebarFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = Sidebar
+
+    block = factory.SubFactory(SidebarBlockFactory)
+
+    @factory.sequence
+    def order(n):
+        return n
 
 
 class SlideshowBlockFactory(factory.django.DjangoModelFactory):

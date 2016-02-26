@@ -10,10 +10,6 @@ from compose.views import (
     ArticlePublishView,
     ArticleRemoveView,
     ArticleUpdateView,
-    SlideshowCreateView,
-    SlideshowPublishView,
-    SlideshowRemoveView,
-    SlideshowUpdateView,
     # Feature
     FeatureCreateView,
     FeaturePublishView,
@@ -31,6 +27,16 @@ from compose.views import (
     HeaderStyleCreateView,
     HeaderStyleListView,
     HeaderStyleUpdateView,
+    # Sidebar
+    SidebarCreateView,
+    SidebarPublishView,
+    SidebarRemoveView,
+    SidebarUpdateView,
+    # Slideshow
+    SlideshowCreateView,
+    SlideshowPublishView,
+    SlideshowRemoveView,
+    SlideshowUpdateView,
 )
 
 
@@ -117,6 +123,27 @@ urlpatterns = patterns(
     url(regex=r'^header/(?P<pk>\d+)/edit/$',
         view=HeaderUpdateView.as_view(),
         name='compose.header.update'
+        ),
+    # Sidebar
+    url(regex=r'^sidebar/create/(?P<page>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
+        view=SidebarCreateView.as_view(),
+        name='compose.sidebar.create'
+        ),
+    url(regex=r'^sidebar/create/(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
+        view=SidebarCreateView.as_view(),
+        name='compose.sidebar.create'
+        ),
+    url(regex=r'^sidebar/(?P<pk>\d+)/publish/$',
+        view=SidebarPublishView.as_view(),
+        name='compose.sidebar.publish'
+        ),
+    url(regex=r'^sidebar/(?P<pk>\d+)/remove/$',
+        view=SidebarRemoveView.as_view(),
+        name='compose.sidebar.remove'
+        ),
+    url(regex=r'^sidebar/(?P<pk>\d+)/edit/$',
+        view=SidebarUpdateView.as_view(),
+        name='compose.sidebar.update'
         ),
     # styles
     url(regex=r'^feature/style/create/$',

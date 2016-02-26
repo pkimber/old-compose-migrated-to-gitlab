@@ -24,24 +24,27 @@ from .forms import (
     ArticleForm,
     CodeSnippetCreateForm,
     CodeSnippetUpdateForm,
-    SlideshowForm,
     FeatureForm,
     FeatureStyleForm,
     HeaderForm,
     HeaderStyleForm,
+    SidebarForm,
+    SlideshowForm,
 )
 from .models import (
     Article,
     ArticleBlock,
     CodeSnippet,
-    Slideshow,
-    SlideshowBlock,
     Feature,
     FeatureBlock,
     FeatureStyle,
     Header,
     HeaderBlock,
     HeaderStyle,
+    Sidebar,
+    SidebarBlock,
+    Slideshow,
+    SlideshowBlock,
 )
 
 
@@ -103,39 +106,6 @@ class CodeSnippetUpdateView(
 
     def get_success_url(self):
         return reverse('compose.code.snippet.list')
-
-
-class SlideshowCreateView(
-        LoginRequiredMixin, StaffuserRequiredMixin, ContentCreateView):
-
-    block_class = SlideshowBlock
-    form_class = SlideshowForm
-    model = Slideshow
-    template_name = 'compose/slideshow_create.html'
-
-
-class SlideshowPublishView(
-        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
-
-    form_class = ContentEmptyForm
-    model = Slideshow
-    template_name = 'compose/slideshow_publish.html'
-
-
-class SlideshowRemoveView(
-        LoginRequiredMixin, StaffuserRequiredMixin, ContentRemoveView):
-
-    form_class = ContentEmptyForm
-    model = Slideshow
-    template_name = 'compose/slideshow_remove.html'
-
-
-class SlideshowUpdateView(
-        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
-
-    form_class = SlideshowForm
-    model = Slideshow
-    template_name = 'compose/slideshow_update.html'
 
 
 class FeatureCreateView(
@@ -246,3 +216,69 @@ class FeatureStyleListView(LoginRequiredMixin, StaffuserRequiredMixin, ListView)
 
 class HeaderStyleListView(LoginRequiredMixin, StaffuserRequiredMixin, ListView):
     model = HeaderStyle
+
+
+class SidebarCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentCreateView):
+
+    block_class = SidebarBlock
+    form_class = SidebarForm
+    model = Sidebar
+    template_name = 'compose/sidebar_form.html'
+
+
+class SidebarPublishView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
+
+    form_class = ContentEmptyForm
+    model = Sidebar
+    template_name = 'compose/sidebar_publish.html'
+
+
+class SidebarRemoveView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentRemoveView):
+
+    form_class = ContentEmptyForm
+    model = Sidebar
+    template_name = 'compose/sidebar_remove.html'
+
+
+class SidebarUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
+
+    form_class = SidebarForm
+    model = Sidebar
+    template_name = 'compose/sidebar_form.html'
+
+
+class SlideshowCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentCreateView):
+
+    block_class = SlideshowBlock
+    form_class = SlideshowForm
+    model = Slideshow
+    template_name = 'compose/slideshow_create.html'
+
+
+class SlideshowPublishView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
+
+    form_class = ContentEmptyForm
+    model = Slideshow
+    template_name = 'compose/slideshow_publish.html'
+
+
+class SlideshowRemoveView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentRemoveView):
+
+    form_class = ContentEmptyForm
+    model = Slideshow
+    template_name = 'compose/slideshow_remove.html'
+
+
+class SlideshowUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpdateView):
+
+    form_class = SlideshowForm
+    model = Slideshow
+    template_name = 'compose/slideshow_update.html'

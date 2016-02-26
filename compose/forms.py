@@ -6,11 +6,12 @@ from base.form_utils import (
 from .models import (
     Article,
     CodeSnippet,
-    Slideshow,
     Feature,
     FeatureStyle,
     Header,
     HeaderStyle,
+    Sidebar,
+    Slideshow,
 )
 
 
@@ -155,3 +156,28 @@ class HeaderStyleForm(RequiredFieldForm):
             'name',
             'css_class_name',
         )
+
+
+class SidebarForm(RequiredFieldForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['title'].widget.attrs.update({
+            'class': 'pure-input-2-3',
+        })
+        self.fields['title'].widget.attrs.update({
+            'rows': '3',
+        })
+
+    def clean_title(self):
+        data = self.cleaned_data['title']
+        return bleach_clean(data)
+
+
+    class Meta:
+        model = Sidebar
+        fields = (
+            'title',
+        )
+
+
