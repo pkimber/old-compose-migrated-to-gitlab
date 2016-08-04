@@ -20,7 +20,7 @@ def get_readme():
 
 setup(
     name='kb-compose',
-    packages=['compose', 'compose.management', 'compose.management.commands', 'compose.migrations', 'compose.tests', 'compose.urls'],
+    packages=['compose', 'compose.management', 'compose.management.commands', 'compose.tests', 'compose.migrations', 'compose.urls'],
     package_data={
         'compose': [
             'static/*.*',
@@ -31,10 +31,10 @@ setup(
             'templates/compose/*.*',
         ],
     },
-    version='0.0.21',
+    version='0.0.22',
     description='compose',
     author='Malcolm Dinsmore',
-    author_email='m.dinsmore@talk21.com',
+    author_email='zebyea@gmail.com',
     url='git@github.com:pkimber/compose.git',
     classifiers=[
         'Development Status :: 1 - Planning',
