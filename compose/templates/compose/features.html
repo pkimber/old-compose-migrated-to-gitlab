@@ -1,0 +1,52 @@
+{% comment %}
+A universal template for to add features to a page.
+
+To use, specify an include directive and optionally set the following::
+  * container_class - defaults to "pure-g"
+  * feature_class - defaults to "feature"
+  * feature_description - defaults to "feature"
+  * feature_outer_class - defaults to "pure-u-1 pure-u-md-1-3 feature-outer" i.e.
+                          three columns with a mob-feature class to allow extra
+                          style info to be defined for mobile
+  * feature_title - defaults to "feature-title"
+  * image_class - defaults to "scale"
+  * image_size - defaults to 480x480
+  * placeholder_style - defaults to "padding-top: 100%;"
+  * title_class - defaults to "featuretitle"
+
+e.g. minimal specification
+    {% include 'compose/features.html' %}
+  or to change defaults
+    {% include 'compose/features.html' with image_size='500x300' %}
+{% endcomment %}
+
+{% load block_tags %}
+{% load thumbnail %}
+{% load startswith %}
+
+<div class="{% if container_class %}{{ container_class}}{% else %}pure-g{% endif %}">
+  {% for c in feature_a_list %}
+    <div class="{% if feature_outer_class %}{{ feature_outer_class }}{% else %}pure-u-1 pure-u-md-1-3 feature-outer{% endif %}">
+      <div class="{% if feature_class %}{{ feature_class }}{% else %}feature{% endif %}">
+        <a href={% if c.url %}"{{ c.url }}" {% ifstartswith c.url 'http' %}target="_blank"{% endifstartswith %}{% else %}"#"{% endif %}>
+          <div>
+            {% if c.picture and c.picture.image %}
+            {% if image_size %}
+              <img src="{% thumbnail c.picture.image image_size %}" alt="{{ c.picture.title }}" class="{% if image_class %}{{ image_class }}{% else %}scale{% endif %}">
+            {% else %}
+              {# size of the image is calculated at 480 i.e. 1920/4 #}
+              <img src="{% thumbnail c.picture.image 480x480 %}" alt="{{ c.picture.title }}" class="{% if image_class %}{{ image_class }}{% else %}scale{% endif %}">
+            {% endif %}
+            {% else %}
+            {# create a placeholder - padding-top curiously, is dependant on the width not the height! #}
+            <div style="{% if placeholder_style %}{{ placeholder_style }}{% else %}padding-top: 100%;{% endif %}"></div>
+            {% endif %}
+            <div class="{% if title_class %}{{ title_class }}{% else %}feature-title{% endif %}"><span>{{ c.title }}</span>{% autoescape off %}{{ c.description }}{% endautoescape %}</div>
+          </div>
+          </a>
+      </div>
+      {% if design %}{% block_moderate c %}{% endif %}
+    </div>
+  {% endfor %}
+</div><!-- /row -->
+{% if design %}{% if feature_description %}{% block_add feature_a_create_url feature_description %}{% else %}{% block_add feature_a_create_url 'feature' %}{% endif %}{% endif %}
