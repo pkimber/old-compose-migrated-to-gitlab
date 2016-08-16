@@ -12,6 +12,7 @@ To use, specify an include directive and optionally set the following::
   * image_class - defaults to "scale"
   * image_size - defaults to 480x480
   * placeholder_style - defaults to "padding-top: 100%;"
+  * mask_class - defaults to "featuretitle"
   * title_class - defaults to "featuretitle"
 
 e.g. minimal specification
@@ -41,6 +42,7 @@ e.g. minimal specification
             {# create a placeholder - padding-top curiously, is dependant on the width not the height! #}
             <div style="{% if placeholder_style %}{{ placeholder_style }}{% else %}padding-top: 100%;{% endif %}"></div>
             {% endif %}
+            <div class="{% if mask_class %}{{ mask_class }}{% else %}feature-mask{% endif %}"><span>&nbsp;</span></div>
             <div class="{% if title_class %}{{ title_class }}{% else %}feature-title{% endif %}"><span>{{ c.title }}</span>{% autoescape off %}{{ c.description }}{% endautoescape %}</div>
           </div>
           </a>
