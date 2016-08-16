@@ -4,6 +4,7 @@ A universal template for to add features to a page.
 To use, specify an include directive and optionally set the following::
   * container_class - defaults to "pure-g"
   * feature_class - defaults to "feature"
+  * feature_odd_class - defaults to "odd"
   * feature_description - defaults to "feature"
   * feature_outer_class - defaults to "pure-u-1 pure-u-md-1-3 feature-outer" i.e.
                           three columns with a mob-feature class to allow extra
@@ -28,7 +29,7 @@ e.g. minimal specification
 <div class="{% if container_class %}{{ container_class}}{% else %}pure-g{% endif %}">
   {% for c in feature_a_list %}
     <div class="{% if feature_outer_class %}{{ feature_outer_class }}{% else %}pure-u-1 pure-u-md-1-3 feature-outer{% endif %}">
-      <div class="{% if feature_class %}{{ feature_class }}{% else %}feature{% endif %}">
+      <div class="{% if feature_class %}{{ feature_class }}{% else %}feature{% endif %}{% if not forloop.counter|divisibleby:2 %}{% if feature_odd_class %} {{ feature_odd_class }}{% else %} odd{% endif %}{% endif %}">
         <a href={% if c.url %}"{{ c.url }}" {% ifstartswith c.url 'http' %}target="_blank"{% endifstartswith %}{% else %}"#"{% endif %}>
           <div>
             {% if c.picture and c.picture.image %}
