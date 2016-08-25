@@ -1,8 +1,5 @@
 # -*- encoding: utf-8 -*-
-from django.conf.urls import (
-    patterns,
-    url,
-)
+from django.conf.urls import url
 
 from compose.views import (
     # Article
@@ -40,8 +37,7 @@ from compose.views import (
 )
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(regex=r'^article/create/(?P<page>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
         view=ArticleCreateView.as_view(),
         name='compose.article.create'
@@ -170,4 +166,4 @@ urlpatterns = patterns(
         view=HeaderStyleUpdateView.as_view(),
         name='compose.header.style.update'
         ),
-)
+]
