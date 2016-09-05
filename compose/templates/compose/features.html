@@ -29,7 +29,7 @@ e.g. minimal specification
   {% for c in feature_a_list %}
     <div class="{% if feature_outer_class %}{{ feature_outer_class }}{% else %}pure-u-1 pure-u-md-1-3 feature-outer{% endif %}">
       <div class="{% if feature_class %}{{ feature_class }}{% else %}feature{% endif %}{% if not forloop.counter|divisibleby:2 %}{% if feature_odd_class %} {{ feature_odd_class }}{% else %} odd{% endif %}{% endif %}">
-        <a href={% if c.link and c.link.url %}"{{ c.link.url }}" {% if c.link.is_external %}target="_blank"{% endif %}{% else %}"#"{% endif %}>
+        <a href={% if c.link and c.link.url %}"{{ c.link.url }}" {% if c.link.is_external or c.link.is_document %}target="_blank"{% endif %}{% else %}"#"{% endif %}>
           <div>
             {% if c.picture and c.picture.image %}
             {% if image_size %}
