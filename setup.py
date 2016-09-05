@@ -31,7 +31,7 @@ setup(
             'templates/compose/*.*',
         ],
     },
-    version='0.0.25',
+    version='0.0.26',
     description='compose',
     author='Malcolm Dinsmore',
     author_email='zebyea@gmail.com',
