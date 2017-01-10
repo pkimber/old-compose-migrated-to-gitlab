@@ -141,7 +141,8 @@ class FeatureUpdateView(
     template_name = 'compose/feature_create_update.html'
 
 
-class FeatureStyleCreateView (LoginRequiredMixin, StaffuserRequiredMixin, CreateView):
+class FeatureStyleCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, CreateView):
     form_class = FeatureStyleForm
     model = FeatureStyle
     template_name = 'compose/style_create_update.html'
@@ -150,7 +151,8 @@ class FeatureStyleCreateView (LoginRequiredMixin, StaffuserRequiredMixin, Create
         return reverse('compose.feature.style.list')
 
 
-class FeatureStyleUpdateView (LoginRequiredMixin, StaffuserRequiredMixin, UpdateView):
+class FeatureStyleUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, UpdateView):
     form_class = FeatureStyleForm
     model = FeatureStyle
     template_name = 'compose/style_create_update.html'
@@ -192,7 +194,8 @@ class HeaderRemoveView(
     template_name = 'compose/header_remove.html'
 
 
-class HeaderStyleCreateView (LoginRequiredMixin, StaffuserRequiredMixin, CreateView):
+class HeaderStyleCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, CreateView):
     form_class = HeaderStyleForm
     model = HeaderStyle
     template_name = 'compose/style_create_update.html'
@@ -201,7 +204,8 @@ class HeaderStyleCreateView (LoginRequiredMixin, StaffuserRequiredMixin, CreateV
         return reverse('compose.header.style.list')
 
 
-class HeaderStyleUpdateView (LoginRequiredMixin, StaffuserRequiredMixin, UpdateView):
+class HeaderStyleUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, UpdateView):
     form_class = HeaderStyleForm
     model = HeaderStyle
     template_name = 'compose/style_create_update.html'
@@ -210,11 +214,13 @@ class HeaderStyleUpdateView (LoginRequiredMixin, StaffuserRequiredMixin, UpdateV
         return reverse('compose.header.style.list')
 
 
-class FeatureStyleListView(LoginRequiredMixin, StaffuserRequiredMixin, ListView):
+class FeatureStyleListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ListView):
     model = FeatureStyle
 
 
-class HeaderStyleListView(LoginRequiredMixin, StaffuserRequiredMixin, ListView):
+class HeaderStyleListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ListView):
     model = HeaderStyle
 
 
