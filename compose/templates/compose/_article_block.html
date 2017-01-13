@@ -18,11 +18,11 @@
   The following CSS is defined in compose/compose.css if you are not including
   this stylesheet you should define the following css classes in your
   stylesheet::
-    .stick-left: {float:left; padding: 0; margin-right:25px;}
-    .stick-right: {float:right; padding: 0; margin-left:25px;}
-    .stick-1-2: {width: 50%;}
-    .stick-1-3: {width: 33%;}
-    .stick-1-4: {width: 25%;}
+    .stick-left {float:left; padding: 0; margin-right:25px;}
+    .stick-right {float:right; padding: 0; margin-left:25px;}
+    .stick-1-2 {width: 50%;}
+    .stick-1-3 {width: 33%;}
+    .stick-1-4 {width: 25%;}
 {% endcomment %}
 {% load static %}
 {% load block_tags %}
@@ -57,7 +57,7 @@
     <p>
       <a href="{{ b.link.url }}" title="{{ b.link.title }}" target="_blank">
         <i class="fa fa-external-link"></i>{{ b.link.title }}
-        {% if b.link.is_document %}<small>{{ b.link.file_name }}</small>{% endif %}
+        {% if b.link.is_document %}{% if display_link_file %}<small>{{ b.link.file_name }}</small>{% endif %}{% endif %}
       </a>
     </p>
   {% endif %}
