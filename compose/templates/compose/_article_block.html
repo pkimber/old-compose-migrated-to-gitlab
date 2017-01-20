@@ -57,7 +57,7 @@
     <p>
       <a href="{{ b.link.url }}" title="{{ b.link.title }}" target="_blank">
         <i class="fa fa-external-link"></i>{{ b.link.title }}
-        {% if b.link.is_document %}{% if display_link_file %}<small>{{ b.link.file_name }}</small>{% endif %}{% endif %}
+        {% if display_link_file and b.link.is_document %}<small>{{ b.link.file_name }}</small>{% endif %}
       </a>
     </p>
   {% endif %}
