@@ -31,10 +31,10 @@ setup(
             'templates/compose/*.*',
         ],
     },
-    version='0.0.28',
+    version='0.0.29',
     description='compose',
     author='Malcolm Dinsmore',
-    author_email='zebyea@gmail.com',
+    author_email='code-md@kbsoftware.co.uk',
     url='git@github.com:pkimber/compose.git',
     classifiers=[
         'Development Status :: 1 - Planning',
