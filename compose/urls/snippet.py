@@ -1,8 +1,5 @@
 # -*- encoding: utf-8 -*-
-from django.conf.urls import (
-    patterns,
-    url,
-)
+from django.conf.urls import url
 
 from compose.views import (
     CodeSnippetCreateView,
@@ -11,8 +8,7 @@ from compose.views import (
 )
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(regex=r'^code/snippet/$',
         view=CodeSnippetListView.as_view(),
         name='compose.code.snippet.list'
@@ -25,4 +21,4 @@ urlpatterns = patterns(
         view=CodeSnippetUpdateView.as_view(),
         name='compose.code.snippet.update'
         ),
-)
+]

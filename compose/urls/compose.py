@@ -1,8 +1,5 @@
 # -*- encoding: utf-8 -*-
-from django.conf.urls import (
-    patterns,
-    url,
-)
+from django.conf.urls import url
 
 from compose.views import (
     # Article
@@ -40,8 +37,7 @@ from compose.views import (
 )
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(regex=r'^article/create/(?P<page>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
         view=ArticleCreateView.as_view(),
         name='compose.article.create'
@@ -150,7 +146,7 @@ urlpatterns = patterns(
         view=FeatureStyleCreateView.as_view(),
         name='compose.feature.style.create'
         ),
-    url(regex=r'^feature/style/list/$', 
+    url(regex=r'^feature/style/list/$',
         view=FeatureStyleListView.as_view(),
         name='compose.feature.style.list'
         ),
@@ -162,7 +158,7 @@ urlpatterns = patterns(
         view=HeaderStyleCreateView.as_view(),
         name='compose.header.style.create'
         ),
-    url(regex=r'^header/style/list/$', 
+    url(regex=r'^header/style/list/$',
         view=HeaderStyleListView.as_view(),
         name='compose.header.style.list'
         ),
@@ -170,4 +166,4 @@ urlpatterns = patterns(
         view=HeaderStyleUpdateView.as_view(),
         name='compose.header.style.update'
         ),
-)
+]
