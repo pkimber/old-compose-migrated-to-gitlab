@@ -91,6 +91,10 @@ class Article(ContentModel):
     def url_update(self):
         return reverse('compose.article.update', kwargs={'pk': self.pk})
 
+    def text_size(self):
+        invert = self.image_size.split('-')
+        return '-'.join([str(int(invert[1])-int(invert[0])) or 1, invert[1]])
+
     @property
     def wizard_fields(self):
         return [
