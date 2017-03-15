@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.core.urlresolvers import reverse
 
-from base.tests.test_utils import PermTestCase
+from base.tests.test_utils import PermTestCase, assert_redirect
 
 from block.tests.factories import (
     PageFactory,
@@ -47,6 +47,26 @@ class TestViewPerm(PermTestCase):
         c = ArticleFactory()
         url = reverse('compose.article.update', kwargs={'pk': c.pk})
         self.assert_staff_only(url)
+
+    def test_article_up(self):
+        c = ArticleFactory()
+        url = reverse('compose.article.up', kwargs={'pk': c.pk})
+        self.client.logout()
+        response = self.client.get(url)
+        assert_redirect(response, 'login')
+        staff = self.login_staff()
+        response = self.client.get(url)
+        assert_redirect(response, 'design')
+
+    def test_article_down(self):
+        c = ArticleFactory()
+        url = reverse('compose.article.down', kwargs={'pk': c.pk})
+        self.client.logout()
+        response = self.client.get(url)
+        assert_redirect(response, 'login')
+        staff = self.login_staff()
+        response = self.client.get(url)
+        assert_redirect(response, 'design')
 
     def test_code_snippet_list(self):
         url = reverse('compose.code.snippet.list')

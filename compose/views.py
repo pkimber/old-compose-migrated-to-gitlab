@@ -18,6 +18,8 @@ from block.views import (
     ContentPublishView,
     ContentRemoveView,
     ContentUpdateView,
+    ContentUpView,
+    ContentDownView,
 )
 
 from .forms import (
@@ -79,6 +81,18 @@ class ArticleUpdateView(
     form_class = ArticleForm
     model = Article
     template_name = 'compose/article_update.html'
+
+
+class ArticleUpView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpView):
+
+    model = Article
+
+
+class ArticleDownView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentDownView):
+
+    model = Article
 
 
 class CodeSnippetCreateView(
