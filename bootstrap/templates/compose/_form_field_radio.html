@@ -1,0 +1,9 @@
+{% for choice in field.field.choices %}
+  <label class="form-check-label">
+    <input type="radio" class="form-check-input" name="{{ field.name }}" value="{{choice.0}}"
+      {% ifequal field.field.initial choice.0 %}
+         checked="checked"
+      {% endifequal %}/>
+      {{ choice.1 }}
+  </label>
+{% endfor %}

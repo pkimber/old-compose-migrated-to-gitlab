@@ -1,0 +1,64 @@
+{% extends 'compose/base.html' %}
+
+{% load block_tags %}
+{% load static %}
+{% load thumbnail %}
+
+{% block content %}
+  {% for g in gallery_list %}
+    {% if g.title or g.description %}
+      <div class="row">
+        <div class="col">
+          {% if g.title %}
+            <h4>{{ g.title }}</h4>
+          {% endif %}
+          {% if g.description %}
+            {% autoescape off %}
+              {{ g.description }}
+            {% endautoescape %}
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+    <div class="row">
+      <div class="my-gallery" itemscope itemtype="http://schema.org/imagegallery">
+        {% for item in g.ordered_slideshow %}
+          <div class="col">
+            <figure itemprop="associatedmedia" itemscope itemtype="http://schema.org/imageobject">
+              <a href="{{ MEDIA_URL }}{{ item.image.image }}" itemprop="contenturl" data-size="{{ item.image.image.width }}x{{ item.image.image.height }}">
+                <img
+                  itemprop="thumbnail"
+                  alt="{{ item.image.caption }}"
+                  title="{{ item.image.caption }}"
+                  class="img-fluid"
+                  src="{% thumbnail item.image.image '200x0' crop='auto' %}" />
+              </a>
+              <figcaption itemprop="caption description">{{ item.image.title }}</figcaption>
+            </figure>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        {% if design %}
+          {% block_moderate g %}
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+  {% if design %}
+    <div class="row">
+      <div class="col">
+        {% block_add gallery_create_url 'Gallery' %}
+      </div>
+    </div>
+  {% endif %}
+  {% include 'base/_photoswipe.html' %}
+{% endblock content %}
+
+{% block script_extra %}
+  {{ block.super }}
+  {% include 'base/_slider.html' %}
+  {% include 'base/_photoswipe.js.html' %}
+{% endblock script_extra %}

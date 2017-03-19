@@ -1,0 +1,17 @@
+{% load thumbnail %}
+
+<div class="l-box">
+  {% if b.picture %}
+    {% if b.link %}
+      <a href="{{ b.link.url }}"{% if b.link.open_in_tab %} target="_blank"{% endif %}>
+    {% endif %}
+    <img
+      alt="{{ b.picture.title }}"
+      title="{{ b.picture.title }}"
+      class="{{ image_class }} img-fluid"
+      src="{% thumbnail b.picture.image 700x525 autocrop %}" />
+    {% if b.link %}
+      </a>
+    {% endif %}
+  {% endif %}
+</div>

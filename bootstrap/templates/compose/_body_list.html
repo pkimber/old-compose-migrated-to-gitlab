@@ -1,0 +1,54 @@
+{% load block_tags %}
+{% load thumbnail %}
+
+{% for b in body_list %}
+  <div class="row">
+    <div class="col">
+      <div class="l-box">
+        <h4>{{ b.title }}</h4>
+        {% if b.description %}
+          {% autoescape off %}
+            {{ b.description }}
+          {% endautoescape %}
+        {% endif %}
+        {% if b.link %}
+          <h3>Link</h3>
+          <p>
+            <a href="{{ b.link.url }}" target="_blank">
+              <i class="fa fa-external-link"></i>
+              {{ b.link.title }}
+              {% if b.link.is_document %}
+                - {{ b.link.file_name }}
+              {% endif %}
+            </a>
+          </p>
+        {% endif %}
+
+        {% for picture in b.carousel.all %}
+          <img
+            alt="{{ picture.caption }}"
+            title="{{ picture.caption }}"
+            class="img-fluid"
+            src="{% thumbnail picture.image 200x200 autocrop %}" />
+          <br />
+        {% endfor %}
+
+        {% if design %}
+          {% block_moderate b %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="col">
+      <div class="l-box">
+        {% if b.picture %}
+          <img
+            alt="{{ b.picture.caption }}"
+            title="{{ b.picture.caption }}"
+            class="img-fluid"
+            src="{% thumbnail b.picture.image 533x300 autocrop %}" />
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% if design %}{% block_add body_create_url %}{% endif %}

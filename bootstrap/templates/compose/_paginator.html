@@ -1,0 +1,30 @@
+{% load project_tags %}
+<nav>
+  <ul class="pagination">
+
+    <li{% if paginator_page_num < 2 %} class="disabled" {% endif %}>
+      <a href="?{% url_replace paginator_page_key paginator_page_num|add:'-1' %}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+
+    {% for num in paginator_page_nums %}
+      {% if num > 0 and num <= num_paginator_pages %}
+        {% if num == paginator_page_num %}
+          <li class="active">
+            <a href="#">{{ num }}</a>
+          </li>
+        {% else %}
+          <li>
+            <a href="?{% url_replace paginator_page_key num %}">{{ num }}</a>
+          </li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    <li{% if paginator_page_num|add:'1' >= num_paginator_pages %} class="disabled" {% endif %}>
+      <a href="?{% url_replace paginator_page_key paginator_page_num|add:'1'  %}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>

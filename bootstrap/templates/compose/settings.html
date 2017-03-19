@@ -1,0 +1,20 @@
+{% extends 'dash/base.html' %}
+{% load staticfiles %}
+
+{% block sub_title %}
+  Example Settings
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Example Settings
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <h4>CMS</h4>
+    </div>
+  </div>
+  {% include 'block/_settings.html' %}
+  {% include 'compose/_settings.html' %}
+{% endblock content %}

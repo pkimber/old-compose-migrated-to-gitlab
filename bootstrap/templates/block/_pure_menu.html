@@ -1,0 +1,36 @@
+  {% if page.is_home %}
+    {% include 'block/_design_menu.html' %}
+  {% endif %}
+  {% for menu_item in main_menu_items %}
+    <li class="nav-item">
+      {% if menu_item.has_link %}
+      <a class="nav-link" href="{{menu_item.get_link }}">
+      {% else %}
+      <div class="nav-link">
+      {% endif %}
+        {{ menu_item.title }}
+      {% if menu_item.has_link %}
+      </a>
+      {% else %}
+      </div>
+      {% endif %}
+    </li>
+
+    {% if menu_item.link and menu_item.link.page and menu_item.link.page.pk == page.pk %}
+      {% include 'block/_design_menu.html' %}
+    {% endif %}
+
+    {% if menu_item.has_children %}
+
+      {% for sub_menu_item in menu_item.menuitem_set.all %}
+        <li class="nav-item sub-item">
+          <a class="nav-link" href="{{ sub_menu_item.get_link }}">
+            {{ sub_menu_item.title }}
+          </a>
+        </li>
+        {% if sub_menu_item.link and sub_menu_item.link.page and sub_menu_item.link.page.pk == page.pk %}
+          {% include 'block/_design_menu.html' %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}

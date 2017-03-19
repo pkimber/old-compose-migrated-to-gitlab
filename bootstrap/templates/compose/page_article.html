@@ -1,0 +1,33 @@
+{% extends 'compose/base.html' %}
+
+{% load static %}
+
+{% block content %}
+  {% include 'compose/_body.html' %}
+  {% if form %}
+    <div class="l-box">
+      {% include '_form.html' %}
+    </div>
+  {% endif %}
+  {# calendar from the booking app #}
+  {% if calendar %}
+    {% for c in calendar %}
+      <div class="row">
+        {% for month in c %}
+          <div class="col">
+            <div class="l-box">
+              {{ month }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  {% endif %}
+  {% include 'compose/_news.html' %}
+  {% include 'compose/_card.html' %}
+{% endblock content %}
+
+{% block script_extra %}
+  {{ block.super }}
+  {% include 'base/_slider.html' %}
+{% endblock script_extra %}

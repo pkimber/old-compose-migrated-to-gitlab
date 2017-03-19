@@ -1,0 +1,20 @@
+{% extends 'dash/base.html' %}
+{% load thumbnail %}
+
+{% block sub_title %}
+  Style Create / Update
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Style Create / Update
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <div class="l-box">
+        {% include '_form.html' with legend='Style Create / Update' multipart=True %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

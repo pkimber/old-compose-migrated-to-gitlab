@@ -1,0 +1,7 @@
+<a
+  class="btn btn-outline-primary btn-sm"
+  title="Add{% if caption %} {{ caption }}{% endif %}"
+  href="{{ url }}{% if return_path %}?next={{ return_path }}{% endif %}">
+  <i class="fa fa-plus"></i>
+  Add{% if caption %} {{ caption }}{% endif %}
+</a>

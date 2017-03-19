@@ -1,0 +1,39 @@
+{% load block_tags %}
+
+<div class="row">
+{% for b in body_list %}
+
+  {% if b.article_type == 'text_right' %}
+  <div class="col-{{ b.image_size }}">
+    {% include 'compose/_body_picture.html' with image_class='article-image-left' %}
+  </div>
+  {% endif %}
+
+  {% if b.article_type == 'text_bottom' or b.article_type == 'picture_only' %}
+  <div class="col">
+    {% include 'compose/_body_picture.html' with image_class='article-image-center' %}
+  </div>
+  {% endif %}
+
+  {% if not b.article_type == 'picture_only' %}
+  <div class="col-{{ b.text_size }}">
+    {% include 'compose/_text.html' with text_class='l-box' %}
+  </div>
+  {% endif %}
+
+  {% if b.article_type == 'text_right' %}
+    <div class="col-{{ b.image_size }}">
+      {% include 'compose/_body_picture.html' with image_class='article-image-left' %}
+    </div>
+  {% endif %}
+
+  {% if b.article_type == 'text_left' %}
+    <div class="col-{{ b.image_size }}">
+      {% include 'compose/_body_picture.html' with image_class='article-image-right' %}
+    </div>
+  {% endif %}
+
+{% endfor %}
+</div>
+
+{% if design %}{% block_add body_create_url 'Article' %}{% endif %}
