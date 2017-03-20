@@ -51,38 +51,40 @@
 
 {% block content %}
   <div class="row">
-    <div class="col">
-       <form id="urlchoice" action="" method="post" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
-        {% csrf_token %}
-        {% if form.non_field_errors %}
-          {{ form.non_field_errors }}
-        {% endif %}
-        <fieldset>
-          {{ wizard.management_form }}
-          {% if wizard.form.forms %}
-            {{ wizard.form.management_form }}
-            {% for form in wizard.form.forms %}
-              {% include 'block/_wizard_form.html' %}
-            {% endfor %}
-          {% else %}
-            {% include 'block/_wizard_form.html' with form=wizard.form %}
+    <div class="col-12">
+      <div class="l-box">
+         <form id="urlchoice" action="" method="post" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+          {% csrf_token %}
+          {% if form.non_field_errors %}
+            {{ form.non_field_errors }}
           {% endif %}
-
-          {% if wizard.steps.prev %}
-            <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">< {% trans "Back" %}</button>
-          {% endif %}
-          <button type="submit" value="{% trans "submit" %}">
-            {% if wizard.steps.step1 == 1 %}
-              Next >
-            {% elif wizard.steps.current == 'list_delete' %}
-              Delete
+          <fieldset>
+            {{ wizard.management_form }}
+            {% if wizard.form.forms %}
+              {{ wizard.form.management_form }}
+              {% for form in wizard.form.forms %}
+                {% include 'block/_wizard_form.html' %}
+              {% endfor %}
             {% else %}
-              Submit
+              {% include 'block/_wizard_form.html' with form=wizard.form %}
             {% endif %}
-          </button>
 
-        </fieldset>
-      </form>
+            {% if wizard.steps.prev %}
+              <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">< {% trans "Back" %}</button>
+            {% endif %}
+            <button type="submit" value="{% trans "submit" %}">
+              {% if wizard.steps.step1 == 1 %}
+                Next >
+              {% elif wizard.steps.current == 'list_delete' %}
+                Delete
+              {% else %}
+                Submit
+              {% endif %}
+            </button>
+
+          </fieldset>
+        </form>
+      </div>
     </div>
   </div>
 {% endblock %}

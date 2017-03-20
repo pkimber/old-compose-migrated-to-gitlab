@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -43,8 +44,9 @@ class TestView(TestCase):
             url,
             {
                 'title': 'pkimber.net',
-                'article_type': 'text_only',
-                'image_size': '1-3',
+                'article_width': settings.ARTICLE_WIDTH_HALFBIG,
+                'article_type': settings.ARTICLE_TYPE_TEXT_ONLY,
+                'image_size': settings.ARTICLE_IMAGE_SIZE_THIRD,
             }
         )
         self.assertEqual(response.status_code, 302)
@@ -63,8 +65,9 @@ class TestView(TestCase):
             url,
             {
                 'title': 'pkimber.net',
-                'article_type': 'text_only',
-                'image_size': '1-4',
+                'article_width': settings.ARTICLE_WIDTH_HALFBIG,
+                'article_type': settings.ARTICLE_TYPE_LEFT,
+                'image_size': settings.ARTICLE_IMAGE_SIZE_QUARTER,
             }
         )
         self.assertEqual(response.status_code, 302)
@@ -82,8 +85,9 @@ class TestView(TestCase):
             reverse('compose.article.update', kwargs={'pk': c.pk}),
             {
                 'title': 'pkimber.net',
-                'article_type': 'text_only',
-                'image_size': '1-2',
+                'article_width': settings.ARTICLE_WIDTH_HALFBIG,
+                'article_type': settings.ARTICLE_TYPE_LEFT,
+                'image_size': settings.ARTICLE_IMAGE_SIZE_QUARTER,
             }
         )
         self.assertEqual(response.status_code, 302)

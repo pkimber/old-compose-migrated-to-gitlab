@@ -1,33 +1,33 @@
 {% extends 'dash/base.html' %}
 
 {% block sub_title %}
-  {{ menu }} items
+  {{ menu }}
+  items
 {% endblock sub_title %}
 
 {% block sub_heading %}
-  {{ menu }} items
+  {{ menu }}
+  items
 {% endblock sub_heading %}
 
 {% block content %}
   <div class="row">
-    <div class="col">
-
-        <ul class="nav flex-column">
-          {% include 'base/_settings.html' %}
-          {% include 'base/_paginate.html' %}
-          <li class="nav-item">
-            {# navigation menu defaults to 'main' #}
-            <a href="{% url 'block.menuitem.create' menu.slug %}" class="nav-link">
-              <i class="fa fa-file-text-o"></i>
-              Create menu item
-            </a>
-          </li>
-        </ul>
-
+    <div class="col-12">
+      <ul class="nav nav-pills">
+        {% include 'base/_settings.html' %}
+        {% include 'base/_paginate.html' %}
+        <li class="nav-item">
+          {# navigation menu defaults to 'main' #}
+          <a href="{% url 'block.menuitem.create' menu.slug %}" class="nav-link">
+            <i class="fa fa-file-text-o"></i>
+            Create menu item
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col-12">
       <table class="table table-sm table-bordered">
         <thead>
           <tr>
@@ -43,46 +43,61 @@
             <tr valign="top">
               <td>
                 {% if object.is_deleted %}
-                <del>
-                {% else %}
-                <a href="{% url 'block.menuitem.update' object.pk %}">
-                  <i class="fa fa-edit"></i>
+                  <del>
+                  {% else %}
+                    <a href="{% url 'block.menuitem.update' object.pk %}">
+                      <i class="fa fa-edit"></i>
+                    {% endif %}
+                    {{ object.title }}
+                    {% if object.is_deleted %}
+                    </del>
+                  {% else %}
+                  </a>
                 {% endif %}
-                  {{ object.title }}
-                {% if object.is_deleted %}</del>{% else %}</a>{% endif %}
-              </td>
-              <td>
-                {% if object.is_deleted %}<del>{% endif %}
-                {{ object.order }}
-                {% if object.is_deleted %}</del>{% endif %}
               </td>
               <td>
                 {% if object.is_deleted %}
-                <del>
-                {% else %}
-                <a href="{%url 'block.wizard.link.option' object.get_content_type.pk object.pk 'link' 'single' %}">
-                {% endif %}
-                  {% if object.link %}
-                    {% if object.link.is_document %}
-                      Document:
-                    {% elif object.link.is_external %}
-                      External Link:
-                    {% elif object.link.is_internal %}
-                      Page:
-                    {% endif %}
-                    {{ object.link }}
-                  {% else %}
-                    <i class="fa fa-link"></i>
-                    Create Link
+                  <del>
                   {% endif %}
-                {% if object.is_deleted %}</del>{% else %}</a>{% endif %}
+                  {{ object.order }}
+                  {% if object.is_deleted %}
+                  </del>
+                {% endif %}
               </td>
-              <td>{% if object.parent %}{{ object.parent }}{% endif %}</td>
+              <td>
+                {% if object.is_deleted %}
+                  <del>
+                  {% else %}
+                    <a
+                      href="{%url 'block.wizard.link.option' object.get_content_type.pk object.pk 'link' 'single' %}">
+                    {% endif %}
+                    {% if object.link %}
+                      {% if object.link.is_document %}
+                        Document:
+                      {% elif object.link.is_external %}
+                        External Link:
+                      {% elif object.link.is_internal %}
+                        Page:
+                      {% endif %}
+                      {{ object.link }}
+                    {% else %}
+                      <i class="fa fa-link"></i>
+                      Create Link
+                    {% endif %}
+                    {% if object.is_deleted %}
+                    </del>
+                  {% else %}
+                  </a>
+                {% endif %}
+              </td>
+              <td>
+                {% if object.parent %}{{ object.parent }}{% endif %}
+              </td>
               <td>
                 {% if not object.is_deleted %}
-                <a href="{% url 'block.menuitem.delete' object.pk %}">
-                  <i class="fa fa-trash"></i>
-                </a>
+                  <a href="{% url 'block.menuitem.delete' object.pk %}">
+                    <i class="fa fa-trash"></i>
+                  </a>
                 {% endif %}
               </td>
             </tr>
@@ -92,10 +107,10 @@
     </div>
   </div>
   <div class="row">
-    <div class="col">
-        <ul class="nav flex-column">
-          {% include 'base/_paginate.html' %}
-        </ul>
+    <div class="col-12">
+      <ul class="nav nav-pills">
+        {% include 'base/_paginate.html' %}
+      </ul>
     </div>
   </div>
 {% endblock content %}

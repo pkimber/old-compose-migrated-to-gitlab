@@ -1,65 +1,58 @@
 {% load block_tags %}
 {% load thumbnail %}
 
-<div class="container-fluid">
-  <div class="row">
-    {% for b in slideshow_list %}
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<div class="row">
+  {% for b in slideshow_list %}
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 
-        <ol class="carousel-indicators">
-          {% for item in b.ordered_slideshow %}
-            <li
-              data-target="#carouselExampleIndicators"
-              data-slide-to="{{ forloop.counter0 }}"
-              {% if forloop.first %}
-              class="active"
-              {% endif %}></li>
-          {% endfor %}
-        </ol>
+      <ol class="carousel-indicators">
+        {% for item in b.ordered_slideshow %}
+          <li
+            data-target="#carouselExampleIndicators"
+            data-slide-to="{{ forloop.counter0 }}"
+            {% if forloop.first %}
+            class="active"
+            {% endif %}></li>
+        {% endfor %}
+      </ol>
 
-        <div class="carousel-inner" role="listbox">
-          {% for item in b.ordered_slideshow %}
-            <div class="carousel-item{% if forloop.first %} active{% endif %}">
-              <img
-                alt="{{ item.image.caption }}"
-                title="{{ item.image.caption }}"
-                class="d-block img-fluid"
-                src="{% thumbnail item.image.image 3681x664 autocrop background %}"/>
-              <div class="carousel-caption d-none d-md-block">
-                <h3>{{ item.image.caption }}</h3>
-                <p>...</p>
+      <div class="carousel-inner" role="listbox">
+        {% for item in b.ordered_slideshow %}
+          <div class="carousel-item{% if forloop.first %} active{% endif %}">
+            <img
+              alt="{{ item.image.caption }}"
+              title="{{ item.image.caption }}"
+              class="d-block img-fluid"
+              src="{% thumbnail item.image.image 3681x664 autocrop background %}"/>
+            <div class="carousel-caption d-none d-md-block">
+              <h3>{{ item.image.caption }}</h3>
+              <p>...</p>
 
-                {% if design %}{% block_moderate b %}{% endif %}
-              </div>
+              {% if design %}{% block_moderate b %}{% endif %}
             </div>
-          {% endfor %}
-        </div>
-
-        <a
-          class="carousel-control-prev"
-          href="#carouselExampleIndicators"
-          role="button"
-          data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a
-          class="carousel-control-next"
-          href="#carouselExampleIndicators"
-          role="button"
-          data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-
+          </div>
+        {% endfor %}
       </div>
-      {% empty %}
-      <div class="col">
-        <h1>
-          {{ header_footer.header }}
-        </h1>
-      </div>
-      {% if design %}{% block_add slideshow_create_url 'Slideshow' %}{% endif %}
-    {% endfor %}
-  </div>
+
+      <a
+        class="carousel-control-prev"
+        href="#carouselExampleIndicators"
+        role="button"
+        data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#carouselExampleIndicators"
+        role="button"
+        data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+
+    </div>
+    {% empty %}
+    {% if design %}{% block_add slideshow_create_url 'Slideshow' %}{% endif %}
+  {% endfor %}
 </div>

@@ -34,6 +34,7 @@ class ArticleForm(RequiredFieldForm):
             'title',
             'description',
             #'picture',
+            'article_width',
             'article_type',
             'image_size',
         )
@@ -179,5 +180,3 @@ class SidebarForm(RequiredFieldForm):
         fields = (
             'title',
         )
-
-

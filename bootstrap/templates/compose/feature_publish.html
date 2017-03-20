@@ -10,36 +10,22 @@
 {% endblock sub_heading %}
 
 {% block content %}
+  <dl class="row">
+    <dt class="col-12 col-sm-2">Title</dt>
+    <dd class="col-12 col-sm-10">{{ object.title|linebreaksbr }}</dd>
+    <dt class="col-12 col-sm-2">Description</dt>
+    <dd class="col-12 col-sm-10">{{ object.description|linebreaksbr }}</dd>
+    <dt class="col-12 col-sm-2">Link</dt>
+    <dd class="col-12 col-sm-10">{{ object.link }}</dd>
+    {% if object.style %}
+    <dt class="col-12 col-sm-2">Style</dt>
+    <dd class="col-12 col-sm-10">{{ object.style }}</dd>
+    {% endif %}
+  </dl>
   <div class="row">
-    <div class="col">
+    <div class="col-12">
       <div class="l-box">
-        <table class="table table-sm table-bordered">
-          <tbody>
-            <tr valign="top">
-              <td><strong>Title</strong></td>
-              <td>{{ object.title|linebreaksbr }}</td>
-            </tr>
-            <tr valign="top">
-              <td><strong>Description</strong></td>
-                <td>
-                  {{ object.description|linebreaksbr }}
-                </td>
-            </tr>
-            <tr>
-              <td><strong>Link</strong></td>
-              <td>{{ object.link }}</td>
-            </tr>
-            {% if object.style %}
-              <tr valign="top">
-                <td><strong>Style</strong></td>
-                <td>{{ object.style }}</td>
-              </tr>
-            {% endif %}
-          </tbody>
-        </table>
-        <div class="col">
-          {% include '_form.html' with legend='Are you sure you want to publish this content?' submit='Publish' %}
-        </div>
+      {% include '_form.html' with legend='Are you sure you want to publish this content?' submit='Publish' %}
       </div>
     </div>
   </div>

@@ -11,55 +11,48 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  <div class="row">
-    <div class="col">
 
-        <ul class="nav flex-column">
-          {% include 'base/_back_to_settings.html' %}
-          <li class="nav-item">
-            <a href="{% url 'block.image.category.list' %}" class="nav-link">
-              <i class="fa fa-picture-o"></i>
-              Image Categories
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'block.image.list.delete' %}" class="nav-link">
-              <i class="fa fa-trash-o"></i>
-              Delete Images
-            </a>
-          </li>
-        </ul>
+  <ul class="nav nav-pills">
+    {% include 'base/_back_to_settings.html' %}
+    <li class="nav-item">
+      <a href="{% url 'block.image.category.list' %}" class="nav-link">
+        <i class="fa fa-picture-o"></i>
+        Image Categories
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{% url 'block.image.list.delete' %}" class="nav-link">
+        <i class="fa fa-trash-o"></i>
+        Delete Images
+      </a>
+    </li>
+  </ul>
 
-    </div>
-  </div>
-  <div class="row">
-    {% for image in image_list %}
+  {% for image in image_list %}
+    <div class="row">
       {% ifchanged image.category %}
-          </div>
-            <div class="row">
-              <div class="col">
-                <br>
-                <h3>
-                  {% if image.category %}
-                    {{ image.category.name }}
-                  {% else %}
-                    No Category
-                  {% endif %}
-                </h3>
-              </div>
-            </div>
-          <div class="row">
+      <div class="col-12">
+        <div class="l-box">
+          <h3>
+            {% if image.category %}
+              {{ image.category.name }}
+            {% else %}
+              No Category
+            {% endif %}
+          </h3>
+        </div>
+      </div>
       {% endifchanged %}
       <div class="col-2 col-4">
-        <img src="{% thumbnail image.image 100x100  crop='center' %}">
-        <br>
-        <a href="{% url 'block.image.update' image.pk %}">
-          <i class="fa fa-edit"></i>
-          {{ image.title }}
-        </a>
-        <br>
-        <br>
+        <div class="l-box">
+          <img src="{% thumbnail image.image 100x100  crop='center' %}">
+          <br>
+          <a href="{% url 'block.image.update' image.pk %}">
+            <i class="fa fa-edit"></i>
+            {{ image.title }}
+          </a>
+        </div>
       </div>
     {% endfor %}
-  </div>
-{% endblock content %}
+
+  {% endblock content %}

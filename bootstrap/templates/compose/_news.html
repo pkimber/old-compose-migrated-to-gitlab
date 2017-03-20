@@ -4,7 +4,7 @@
 
 {% if news_list %}
   <div class="row">
-    <div class="col col-lg-8">
+    <div class="col-12 col-lg-8">
       <div class="l-box">
         {% for b in news_list %}
         <h4>{{ b.title }} - {{ b.block.created|date:"d/m/Y" }}</h4>
@@ -48,7 +48,7 @@
         {% endfor %}
       </div>
     </div>
-    <div class="col col-lg-4">
+    <div class="col-12 col-lg-4">
       {% if design %}
         <small>
           Your Twitter feed will appear here when the page is published.

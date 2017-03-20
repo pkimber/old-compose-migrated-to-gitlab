@@ -2,6 +2,14 @@
 
 {% load static %}
 
+{% block heading %}
+  {{ page.name }}
+{% endblock heading %}
+
+{% block sub_heading %}
+  sub_heading
+{% endblock sub_heading %}
+
 {% block content %}
   {% include 'compose/_body.html' %}
   {% if form %}
@@ -14,7 +22,7 @@
     {% for c in calendar %}
       <div class="row">
         {% for month in c %}
-          <div class="col">
+          <div class="col-12">
             <div class="l-box">
               {{ month }}
             </div>
@@ -26,8 +34,3 @@
   {% include 'compose/_news.html' %}
   {% include 'compose/_card.html' %}
 {% endblock content %}
-
-{% block script_extra %}
-  {{ block.super }}
-  {% include 'base/_slider.html' %}
-{% endblock script_extra %}

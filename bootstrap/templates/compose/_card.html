@@ -3,11 +3,11 @@
 <div class="row">
 {% for b in card_list %}
   {% if b.article_type == 'text_only' or not b.picture %}
-    <div class="col">
+    <div class="col-12">
       {% include 'compose/_text.html' with text_class='l-box' %}
     </div>
   {% else %}
-    <div class="col">
+    <div class="col-12">
       <div class="row">
         <div class="col-3">
           <div class="l-box">
@@ -26,7 +26,7 @@
             {% endif %}
           </div>
         </div>
-        <div class="col">
+        <div class="col-12">
           {% include 'compose/_text.html' with text_class='t-box' %}
         </div>
       </div>

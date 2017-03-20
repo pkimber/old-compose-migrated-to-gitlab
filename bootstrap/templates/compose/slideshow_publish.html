@@ -10,47 +10,31 @@
 {% endblock sub_heading %}
 
 {% block content %}
+  <dl class="row">
+    <dt class="col-12 col-sm-2">Title</dt>
+    <dd class="col-12 col-sm-10">{{ object.title }}</dd>
+    <dt class="col-12 col-sm-2">Description</dt>
+    <dd class="col-12 col-sm-10">
+      {% autoescape off %}
+        {{ object.description }}
+      {% endautoescape %}
+    </dd>
+    {% for item in object.ordered_slideshow %}
+    <dt class="col-12 col-sm-2">Slide {{ item.order }} {{ item.image.title }}</dt>
+    <dd class="col-12 col-sm-10">
+      <img
+        alt="{{ item.image.caption }}"
+        title="{{ item.image.caption }}"
+        class="img-fluid"
+        src="{% thumbnail item.image.image 200x150 crop='smart' %}" />
+    </dd>
+    {% endfor %}
+  </dl>
   <div class="row">
-    <div class="col">
+    <div class="col-12">
       <div class="l-box">
-        <table class="table table-sm table-bordered">
-          <tbody>
-            <tr>
-              <td><strong>Title</strong></td>
-              <td>{{ object.title }}</td>
-            </tr>
-            <tr valign="top">
-              <td><strong>Description</strong></td>
-              <td>
-                {% autoescape off %}
-                  {{ object.description }}
-                {% endautoescape %}
-              </td>
-            </tr>
-            {% for item in object.ordered_slideshow %}
-              <tr valign="top">
-                <td>
-                  {% if forloop.first %}
-                    <strong>Slide</strong>
-                  {% endif %}
-                </td>
-                <td>
-                  {{ item.order }}.
-                  {{ item.image.title }}
-                  <img
-                    alt="{{ item.image.caption }}"
-                    title="{{ item.image.caption }}"
-                    class="img-fluid" 
-                    src="{% thumbnail item.image.image 200x150 crop='smart' %}" />
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+        {% include '_form.html' with legend='Are you sure you want to publish this slideshow?' submit='Publish' %}
       </div>
-    </div>
-    <div class="col">
-      {% include '_form.html' with legend='Are you sure you want to publish this slideshow?' submit='Publish' %}
     </div>
   </div>
 {% endblock content %}

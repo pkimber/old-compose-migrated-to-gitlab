@@ -9,24 +9,20 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  <div class="row">
-    <div class="col">
 
-        <ul class="nav flex-column">
-          {% include 'base/_settings.html' %}
-          {% include 'base/_paginate.html' %}
-          <li class="nav-item">
-            <a href="{% url 'block.page.create' %}" class="nav-link">
-              <i class="fa fa-file-text-o"></i>
-              Create page
-            </a>
-          </li>
-        </ul>
+  <ul class="nav nav-pills">
+    {% include 'base/_settings.html' %}
+    {% include 'base/_paginate.html' %}
+    <li class="nav-item">
+      <a href="{% url 'block.page.create' %}" class="nav-link">
+        <i class="fa fa-file-text-o"></i>
+        Create page
+      </a>
+    </li>
+  </ul>
 
-    </div>
-  </div>
   <div class="row">
-    <div class="col">
+    <div class="col-12">
       <table class="table table-sm table-bordered">
         <thead>
           <tr>
@@ -42,16 +38,20 @@
             <tr valign="top">
               <td>
                 {% if not object.is_custom %}
-                <a href="{{ object.get_absolute_url }}">
-                {% endif %}
-                  {% if object.deleted %}<del>{% endif %}
-                  {% if object.order and not object.is_custom %}
-                    {{ object.order }})
+                  <a href="{{ object.get_absolute_url }}">
                   {% endif %}
-                  {{ object.name }}
-                  {% if object.deleted %}</del>{% endif %}
-                {% if not object.is_custom %}
-                </a>
+                  {% if object.deleted %}
+                    <del>
+                    {% endif %}
+                    {% if object.order and not object.is_custom %}
+                      {{ object.order }})
+                    {% endif %}
+                    {{ object.name }}
+                    {% if object.deleted %}
+                    </del>
+                  {% endif %}
+                  {% if not object.is_custom %}
+                  </a>
                 {% endif %}
               </td>
               <td>
@@ -90,10 +90,10 @@
     </div>
   </div>
   <div class="row">
-    <div class="col">
-        <ul class="nav flex-column">
-          {% include 'base/_paginate.html' %}
-        </ul>
+    <div class="col-12">
+      <ul class="nav nav-pills">
+        {% include 'base/_paginate.html' %}
+      </ul>
     </div>
   </div>
 {% endblock content %}

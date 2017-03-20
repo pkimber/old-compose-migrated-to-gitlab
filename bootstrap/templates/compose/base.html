@@ -27,7 +27,13 @@
     {% endblock stylesheets %}
     {% block stylesheets_extra %}{% endblock stylesheets_extra %}
     {% block analytics %}{% endblock analytics %}
-
+    <style>
+      .l-box {
+        border: #dddddd 1px solid;
+        padding: 10px;
+        margin: 15px;
+      }
+    </style>
   </head>
   <body>
 
@@ -43,7 +49,9 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="{% url 'project.home' %}">
-        {% block site_name %}Brand{% endblock site_name %}
+        {% block heading %}
+          {{ site_name }}
+        {% endblock heading %}
       </a>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -51,95 +59,19 @@
 
           {% include 'block/_menu_list.html' %}
 
-          {% if user.is_authenticated %}
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="http://example.com"
-                id="navbarDropdownDash"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false">
-                Dash
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownDash">
-                <a class="dropdown-item" href="{% url 'project.dash' %}">Dash Home</a>
-                {% if user.is_staff %}
-                  <a class="dropdown-item" href="{% url 'project.settings' %}">Settings</a>
-                {% endif %}
-                <div class="dropdown-divider"></div>
-                {% if user.is_authenticated %}
-                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-                {% else %}
-                  <a class="dropdown-item" href="{% url 'login' %}">Login</a>
-                {% endif %}
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownCompose"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false">
-                CMS
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownCompose">
-                {% if user.is_superuser %}
-                  <a class="dropdown-item" href="{% url 'block.template.list' %}">
-                    <i class="fa fa-file-code-o"></i>
-                    Page Templates
-                  </a>
-                {% endif %}
-                <a class="dropdown-item" href="{% url 'block.page.list' %}">
-                  <i class="fa fa-file-text-o"></i>
-                  Pages
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'block.image.list' %}">
-                  <i class="fa fa-picture-o"></i>
-                  Image Library
-                </a>
-                <a class="dropdown-item" href="{% url 'block.link.list' %}">
-                  <i class="fa fa-picture-o"></i>
-                  Link Library
-                </a>
-                {% if not no_navigation_menu %}
-                  {# navigation menu should be called main #}
-                  <a class="dropdown-item" href="{% url 'block.menuitem.list' 'main' %}">
-                    <i class="fa fa-bars"></i>
-                    Navigation Menu
-                  </a>
-                {% endif %}
-                {% if not no_header_footer %}
-                  <a class="dropdown-item" href="{% url 'block.header.footer.update' %}">
-                    <i class="fa fa-header"></i>
-                    Header and footer
-                  </a>
-                {% endif %}
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'compose.code.snippet.list' %}">
-                  <i class="fa fa-code"></i>
-                  Code Snippets
-                </a>
-                <a class="dropdown-item" href="{% url 'compose.feature.style.list' %}">
-                  <i class="fa fa-tags"></i>
-                  Feature Styles
-                </a>
-                <a class="dropdown-item" href="{% url 'compose.header.style.list' %}">
-                  <i class="fa fa-tags"></i>
-                  Header Styles
-                </a>
-              </div>
-            </li>
-          {% endif %}
+          {% include 'compose/_menu_list.html' %}
 
-          {% block menu_extra %}{% endblock menu_extra %}
-
+          {% block menu_extra %}
           {% if user.is_authenticated %}
             {% include 'block/_design_menu.html' %}
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
           {% endif %}
+          {% endblock menu_extra %}
+
+
 
         </ul>
 
@@ -152,77 +84,95 @@
       </div>
     </nav>
 
+    {% block noheader %}
+      {% block header %}
+      {% if slideshow_list %}
+        <div class="container-fluid">
+          {% include 'compose/_header_slideshow.html' %}
+        </div>
+      {% else %}
+        <div class="container">
+          <h1>
+            {% block sub_heading %}
+              This is the base template (please add a 'sub_heading' block)
+            {% endblock sub_heading %}
+          </h1>
+          {% if messages %}
+            <div>
+              {% for message in messages %}
+                <div class="alert alert-info" role="alert">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endblock header %}
+  {% endblock noheader %}
+
+  <div class="container">
+    {% block content %}{% endblock content %}
+  </div>
+
+  <footer>
     <div class="container">
-      {% block content %}{% endblock content %}
-    </div>
-
-    <footer>
-      {% block footer %}
-        <div class="col col-4">
-          <div class="l-box">
-            {% if header_footer.url_facebook %}
-              <a href="{{ header_footer.url_facebook }}" target="_blank">
-                <i class="fa fa-facebook-official fa-2x"></i>
-              </a>
-            {% endif %}
-            {% if header_footer.url_linkedin %}
-              <a href="{{ header_footer.url_linkedin }}" target="_blank">
-                <i class="fa fa-linkedin fa-2x"></i>
-              </a>
-            {% endif %}
-            {% if header_footer.url_twitter %}
-              <a href="{{ header_footer.url_twitter }}" target="_blank">
-                <i class="fa fa-twitter fa-2x"></i>
-              </a>
-            {% endif %}
-            {% if header_footer.footer_left %}
-              &nbsp;
-              {{ header_footer.footer_left }}
-            {% endif %}
-          </div>
-        </div>
-        <div class="col col-4">
-          <div class="l-box legal-logo">
-            <a href="http://yuilibrary.com/" target="_blank">
-              <img height="30" width="65" alt="YUI logo" src="{% static 'img/project/yui.png' %}">
-            </a>
-            <p class="legal-license">
-              This site is built using
-              <a href="http://purecss.io/" target="_blank">
-                Yahoo Pure CSS
-              </a>
-            </p>
-          </div>
-        </div>
-        <div class="col col-4">
-          <div class="l-box">
-            <ul class="legal-links row">
-              <li class="col">
-                For help and support, please contact
-                <a href="https://www.kbsoftware.co.uk" target="_blank">
-                  KB Software Ltd
+      <div class="row">
+        {% block footer %}
+          <div class="col-12 col-6">
+            <div class="d-flex flex-row">
+              {% if header_footer.url_facebook %}
+                <a href="{{ header_footer.url_facebook }}" target="_blank" class="p-1">
+                  <i class="fa fa-facebook-official fa-2x"></i>
                 </a>
-              </li>
-            </ul>
+              {% endif %}
+              {% if header_footer.url_linkedin %}
+                <a href="{{ header_footer.url_linkedin }}" target="_blank" class="p-1">
+                  <i class="fa fa-linkedin fa-2x"></i>
+                </a>
+              {% endif %}
+              {% if header_footer.url_twitter %}
+                <a href="{{ header_footer.url_twitter }}" target="_blank" class="p-1">
+                  <i class="fa fa-twitter fa-2x"></i>
+                </a>
+              {% endif %}
+            </div>
+
+            {% if header_footer.footer_left %}
+              <p>
+                &nbsp;
+                {{ header_footer.footer_left }}
+              </p>
+            {% endif %}
+
           </div>
-        {% endblock footer %}
-      </footer>
+        </div>
+        <div class="col-12 col-6">
+          For help and support, please contact
+          <a href="https://www.kbsoftware.co.uk" target="_blank">
+            {{ company_name }}
+          </a>
+        </div>
+      {% endblock footer %}
+    </div>
+  </div>
+</footer>
 
-      {% block script %}
-        <script
-          src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-          integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-          crossorigin="anonymous"></script>
-        <script
-          src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
-          integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-          crossorigin="anonymous"></script>
-        <script
-          src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-          integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-          crossorigin="anonymous"></script>
-      {% endblock script %}
-      {% block script_extra %}{% endblock script_extra %}
+{% block script %}
+  <script
+    src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+    integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+    crossorigin="anonymous"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+    integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+    crossorigin="anonymous"></script>
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+    integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+    crossorigin="anonymous"></script>
+{% endblock script %}
+{% block script_extra %}{% endblock script_extra %}
 
-    </body>
-  </html>
+</body>
+</html>

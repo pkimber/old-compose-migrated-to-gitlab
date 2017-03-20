@@ -2,35 +2,7 @@
 {% load thumbnail %}
 {% load startswith %}
 
-<style>
-  .row {
-      margin-bottom: 20px;
-   }
-  .featurewrap {
-      width: 1000px;
-      margin: auto;
-   }
-  .event {
-    display: inline-block;
-    width: 32%;
-    vertical-align: top;
-    background: #efefef;
-    margin: 0.5%;
-  }
-  .event h3, .event div {
-    padding-left: 3px;
-    padding-right: 3px;
-  }
-  .scale {
-    max-width: 100%;
-  }
-  .centre {
-    margin: auto;
-    text-align: center;
- }
-</style>
-
-<div class="row featurewrap">
+<div class="row">
   {% for c in header_a_list %}
     <div{% if c.css_class_name %} class="{{c.css_class_name}}"{% endif %}>{{ c.title }}</div>
     {% if design %}<br>{% block_moderate c %}{% endif %}

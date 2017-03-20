@@ -10,21 +10,18 @@
 
 {% block content %}
   {% if object.in_use %}
-    <div class="row">
-      <div class="col">
 
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a href="{% url 'block.image.category.list' %}" class="nav-link">
-                <i class="fa fa-reply"></i>
-              </a>
-            </li>
-          </ul>
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a href="{% url 'block.image.category.list' %}" class="nav-link">
+          <i class="fa fa-reply"></i>
+        </a>
+      </li>
+    </ul>
 
-      </div>
-    </div>
     <div class="row">
-      <div class="col">
+      <div class="col-12">
+        <div class="l-box">
         <br>
         There are images in this category.
         <br>
@@ -33,7 +30,8 @@
     </div>
   {% else %}
     <div class="row">
-      <div class="col">
+      <div class="col-12">
+        <div class="l-box">
         <br>
         Are you sure you want to delete the
         <strong>{{ object.name }}</strong>
@@ -41,7 +39,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col">
+      <div class="col-12">
+        <div class="l-box">
         {% include '_form.html' with submit='Delete Image Category' %}
       </div>
     </div>

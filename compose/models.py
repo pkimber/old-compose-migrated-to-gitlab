@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -31,34 +32,24 @@ reversion.register(ArticleBlock)
 
 class Article(ContentModel):
 
-    ARTICLE_TYPE_CHOICES = (
-        ('text_left', 'Text Left'),
-        ('text_right', 'Text Right'),
-        ('text_top', 'Text Top'),
-        ('text_bottom', 'Text Bottom'),
-        ('text_only', 'Text Only'),
-        ('picture_only', 'Picture Only'),
-    )
-
-    IMAGE_SIZE = (
-        ('1-2', 'Half Width'),
-        ('1-3', 'Third Width'),
-        ('1-4', 'Quarter Width'),
-    )
-
     block = models.ForeignKey(ArticleBlock, related_name='content')
 
     title = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
+    article_width = models.CharField(
+        max_length=32,
+        choices=settings.ARTICLE_WIDTH_CHOICES,
+        default=settings.ARTICLE_WIDTH_HALFBIG,
+    )
     article_type = models.CharField(
-        max_length=12,
-        choices=ARTICLE_TYPE_CHOICES,
-        default='text_left',
+        max_length=32,
+        choices=settings.ARTICLE_TYPE_CHOICES,
+        default=settings.ARTICLE_TYPE_LEFT,
     )
     image_size = models.CharField(
-        max_length=3,
-        choices=IMAGE_SIZE,
-        default='1-2',
+        max_length=32,
+        choices=settings.ARTICLE_IMAGE_SIZE_CHOICES,
+        default=settings.ARTICLE_IMAGE_SIZE_HALF,
     )
     link = models.ForeignKey(
         Link,
@@ -105,7 +96,10 @@ class Article(ContentModel):
 
     def text_size(self):
         invert = self.image_size.split('-')
-        return '-'.join([str(int(invert[1])-int(invert[0])) or 1, invert[1]])
+        if isinstance(invert[1], int):
+            return '-'.join([str(int(invert[1])-int(invert[0])) or 1, invert[1]])
+        else:
+            return ''
 
     @property
     def wizard_fields(self):

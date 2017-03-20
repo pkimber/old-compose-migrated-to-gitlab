@@ -3,7 +3,7 @@
 
 {% for b in body_list %}
   <div class="row">
-    <div class="col">
+    <div class="col-12">
       <div class="l-box">
         <h4>{{ b.title }}</h4>
         {% if b.description %}
@@ -23,7 +23,6 @@
             </a>
           </p>
         {% endif %}
-
         {% for picture in b.carousel.all %}
           <img
             alt="{{ picture.caption }}"
@@ -32,13 +31,12 @@
             src="{% thumbnail picture.image 200x200 autocrop %}" />
           <br />
         {% endfor %}
-
         {% if design %}
           {% block_moderate b %}
         {% endif %}
       </div>
     </div>
-    <div class="col">
+    <div class="col-12">
       <div class="l-box">
         {% if b.picture %}
           <img

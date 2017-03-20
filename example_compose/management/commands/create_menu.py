@@ -41,14 +41,14 @@ class Command(BaseCommand):
             'compose',
             'Header',
             'compose.header.create',
-        ) 
+        )
         section_feature = Section.objects.init_section(
             'feature',
             'FEATURE',
             'compose',
             'Feature',
             'compose.feature.create',
-        ) 
+        )
 
         page_article = self.create_page(
             'article-demo',

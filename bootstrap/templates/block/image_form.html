@@ -12,11 +12,11 @@
 
 {% block content %}
   <div class="row">
-    <div class="col">
-      <br>
-      <img src="{% thumbnail object.image 100x100  crop='center' %}">
-      {% include '_form.html' %}
-      <br>
+    <div class="col-12">
+      <div class="l-box">
+        <img src="{% thumbnail object.image 100x100  crop='center' %}">
+        {% include '_form.html' %}
+      </div>
     </div>
   </div>
 {% endblock content %}

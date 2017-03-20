@@ -10,8 +10,8 @@
 
 {% block content %}
   <div class="row">
-    <div class="col">
-      <ul class="nav flex-column">
+    <div class="col-12">
+      <ul class="nav nav-pills">
         <li class="nav-item">
           <a href="{{ url_option }}" class="nav-link">
             <i class="fa fa-reply"></i>
@@ -21,9 +21,10 @@
     </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col-12">
+      <div class="l-box">
       {% include 'block/_wizard_form.html' with submit='Update' %}
-      <br>
+      </div>
     </div>
   </div>
 {% endblock content %}

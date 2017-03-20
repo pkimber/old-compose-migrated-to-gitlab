@@ -1,0 +1,19 @@
+{% extends 'dash/base.html' %}
+
+{% block sub_title %}
+  Register
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Register
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      <div class="l-box">
+      {% include '_form.html' with legend='Registration' submit='Register' %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

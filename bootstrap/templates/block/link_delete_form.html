@@ -10,52 +10,53 @@
 
 {% block content %}
   {% if object.in_use %}
+
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a href="{% url 'block.link.list' %}" class="nav-link">
+          <i class="fa fa-reply"></i>
+        </a>
+      </li>
+    </ul>
+
     <div class="row">
-      <div class="col">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a href="{% url 'block.link.list' %}" class="nav-link">
-              <i class="fa fa-reply"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <br>
-        This link is in use on the following pages:
-        <ul>
-          {% for page in link.pages_used %}
-            <li>{{ page }}</li>
-          {% endfor %}
-        </ul>
-        <br><br>
-        If you want to delete this link, remove all uses of it first.
+      <div class="col-12">
+        <div class="l-box">
+          This link is in use on the following pages:
+          <ul>
+            {% for page in link.pages_used %}
+              <li>{{ page }}</li>
+            {% endfor %}
+          </ul>
+          <br><br>
+          If you want to delete this link, remove all uses of it first.
+        </div>
       </div>
     </div>
   {% else %}
-    <div class="d-flex flex-row">
-      <div class="p-2">
-        Title: {{ link.title }}
-      </div>
-      <div class="p-2">
-          Url: {{ link.url }}
-      </div>
-    </div>
-
+    <dl class="row">
+      <dt class="col-12 col-sm-2">Title</dt>
+      <dd class="col-12 col-sm-10">{{ link.title }}</dd>
+      <dt class="col-12 col-sm-2">Url</dt>
+      <dd class="col-12 col-sm-10">{{ link.url }}</dd>
+    </dl>
     <div class="row">
-      <div class="col">
-        <br>
-        <p style="color: red;">Before deleting this link please ensure that you have not used it in the text of your pages. </p>
-        <p>
-        Are you sure you want to delete the
-        <strong>{{ object.title }}</strong>
-        link?
-      </p>
+      <div class="col-12">
+        <div class="l-box">
+          <p style="color: red;">Before deleting this link please ensure that you have not used it
+            in the text of your pages.
+          </p>
+          <p>
+            Are you sure you want to delete the
+            <strong>{{ object.title }}</strong>
+            link?
+          </p>
+        </div>
       </div>
-      <div class="col">
-        {% include '_form.html' with submit='Delete Link' %}
+      <div class="col-12">
+        <div class="l-box">
+          {% include '_form.html' with submit='Delete Link' %}
+        </div>
       </div>
     </div>
   {% endif %}

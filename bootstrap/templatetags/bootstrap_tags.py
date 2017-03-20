@@ -3,6 +3,10 @@ from django import template
 
 register = template.Library()
 
+@register.filter(name='addcss')
+def addcss(field, css):
+   return field.as_widget(attrs={"class":css})
+
 # @register.inclusion_tag('bootstrap/_cms_inctag_pagination_button.html')
 # def cms_pagination_button(cur_page_no, target_page_jump, page_max):
 #     return dict(

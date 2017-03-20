@@ -9,34 +9,32 @@
 {% endblock sub_heading %}
 
 {% block content %}
-``<div class="row">
-    <div class="col">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a href="{% url 'project.settings' %}" class="nav-link">
-            <i class="fa fa-reply"></i>
-          </a>
-        </li>
-        {% include 'base/_paginate.html' %}
-        {% if user.is_superuser %}
-          <li class="nav-item">
-            <a href="{% url 'block.template.create' %}" class="nav-link">
-              <i class="fa fa-file-code-o"></i>
-              Create template
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'block.section.list' %}" class="nav-link">
-              <i class="fa fa-file-code-o"></i>
-              Sections
-            </a>
-          </li>
-        {% endif %}
-      </ul>
-    </div>
-  </div>
+
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a href="{% url 'project.settings' %}" class="nav-link">
+        <i class="fa fa-reply"></i>
+      </a>
+    </li>
+    {% include 'base/_paginate.html' %}
+    {% if user.is_superuser %}
+      <li class="nav-item">
+        <a href="{% url 'block.template.create' %}" class="nav-link">
+          <i class="fa fa-file-code-o"></i>
+          Create template
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'block.section.list' %}" class="nav-link">
+          <i class="fa fa-file-code-o"></i>
+          Sections
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+
   <div class="row">
-    <div class="col">
+    <div class="col-12">
       <table class="table table-sm table-bordered">
         <thead>
           <tr>
@@ -78,8 +76,8 @@
     </div>
   </div>
   <div class="row">
-    <div class="col">
-      <ul class="nav flex-column">
+    <div class="col-12">
+      <ul class="nav nav-pills">
         {% include 'base/_paginate.html' %}
       </ul>
     </div>

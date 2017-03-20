@@ -33,7 +33,9 @@
     <button
       type="submit"
       class="btn btn-primary"
-      {% if submit_id %}id="{{ submit_id }}">{% if submit %}{{ submit }}{% else %}Submit{% endif %}</button>
+      {% if submit_id %}id="{{ submit_id }}"{% endif %}>
+        {% if submit %}{{ submit }}{% else %}Submit{% endif %}
+    </button>
   </fieldset>
   {% for hidden in form.hidden_fields %}
       {{ hidden }}

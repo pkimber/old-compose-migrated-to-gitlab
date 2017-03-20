@@ -9,26 +9,26 @@
 {% endblock sub_heading %}
 
 {% block content %}
+
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a href="{% url 'block.image.list' %}" class="nav-link">
+        <i class="fa fa-reply"></i>
+      </a>
+    </li>
+  </ul>
+
   <div class="row">
-    <div class="col">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a href="{% url 'block.image.list' %}" class="nav-link">
-              <i class="fa fa-reply"></i>
-            </a>
-          </li>
-        </ul>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
+    <div class="col-12">
+      <div class="l-box">
       <h3>
         Select one (or more) images to delete from the library...
       </h3>
     </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col-12">
+      <div class="l-box">
       {% include 'block/_wizard_form.html' with submit='Delete from Library' %}
       <br>
     </div>

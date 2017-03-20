@@ -1,13 +1,11 @@
 {% load project_tags %}
 <nav>
   <ul class="pagination">
-
     <li{% if paginator_page_num < 2 %} class="disabled" {% endif %}>
       <a href="?{% url_replace paginator_page_key paginator_page_num|add:'-1' %}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-
     {% for num in paginator_page_nums %}
       {% if num > 0 and num <= num_paginator_pages %}
         {% if num == paginator_page_num %}

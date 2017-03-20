@@ -9,28 +9,25 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  {% if user.is_staff %}
+
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a href="{% url 'project.settings' %}" class="nav-link">
+        <i class="fa fa-reply"></i>
+      </a>
+    </li>
+      {% if user.is_staff %}
+    <li class="nav-item">
+      <a href="{% url 'block.section.create' %}" class="nav-link">
+        <i class="fa fa-file-code-o"></i>
+        Create section
+      </a>
+    </li>
+    {% endif %}
+  </ul>
 
   <div class="row">
-    <div class="col">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a href="{% url 'project.settings' %}" class="nav-link">
-            <i class="fa fa-reply"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{% url 'block.section.create' %}" class="nav-link">
-            <i class="fa fa-file-code-o"></i>
-            Create section
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  {% endif %}
-  <div class="row">
-    <div class="col">
+    <div class="col-12">
       {% include 'base/_paginate.html' %}
       <table class="table table-sm table-bordered">
         <thead>

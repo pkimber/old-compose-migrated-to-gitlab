@@ -9,6 +9,9 @@ THUMBNAIL_DEBUG = DEBUG
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 
+SITE_NAME = 'Compose'
+COMPANY_NAME = 'KB Software'
+
 ADMINS = (
     ('admin', 'code@pkimber.net'),
 )
@@ -131,6 +134,11 @@ THIRD_PARTY_APPS = (
     'reversion',
 )
 
+
+
+# `bootstrap` comes first so that it's version of `base`, `block`, and `compose`
+# templates will be selected first.
+
 LOCAL_APPS = (
     'bootstrap',
     'compose',
@@ -184,3 +192,42 @@ LOGIN_REDIRECT_URL = reverse_lazy('project.dash')
 # https://github.com/johnsensible/django-sendfile
 SENDFILE_BACKEND = 'sendfile.backends.development'
 SENDFILE_ROOT = 'media-private'
+
+
+ARTICLE_WIDTH_HALFBIG = 'col-12 col-md-6'
+ARTICLE_WIDTH_FULL = 'col-12'
+ARTICLE_WIDTH_HALFORSMALLER = 'col-12 col-sm-6 col-md-4 col-lg-3 pure-xl-2'
+ARTICLE_WIDTH_THIRDS = 'col-12 col-sm-6 col-md-4'
+
+ARTICLE_TYPE_LEFT = 'pull-right'
+ARTICLE_TYPE_RIGHT = 'pull-left'
+ARTICLE_TYPE_TOP = 'w-100'
+ARTICLE_TYPE_BOTTOM = 'w-100'
+ARTICLE_TYPE_TEXT_ONLY = 'hidden'
+ARTICLE_TYPE_PICTURE_ONLY = 'visible'
+
+ARTICLE_IMAGE_SIZE_HALF = 'col-6'
+ARTICLE_IMAGE_SIZE_THIRD = 'col-4'
+ARTICLE_IMAGE_SIZE_QUARTER = 'col-3'
+
+ARTICLE_WIDTH_CHOICES = (
+    (ARTICLE_WIDTH_HALFBIG, 'Half when Big'),
+    (ARTICLE_WIDTH_FULL, 'Full Width'),
+    (ARTICLE_WIDTH_HALFORSMALLER, 'Half or Less'),
+    (ARTICLE_WIDTH_THIRDS, 'Text Bottom'),
+)
+
+ARTICLE_TYPE_CHOICES = (
+    (ARTICLE_TYPE_LEFT, 'Text Left'),
+    (ARTICLE_TYPE_RIGHT, 'Text Right'),
+    (ARTICLE_TYPE_TOP, 'Text Top'),
+    (ARTICLE_TYPE_BOTTOM, 'Text Bottom'),
+    (ARTICLE_TYPE_TEXT_ONLY, 'Text Only'),
+    (ARTICLE_TYPE_PICTURE_ONLY, 'Picture Only'),
+)
+
+ARTICLE_IMAGE_SIZE_CHOICES = (
+    (ARTICLE_IMAGE_SIZE_HALF, 'Half Width'),
+    (ARTICLE_IMAGE_SIZE_THIRD, 'Third Width'),
+    (ARTICLE_IMAGE_SIZE_QUARTER, 'Quarter Width'),
+)
