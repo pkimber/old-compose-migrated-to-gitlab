@@ -1,20 +1,20 @@
 {% load block_tags %}
 {% load thumbnail %}
-  <div class="row">
+<div class="row">
 
   {% for b in card_list %}
       <div class="col-12 col-sm-6 col-md-4">
-        <div class="card {{ b.style.css_class_name }}">
+        <div class="{{ b.style.css_class_name }}">
 
         {% if b.picture and not b.article_type == 'hidden' and not b.article_type == 'w-100 mb-2 mt-3' %}
         <img
           alt="{{ b.picture.title }}"
           title="{{ b.picture.title }}"
-          class="card-img {% if not 'overlay' in b.style.name %}card-img-top img-fluid{% endif %}"
+          class="card-img {% if not 'img-overlay' in b.style.name %}card-img-top img-fluid{% endif %}"
           src="{% thumbnail b.picture.image 400x0 crop=true %}">
         {% endif %}
 
-        {% if 'overlay' in b.style.name %}
+        {% if 'img-overlay' in b.style.name %}
         <div class="card-block card-img-overlay">
         {% else %}
         <div class="card-block">
@@ -38,8 +38,6 @@
 
         </div>
 
-
-
         {% if b.picture and b.article_type == 'w-100 mb-2 mt-3' %}
         <img
           alt="{{ b.picture.title }}"
@@ -50,7 +48,6 @@
 
       </div>
 
-
       {% if design %}
         <div class="card-footer">
         {% block_moderate b request_path=request_path %}
@@ -59,8 +56,6 @@
 
     </div>
   {% endfor %}
-
-
 
 </div>
 
