@@ -41,9 +41,9 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <div class="l-box">
+        <div class="l-box setting-buttons">
         {% if design %}
-          {% block_moderate g %}
+          {% block_moderate g return_path=return_path %}
         {% endif %}
         </div>
       </div>
@@ -52,8 +52,8 @@
   {% if design %}
     <div class="row">
       <div class="col-12">
-        <div class="l-box">
-        {% block_add gallery_create_url 'Gallery' %}
+        <div class="l-box setting-buttons">
+        {% block_add gallery_create_url 'Gallery' return_path=return_path %}
         </div>
       </div>
     </div>

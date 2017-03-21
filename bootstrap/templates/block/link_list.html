@@ -11,92 +11,92 @@
 {% endblock sub_heading %}
 
 {% block content %}
+
+  <ul class="nav nav-pills">
+    {% include 'base/_back_to_settings.html' %}
+    <li class="nav-item">
+      <a href="{% url 'block.link.category.list' %}" class="nav-link">
+        <i class="fa fa-picture-o"></i>
+        Link Categories
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{% url 'block.link.document.create' %}" class="nav-link">
+        <i class="fa fa-file-o"></i>
+        Upload New Document
+      </a>
+    </li>
+  </ul>
+
   <div class="row">
     <div class="col-12">
-      <ul class="nav nav-pills">
-        {% include 'base/_back_to_settings.html' %}
-        <li class="nav-item">
-          <a href="{% url 'block.link.category.list' %}" class="nav-link">
-            <i class="fa fa-picture-o"></i>
-            Link Categories
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{% url 'block.link.document.create' %}" class="nav-link">
-            <i class="fa fa-file-o"></i>
-            Upload New Document
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <table class="table table-sm table-bordered">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Target</th>
-            <th>Permanent Url *</th>
-            <th class="text-right">Pages used</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for link in link_list %}
-            {% ifchanged link.category %}
-            <tr class="table-info">
-              <th scope="row" colspan="4">
-                {% if link.category %}
-                  {{ link.category.name }}
-                {% else %}
-                  No Category
-                {% endif %}
-              </th>
+      <div class="l-box">
+        <table class="table table-sm table-bordered">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Target</th>
+              <th>Permanent Url *</th>
+              <th class="text-right">Pages used</th>
             </tr>
-            {% endifchanged %}
-            <tr valign="top">
-              <th scope="row">
-                <a
-                  href="{% if link.is_document %}{% url 'block.link.document.update' link.pk %}{% elif link.is_external %}{% url 'block.link.external.update' link.pk %}{% elif link.is_internal %}{% url 'block.link.internal.update' link.pk %}{% endif %}">
-                  <i class="fa fa-edit"></i>
-                  {{ link.title }}
-                </a>
-              </th>
-              <td>
-                {% if link.is_document %}
-                  <strong>Document:</strong>
-                  {{ link.file_name }}
-                {% elif link.is_internal %}
-                  <strong>Page:</strong>
-                  {{ link.url }}
-                {% elif link.is_external %}
-                  <strong>Url:</strong>
-                  {{ link.url }}
-                {% endif %}
-              </td>
-              <td>
-                {% url 'block.link.follow' link.link_type link.pk %}
-              </td>
-              <td class="text-right">
-                {% for page in link.pages_used %}
-                  {% if forloop.counter0 %},
+          </thead>
+          <tbody>
+            {% for link in link_list %}
+              {% ifchanged link.category %}
+              <tr class="table-info">
+                <th scope="row" colspan="4">
+                  {% if link.category %}
+                    {{ link.category.name }}
+                  {% else %}
+                    No Category
                   {% endif %}
-                  {{ page }}
-                  {% empty %}
-                  <a href="{% url 'block.link.delete' link.pk %}">
-                    <i class="fa fa-trash-o"></i>
+                </th>
+              </tr>
+              {% endifchanged %}
+              <tr valign="top">
+                <th scope="row">
+                  <a
+                    href="{% if link.is_document %}{% url 'block.link.document.update' link.pk %}{% elif link.is_external %}{% url 'block.link.external.update' link.pk %}{% elif link.is_internal %}{% url 'block.link.internal.update' link.pk %}{% endif %}">
+                    <i class="fa fa-edit"></i>
+                    {{ link.title }}
                   </a>
-                {% endfor %}
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-        <tr class="table-warning">
-          <td scope="row" colspan="4">
-            * If using a link in the text of an article, use the Permanent Url rather than the Target.
-          </td>
-        </tr>
-      </table>
+                </th>
+                <td>
+                  {% if link.is_document %}
+                    <strong>Document:</strong>
+                    {{ link.file_name }}
+                  {% elif link.is_internal %}
+                    <strong>Page:</strong>
+                    {{ link.url }}
+                  {% elif link.is_external %}
+                    <strong>Url:</strong>
+                    {{ link.url }}
+                  {% endif %}
+                </td>
+                <td>
+                  {% url 'block.link.follow' link.link_type link.pk %}
+                </td>
+                <td class="text-right">
+                  {% for page in link.pages_used %}
+                    {% if forloop.counter0 %},
+                    {% endif %}
+                    {{ page }}
+                    {% empty %}
+                    <a href="{% url 'block.link.delete' link.pk %}">
+                      <i class="fa fa-trash-o"></i>
+                    </a>
+                  {% endfor %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tr class="table-warning">
+            <td scope="row" colspan="4">
+              * If using a link in the text of an article, use the Permanent Url rather than the Target.
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 {% endblock content %}

@@ -9,7 +9,17 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  <dl class="row">
+
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+    <a href="{% url 'project.settings' %}" class="nav-link">
+      <i class="fa fa-reply"></i>
+    </a>
+    </li>
+  </ul>
+
+
+  <dl class="row l-box">
     <dt class="col-12 col-sm-2">Title</dt>
     <dd class="col-12 col-sm-10">{{ link.title }}</dd>
     {% if object.style %}

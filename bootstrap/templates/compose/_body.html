@@ -3,37 +3,40 @@
 <div class="row">
 {% for b in body_list %}
 
-  {% if b.article_type == 'text_right' %}
-  <div class="col-12 {{ b.image_size }}">
-    {% include 'compose/_body_picture.html' with image_class='article-image-left' %}
-  </div>
-  {% endif %}
+  <div class="col-12 {{ b.article_width }}">
+    <div class="l-box{% if design %} setting-buttons{% endif %}">
+      <div class="row">
 
-  {% if b.article_type == 'text_bottom' or b.article_type == 'picture_only' %}
-  <div class="col-12">
-    {% include 'compose/_body_picture.html' with image_class='article-image-center' %}
-  </div>
-  {% endif %}
+        {% if not b.article_type == 'visible' %}
+          <div class="col">
+            {% include 'compose/_text.html' with text_class='l-box' %}
+          </div>
+        {% endif %}
 
-  {% if not b.article_type == 'picture_only' %}
-  <div class="col-12 {{ b.text_size }}">
-    {% include 'compose/_text.html' with text_class='l-box' %}
-  </div>
-  {% endif %}
+        {% if b.picture and not b.article_type == 'hidden' %}
+          <div class="{{ b.image_size }}">
+            {% include 'compose/_body_picture.html' with image_class='' %}
+          </div>
+        {% endif %}
 
-  {% if b.article_type == 'text_right' %}
-    <div class="col-12 {{ b.image_size }}">
-      {% include 'compose/_body_picture.html' with image_class='article-image-left' %}
+      </div>
+
+      {% if design %}
+        {% block_moderate b return_path=return_path %}
+      {% endif %}
+
     </div>
-  {% endif %}
-
-  {% if b.article_type == 'text_left' %}
-    <div class="col-12 {{ b.image_size }}">
-      {% include 'compose/_body_picture.html' with image_class='article-image-right' %}
-    </div>
-  {% endif %}
+  </div>
 
 {% endfor %}
-</div>
 
-{% if design %}{% block_add body_create_url 'Article' %}{% endif %}
+{% if design %}
+  <div class="col-12">
+    <div class="l-box setting-buttons">
+      {% block_add body_create_url 'Article' return_path=return_path %}
+    </div>
+  </div>
+{% endif %}
+
+
+</div>

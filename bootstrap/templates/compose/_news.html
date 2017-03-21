@@ -4,21 +4,24 @@
 
 {% if news_list %}
   <div class="row">
+
     <div class="col-12 col-lg-8">
       <div class="l-box">
         {% for b in news_list %}
-        <h4>{{ b.title }} - {{ b.block.created|date:"d/m/Y" }}</h4>
+          <h4>{{ b.title }}
+            -
+            {{ b.block.created|date:"d/m/Y" }}</h4>
           <p>
             {% if b.picture %}
               {% if b.link %}
                 <a href="{{ b.link.url }}" target="_blank">
-              {% endif %}
-              <img
-                alt="{{ b.picture.caption }}"
-                title="{{ b.picture.caption }}"
-                class="img-fluid"
-                src="{% thumbnail b.picture.image 100x100 crop='smart' %}">
-              {% if b.link %}
+                {% endif %}
+                <img
+                  alt="{{ b.picture.caption }}"
+                  title="{{ b.picture.caption }}"
+                  class="img-fluid"
+                  src="{% thumbnail b.picture.image 100x100 crop='smart' %}">
+                {% if b.link %}
                 </a>
               {% endif %}
             {% endif %}
@@ -28,7 +31,8 @@
               {% endautoescape %}
             {% endif %}
             <small>
-              Created {{ b.block.created|naturaltime }}
+              Created
+              {{ b.block.created|naturaltime }}
             </small>
             {% if not b.picture %}
               {% if b.link %}
@@ -39,15 +43,18 @@
                 <br>
               {% endif %}
             {% endif %}
-            {% if design %}
-              {% block_moderate b %}
-            {% endif %}
-            <br>
-            <br>
           </p>
         {% endfor %}
       </div>
+
+      {% if design %}
+        <div class="l-box setting-buttons">
+          {% block_moderate b return_path=return_path %}
+        </div>
+      {% endif %}
+
     </div>
+
     <div class="col-12 col-lg-4">
       {% if design %}
         <small>
@@ -62,10 +69,18 @@
         {% endif %}
       {% endif %}
     </div>
+
   </div>
 {% endif %}
+
 {% if news_create_url %}
-  <p>
-    {% if design %}{% block_add news_create_url 'News' %}{% endif %}
-  </p>
+  {% if design %}
+    <div class="row">
+      <div class="col-12">
+        <div class="l-box setting-buttons">
+          {% block_add news_create_url 'News' return_path=return_path %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
 {% endif %}

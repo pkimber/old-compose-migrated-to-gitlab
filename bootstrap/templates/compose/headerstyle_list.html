@@ -9,11 +9,11 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  {% if user.is_staff %}
 
+  {% if user.is_staff %}
   <ul class="nav nav-pills">
     <li class="nav-item">
-      <a href="{% url 'project.dash' %}" class="nav-link">
+      <a href="{% url 'project.settings' %}" class="nav-link">
         <i class="fa fa-reply"></i>
       </a>
     </li>
@@ -26,39 +26,40 @@
       </li>
     {% endif %}
   </ul>
-
   {% endif %}
+
   <div class="row">
     <div class="col-12">
-      {% include 'base/_paginate.html' %}
-      <table class="table table-sm table-bordered">
-        <thead>
-          <tr>
-            <th>Style Name</th>
-            <th>CSS Class</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for object in object_list %}
-            <tr valign="top">
-              <td>
-                <a href="{% url 'compose.header.style.update' object.pk %}">
-                  <i class="fa fa-edit"></i>
-                  {{ object.name }}
-                </a>
-              </td>
-              <td>
-                <a href="{% url 'compose.header.style.update' object.pk %}">
-                  <i class="fa fa-edit"></i>
-                  {{ object.css_class_name }}
-                </a>
-              </td>
+      <div class="l-box">
+        {% include 'base/_paginate.html' %}
+        <table class="table table-sm table-bordered">
+          <thead>
+            <tr>
+              <th>Style Name</th>
+              <th>CSS Class</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% include 'base/_paginate.html' %}
+          </thead>
+          <tbody>
+            {% for object in object_list %}
+              <tr valign="top">
+                <td>
+                  <a href="{% url 'compose.header.style.update' object.pk %}">
+                    <i class="fa fa-edit"></i>
+                    {{ object.name }}
+                  </a>
+                </td>
+                <td>
+                  <a href="{% url 'compose.header.style.update' object.pk %}">
+                    <i class="fa fa-edit"></i>
+                    {{ object.css_class_name }}
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% include 'base/_paginate.html' %}
+      </div>
     </div>
   </div>
-</div>
 {% endblock content %}

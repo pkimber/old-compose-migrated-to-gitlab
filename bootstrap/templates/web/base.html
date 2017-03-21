@@ -1,1 +1,29 @@
 {% extends 'compose/base.html' %}
+
+
+{% block noheader %}
+  {% block header %}
+    {% if slideshow_list %}
+      <div class="container-fluid">
+        {% include 'compose/_header_slideshow.html' %}
+      </div>
+    {% else %}
+      <div class="container">
+        <h1>
+          {% block sub_heading %}
+            Tim's Bootstrap Compose App
+          {% endblock sub_heading %}
+        </h1>
+        {% if messages %}
+          <div>
+            {% for message in messages %}
+              <div class="alert alert-info" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endblock header %}
+{% endblock noheader %}

@@ -18,7 +18,8 @@
               <i class="fa fa-external-link"></i>
               {{ b.link.title }}
               {% if b.link.is_document %}
-                - {{ b.link.file_name }}
+                -
+                {{ b.link.file_name }}
               {% endif %}
             </a>
           </p>
@@ -28,14 +29,20 @@
             alt="{{ picture.caption }}"
             title="{{ picture.caption }}"
             class="img-fluid"
-            src="{% thumbnail picture.image 200x200 autocrop %}" />
-          <br />
+            src="{% thumbnail picture.image 200x200 autocrop %}"/>
+          <br/>
         {% endfor %}
-        {% if design %}
-          {% block_moderate b %}
-        {% endif %}
       </div>
     </div>
+
+    {% if design %}
+      <div class="col-12">
+        <div class="l-box setting-buttons">
+          {% block_moderate b return_path=return_path %}
+        </div>
+      </div>
+    {% endif %}
+
     <div class="col-12">
       <div class="l-box">
         {% if b.picture %}
@@ -43,10 +50,19 @@
             alt="{{ b.picture.caption }}"
             title="{{ b.picture.caption }}"
             class="img-fluid"
-            src="{% thumbnail b.picture.image 533x300 autocrop %}" />
+            src="{% thumbnail b.picture.image 533x300 autocrop %}"/>
         {% endif %}
       </div>
     </div>
   </div>
 {% endfor %}
-{% if design %}{% block_add body_create_url %}{% endif %}
+
+{% if design %}
+  <div class="row">
+    <div class="col-12">
+      <div class="l-box setting-buttons">
+        {% block_add body_create_url return_path=return_path %}
+      </div>
+    </div>
+  </div>
+{% endif %}

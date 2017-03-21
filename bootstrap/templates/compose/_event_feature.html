@@ -5,10 +5,22 @@
 <div class="row">
   {% for c in header_a_list %}
     <div{% if c.css_class_name %} class="{{c.css_class_name}}"{% endif %}>{{ c.title }}</div>
-    {% if design %}<br>{% block_moderate c %}{% endif %}
+
+    {% if design %}
+      <div class="col-12">
+        <div class="l-box setting-buttons">
+          {% block_moderate c return_path=return_path %}
+        </div>
+      </div>
+    {% endif %}
+
   {% empty %}
       {% if design %}
-        {% block_add header_a_create_url 'header' %}
+        <div class="col-12">
+          <div class="l-box setting-buttons">
+            {% block_add header_a_create_url 'Header' return_path=return_path %}
+          </div>
+        </div>
       {% endif %}
   {% endfor %}
   {% for c in feature_a_list %}
@@ -32,8 +44,24 @@
           {{ c.description }}
         {% endautoescape %}
       </div>
-      {% if design %}{% block_moderate c %}{% endif %}
+
+      {% if design %}
+        <div class="col-12">
+          <div class="l-box setting-buttons">
+            {% block_moderate c return_path=return_path %}
+          </div>
+        </div>
+      {% endif %}
+
     </div>
   {% endfor %}
-</div><!-- /row -->
-{% if design %}{% block_add feature_a_create_url 'feature' %}{% endif %}
+
+  {% if design %}
+    <div class="col-12">
+      <div class="l-box setting-buttons">
+        {% block_add feature_a_create_url 'feature' return_path=return_path %}
+      </div>
+    </div>
+  {% endif %}
+
+</div>

@@ -1,54 +1,41 @@
-
 {% if c.url_order_up %}
-
 <a
   class="btn btn-outline-primary btn-sm{% if c.url_order_up == '#' %} disabled{%endif%}"
   href="{{ c.url_order_up }}{% if return_path %}?next={{ return_path }}{% endif %}"
   title="Move {{ caption }} Up">
-  <i class="fa fa-arrow-up"></i>
-</a>
-
+  <i class="fa fa-arrow-up"></i></a>
 <span class="h6">{{ caption }}#{{ c.order }}</span>
-
 <a
   class="btn btn-outline-primary btn-sm{% if c.url_order_down == '#' %} disabled{%endif%}"
   href="{{ c.url_order_down }}{% if return_path %}?next={{ return_path }}{% endif %}"
   title="Move {{ caption }} Down">
-  <i class="fa fa-arrow-down"></i>
-</a>
-
+  <i class="fa fa-arrow-down"></i></a>
 {% endif %}
-
 {% if c.is_pending_added or c.is_pending_edited %}
   <a
     class="btn btn-outline-primary btn-sm"
     title="Publish{% if caption %} {{ caption }}{% endif %}"
     href="{{ c.url_publish }}{% if return_path %}?next={{ return_path }}{% endif %}">
     <i class="fa fa-check"></i>
-    Publish{% if caption %} {{ caption }}{% endif %}
-  </a>
+    Publish{% if caption %} {{ caption }}{% endif %}</a>
 {% endif %}
 <a
   class="btn btn-outline-primary btn-sm"
   title="Edit{% if caption %} {{ caption }}{% endif %}"
   href="{{ c.url_update }}{% if return_path %}?next={{ return_path }}{% endif %}">
   <i class="fa fa-edit"></i>
-  Edit{% if caption %} {{ caption }}{% endif %}
-</a>
-
+  Edit{% if caption %} {{ caption }}{% endif %}</a>
 {% for url in c.wizard_urls %}
   <a class="btn btn-outline-primary btn-sm" href="{{ url.url }}{% if return_path %}?next={{ return_path }}{% endif %}">
     <i class="{{ url.class }}"></i>
     {{ url.caption }}
   </a>
 {% endfor %}
-
 {% if can_remove %}
   <a
     class="btn btn-outline-primary btn-sm"
     title="Remove{% if caption %} {{ caption }}{% endif %}"
     href="{{ c.url_remove }}{% if return_path %}?next={{ return_path }}{% endif %}">
     <i class="fa fa-times"></i>
-    Remove{% if caption %} {{ caption }}{% endif %}
-  </a>
+    Remove{% if caption %} {{ caption }}{% endif %}</a>
 {% endif %}

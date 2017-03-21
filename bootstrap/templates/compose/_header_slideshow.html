@@ -26,9 +26,12 @@
               src="{% thumbnail item.image.image 3681x664 autocrop background %}"/>
             <div class="carousel-caption d-none d-md-block">
               <h3>{{ item.image.caption }}</h3>
-              <p>...</p>
-
-              {% if design %}{% block_moderate b %}{% endif %}
+              <p>{{ item }}</p>
+              {% if design %}
+              <div class="l-box setting-buttons">
+                {% block_moderate b return_path=return_path %}
+              </div>
+              {% endif %}
             </div>
           </div>
         {% endfor %}
@@ -52,7 +55,15 @@
       </a>
 
     </div>
-    {% empty %}
-    {% if design %}{% block_add slideshow_create_url 'Slideshow' %}{% endif %}
+  {% empty %}
+
+      {% if design %}
+      <div class="col-12">
+        <div class="l-box setting-buttons">
+          {% block_add slideshow_create_url 'Slideshow' return_path=return_path %}
+        </div>
+      </div>
+      {% endif %}
+
   {% endfor %}
 </div>

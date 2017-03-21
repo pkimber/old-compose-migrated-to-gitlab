@@ -1,37 +1,46 @@
 {% load block_tags %}
 {% load thumbnail %}
 <div class="row">
-{% for b in card_list %}
-  {% if b.article_type == 'text_only' or not b.picture %}
-    <div class="col-12">
-      {% include 'compose/_text.html' with text_class='l-box' %}
-    </div>
-  {% else %}
-    <div class="col-12">
-      <div class="row">
-        <div class="col-3">
-          <div class="l-box">
-            {% if b.picture %}
-              {% if b.link %}
-                <a href="{{ b.link.url }}" target="_blank">
+
+  {% for b in card_list %}
+    {% if b.article_type == 'text_only' or not b.picture %}
+      <div class="col-12">
+        {% include 'compose/_text.html' with text_class='l-box' %}
+      </div>
+    {% else %}
+      <div class="col-12">
+        <div class="row">
+          <div class="col-3">
+            <div class="l-box">
+              {% if b.picture %}
+                {% if b.link %}
+                  <a href="{{ b.link.url }}" target="_blank">
+                  {% endif %}
+                  <img
+                    alt="{{ b.picture.title }}"
+                    title="{{ b.picture.title }}"
+                    class="img-fluid"
+                    src="{% thumbnail b.picture.image 100x200 crop='smart' %}">
+                  {% if b.link %}
+                  </a>
+                {% endif %}
               {% endif %}
-              <img
-                alt="{{ b.picture.title }}"
-                title="{{ b.picture.title }}"
-                class="img-fluid"
-                src="{% thumbnail b.picture.image 100x200 crop='smart' %}">
-              {% if b.link %}
-                </a>
-              {% endif %}
-            {% endif %}
+            </div>
+          </div>
+          <div class="col-12">
+            {% include 'compose/_text.html' with text_class='t-box' %}
           </div>
         </div>
-        <div class="col-12">
-          {% include 'compose/_text.html' with text_class='t-box' %}
-        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  {% if design %}
+    <div class="col-12">
+      <div class="l-box setting-buttons">
+        {% block_add card_create_url 'Card' return_path=return_path %}
       </div>
     </div>
   {% endif %}
-{% endfor %}
+
 </div>
-{% if design %}{% block_add card_create_url 'Card' %}{% endif %}
