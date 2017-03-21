@@ -1,0 +1,37 @@
+{% extends 'dash/base.html' %}
+{% load thumbnail %}
+
+{% block sub_title %}
+  Publish content
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Publish content
+{% endblock sub_heading %}
+
+{% block content %}
+
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+    <a href="{% url 'project.settings' %}" class="nav-link">
+      <i class="fa fa-reply"></i>
+    </a>
+    </li>
+  </ul>
+
+  <dl class="row l-box">
+    <dt class="col-12 col-sm-2">Title</dt>
+    <dd class="col-12 col-sm-10">{{ link.caption }}</dd>
+    {% if object.style %}
+    <dt class="col-12 col-sm-2">Style</dt>
+    <dd class="col-12 col-sm-10">{{ object.style }}</dd>
+  {% endif %}
+  </dl>
+  <div class="row">
+    <div class="col-12">
+      <div class="l-box">
+      {% include '_form.html' with legend='Are you sure you want to publish this content?' submit='Publish' %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

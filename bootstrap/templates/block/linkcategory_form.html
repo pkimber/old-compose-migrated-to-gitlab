@@ -1,0 +1,19 @@
+{% extends 'dash/base.html' %}
+
+{% block sub_title %}
+  Link Category
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Link Category
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      <div class="l-box">
+        {% include '_form.html' with legend = 'Link Category' %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

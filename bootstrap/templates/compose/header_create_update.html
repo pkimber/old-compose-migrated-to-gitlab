@@ -1,0 +1,33 @@
+{% extends 'dash/base.html' %}
+{% load staticfiles %}
+
+{% block sub_title %}
+  Content update
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Content update
+{% endblock sub_heading %}
+
+{% block content %}
+
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+    <a href="{{ next }}" class="nav-link">
+      <i class="fa fa-reply"></i>
+    </a>
+    </li>
+  </ul>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="l-box">
+        {% include '_form.html' with multipart=True %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block script_extra %}
+  {% include 'base/_ckeditor.html' %}
+{% endblock script_extra %}

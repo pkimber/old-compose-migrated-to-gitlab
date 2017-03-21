@@ -1,0 +1,326 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  {% now "Y" as current_year %}
+  <head>
+    {% if testing %}
+    <!-- Lacking other means, issues can be raised here:
+    https://github.com/pkimber/compose/issues    Thank you. -->
+    {% endif %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{% static 'ico/favicon.ico' %}">
+    <title>
+      {% block title %}
+        {% if header_footer.company_name %}
+          {{ header_footer.company_name }}
+        {% endif %}
+      {% endblock title %}
+      {% block sub_title %}
+        {% if page %}
+          {{ page.name }}
+        {% endif %}
+      {% endblock sub_title %}
+    </title>
+    {% block meta_extra %}
+    <meta http-equiv="content-language" content="en">
+    <meta name="cache-control" content="no-cache">
+    {% if page %}
+    <meta itemprop="name" content="{{ page.name }}">
+    {% if page.meta_description %}
+    <meta name="description" content="{{ page.meta_description }}">
+    <meta itemprop="description" content="{{ page.meta_description }}">
+    {% endif %}
+    {% if page.meta_keywords %}
+    <meta name="keywords" content="{{ page.meta_keywords }}">
+    {% endif %}
+    {% if page.company_name %}
+    <meta name="publisher" content="{{ page.company_name }} (c) {{ current_year }}">
+    {% endif %}
+    {% endif %}
+    <meta name="rating" content="Safe For Kids">
+
+    {% if testing %}
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="/this/is/base">
+    {% else %}
+    <meta name="robots" content="index,follow">
+    {% if header_footer.google_verification_code %}
+    <meta name="google-site-verification" content="{{ header_footer.google_verification_code }}">
+    {% endif %}
+    {% endif %}
+    {% endblock meta_extra %}
+    {% block stylesheets %}
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/5e3b6c320c.js"></script>      <!-- photoswipe -->
+    <link rel="stylesheet" href="{% static 'vendor/css/photoswipe/photoswipe.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'vendor/css/photoswipe/default-skin/default-skin.css' %}" type="text/css">
+    {% endblock stylesheets %}
+    {% block stylesheets_extra %}{% endblock stylesheets_extra %}
+    {% block analytics %}
+
+    {% endblock analytics %}
+    <style>
+      .l-box {
+        padding: 10px;
+      }
+      .container {
+        margin-top: 20px;
+      }
+      .setting-buttons {
+        margin: 10px 0;
+        border: 3px #888888 dashed;
+      }
+      .container-fluid.alert {
+        margin: 0;
+      }
+      img.pull-right {
+
+      }
+    </style>
+    <script type="text/javascript">
+      window.cookieconsent_options = {
+        "message": "This website uses cookies to maintain your shopping basket between sessions.",
+        "dismiss": "Got it!",
+        "learnMore": "More info",
+        "link": null,
+        "theme": "", // "dark-bottom"
+      };
+    </script>
+
+  </head>
+  <body>
+    {% if testing %}
+    <div class="container-fluid alert alert-warning text-center">
+      Testing [User: {{ user }}] [Auth? {% if user.is_authenticated %} True {% endif %}] [Staff? {{ user.is_staff }}] [Super? {{ user.is_superuser }}]
+    </div>
+    {% endif %}
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+      <button
+        class="navbar-toggler navbar-toggler-right"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'project.home' %}">
+        {% block heading %}
+          {% if header_footer.company_name %}
+          {{ header_footer.company_name }}
+          {% else %}
+          <i class="fa fa-home"></i>
+          {% endif %}
+          {% if header_footer.header %}
+          <small>
+          <br>
+          {{ header_footer.header }}
+          </small>
+          {% endif %}
+        {% endblock heading %}
+      </a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          {% include 'block/_menu_list.html' %}
+          {% include 'compose/_menu_list.html' %}
+
+          {% block menu_extra %}
+            {% if user.is_authenticated %}
+              {% include 'block/_design_menu.html' %}
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+            {% endif %}
+          {% endblock menu_extra %}
+        </ul>
+        {% block nav_search %}
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        {% endblock nav_search %}
+      </div>
+    </nav>
+    {% block noheader %}
+    {% block header %}
+    <div class="container">
+      <div class="l-box">
+        <h1>
+          {% block sub_heading %}
+            {{ page.name }}
+          {% endblock sub_heading %}
+        </h1>
+      </div>
+    </div>
+    {% endblock header %}
+    {% endblock noheader %}
+    <div class="container">
+      {% block content %}
+        This is the base template (please add a 'content' block)
+      {% endblock content %}
+    </div>
+    <!-- #### -->
+    <footer class="bg-faded mt-5 p-2">
+      <div class="container">
+        {% block footer %}
+          <div class="row border-top-1">
+
+            {% if header_footer.footer_left %}
+            <div class="col">
+                {% if header_footer.footer_left_header %}
+                <h4>{{ header_footer.footer_left_header }}</h4>
+                {% endif %}
+                <p class="align-text-top">
+                  {{ header_footer.footer_left|linebreaksbr }}
+                </p>
+            </div>
+            {% endif %}
+
+            {% if header_footer.footer_right %}
+            <div class="col">
+                {% if header_footer.footer_right_header %}
+                <h4>{{ header_footer.footer_right_header }}</h4>
+                {% endif %}
+                <p class="align-text-top">
+                  {{ header_footer.footer_right|linebreaksbr }}
+                </p>
+            </div>
+            {% endif %}
+
+            {% if header_footer.company_address or header_footer.company_phone or header_footer.company_hours %}
+            <div class="col">
+              {% if header_footer.company_address %}
+              <address>
+                <strong>{{ header_footer.company_name }}</strong><br>
+                {{ header_footer.company_address|linebreaksbr }}
+              </address>
+              {% endif %}
+
+              <address>
+                {% if header_footer.company_phone %}
+                <abbr title="Phone">P:</abbr> {{ header_footer.company_phone }}<br>
+                {% endif %}
+                {% if header_footer.company_fax %}
+                <abbr title="Fax">P:</abbr> {{ header_footer.company_fax }}<br>
+                {% endif %}
+                {% if header_footer.company_email %}
+                <abbr title="Email">E:</abbr> <a href="mailto:{{ header_footer.company_email }}">{{ header_footer.company_email }}</a><br>
+                {% endif %}
+              </address>
+
+              {% if header_footer.company_hours %}
+              <address>
+              <strong>Hours</strong><br>
+              {{ header_footer.company_hours }}
+              </address>
+              {% endif %}
+            </div>
+            {% endif %}
+
+            {% if menu %}
+            <div class="col">
+                {% if header_footer.footer_right_header %}
+                <h4>{{ header_footer.footer_right_header }}</h4>
+                {% endif %}
+                <p class="align-text-top">
+                  {{ header_footer.footer_right|linebreaksbr }}
+                </p>
+            </div>
+            {% endif %}
+
+            <div class="col-1">
+              <div class="d-flex flex-row-reverse">
+                {% if header_footer.url_facebook %}
+                  <a href="{{ header_footer.url_facebook }}" target="_blank" class="p-1">
+                    <i class="fa fa-facebook-official fa-2x"></i>
+                  </a>
+                {% endif %}
+                {% if header_footer.url_linkedin %}
+                  <a href="{{ header_footer.url_linkedin }}" target="_blank" class="p-1">
+                    <i class="fa fa-linkedin fa-2x"></i>
+                  </a>
+                {% endif %}
+                {% if header_footer.url_twitter %}
+                  <a href="{{ header_footer.url_twitter }}" target="_blank" class="p-1">
+                    <i class="fa fa-twitter fa-2x"></i>
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 text-center">
+              {% if header_footer.company_name %}
+              {{ header_footer.company_name }}
+              {% endif %}
+              &copy;
+              {{ current_year }}
+            </div>
+            {% if testing %}
+            <div class="col-12  text-center text-muted small">
+              For help and support, please contact
+              <a href="https://www.kbsoftware.co.uk" target="_blank">
+                {% if header_footer.company_name %}
+                {{ header_footer.company_name }}
+                {% else %}
+                KB Software Ltd
+                {% endif %}
+              </a>
+            </div>
+            {% endif %}
+
+          </div>
+        {% endblock footer %}
+      </div>
+    </footer>
+    <!-- #### -->
+    {% block script %}
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+      integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+      crossorigin="anonymous"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+      integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+      crossorigin="anonymous"></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+      integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+      crossorigin="anonymous"></script>
+    <script
+      src="{% static 'vendor/js/photoswipe/photoswipe.min.js' %}"
+      type="text/javascript"></script>
+    <script
+      src="{% static 'vendor/js/photoswipe/photoswipe-ui-default.min.js' %}"
+      type="text/javascript"></script>
+    {% endblock script %}
+    {% block script_extra %}{% endblock script_extra %}
+
+    {% if not testing and header_footer.google_analytics_code %}
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments)
+        },
+        i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+      ga('create', '{{ header_footer.google_analytics_code }}', 'auto');
+      ga('send', 'pageview');
+    </script>
+    {% endif %}
+
+  </body>
+</html>

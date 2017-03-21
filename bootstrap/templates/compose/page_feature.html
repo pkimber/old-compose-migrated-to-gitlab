@@ -1,0 +1,15 @@
+{% extends 'web/base.html' %}
+
+{% load thumbnail %}
+
+{% block sub_title %}
+  {{ page.name }}
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  {{ page.name }}
+{% endblock sub_heading %}
+
+{% block content %}
+  {% include 'compose/_event_feature.html' %}
+{% endblock content %}

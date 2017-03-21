@@ -1,0 +1,20 @@
+{% extends 'dash/base.html' %}
+
+{% block sub_title %}
+  Template section
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Add section to {{ template.template_name }}
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      <div class="l-box">
+        Add a section to the '{{ template.template_name }}' template.
+        {% include '_form.html' %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

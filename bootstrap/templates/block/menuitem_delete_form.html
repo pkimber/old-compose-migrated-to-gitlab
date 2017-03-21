@@ -1,0 +1,24 @@
+{% extends 'dash/base.html' %}
+
+{% block sub_title %}
+  Delete the menu item '{{object.title}}' from {{ object.menu }}
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Delete the menu item '{{object.title}}' from {{ object.menu }}
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      <div class="l-box">
+        <form action="" method="post">{% csrf_token %}
+          <p>
+            Are you sure you want to delete the menu item '{{ object.title }}' from {{ object.menu }}?
+          </p>
+          <input type="submit" value="Delete" class="btn btn-primary" >
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

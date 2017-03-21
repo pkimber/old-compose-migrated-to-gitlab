@@ -1,0 +1,86 @@
+{% load block_tags %}
+{% load humanize %}
+{% load thumbnail %}
+
+{% if news_list %}
+  <div class="row">
+
+    <div class="col-12 col-lg-8">
+      <div class="l-box">
+        {% for b in news_list %}
+          <h4>{{ b.title }}
+            -
+            {{ b.block.created|date:"d/m/Y" }}</h4>
+          <p>
+            {% if b.picture %}
+              {% if b.link %}
+                <a href="{{ b.link.url }}" target="_blank">
+                {% endif %}
+                <img
+                  alt="{{ b.picture.title }}"
+                  title="{{ b.picture.title }}"
+                  class="img-fluid"
+                  src="{% thumbnail b.picture.image 100x100 crop='smart' %}">
+                {% if b.link %}
+                </a>
+              {% endif %}
+            {% endif %}
+            {% if b.description %}
+              {% autoescape off %}
+                {{ b.description }}
+              {% endautoescape %}
+            {% endif %}
+            <small>
+              Created
+              {{ b.block.created|naturaltime }}
+            </small>
+            {% if not b.picture %}
+              {% if b.link %}
+                <a href="{{ b.link.url }}" target="_blank">
+                  <i class="fa fa-external-link"></i>
+                  {{ b.link.title }}
+                </a>
+                <br>
+              {% endif %}
+            {% endif %}
+          </p>
+        {% endfor %}
+      </div>
+
+      {% if design %}
+        <div class="l-box setting-buttons">
+          {% block_moderate b request_path=request_path %}
+        </div>
+      {% endif %}
+
+    </div>
+
+    <div class="col-12 col-lg-4">
+      {% if design %}
+        <small>
+          Your Twitter feed will appear here when the page is published.
+        </small>
+      {% else %}
+        {% if twitter %}
+          <div class="t-box">
+            <a class="twitter-timeline" href="https://twitter.com/{{ twitter }}" data-widget-id="678295006080315392">Tweets by @{{ twitter }}</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+
+  </div>
+{% endif %}
+
+{% if news_create_url %}
+  {% if design %}
+    <div class="row">
+      <div class="col-12">
+        <div class="l-box setting-buttons">
+          {% block_add news_create_url 'News' request_path=request_path %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endif %}

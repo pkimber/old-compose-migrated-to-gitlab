@@ -1,0 +1,25 @@
+{% load block_tags %}
+
+{% if text_class %}
+<div class="{{ text_class }}">
+{% endif %}
+
+  {% if b.description %}
+    {% autoescape off %}
+      {{ b.description }}
+    {% endautoescape %}
+  {% endif %}
+
+
+  {% if b.link %}
+  <p>
+    <a href="{{ b.link.url }}" target="_blank" class="btn btn-primary">
+      <i class="fa fa-external-link"></i>
+      {{ b.link.title }}
+    </a>
+  </p>
+  {% endif %}
+
+{% if text_class %}
+</div>
+{% endif %}

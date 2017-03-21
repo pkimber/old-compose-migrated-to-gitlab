@@ -1,0 +1,49 @@
+{% extends 'dash/base.html' %}
+{% load thumbnail %}
+
+{% block sub_title %}
+  Publish Slideshow
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Publish Slideshow
+{% endblock sub_heading %}
+
+{% block content %}
+
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+    <a href="{{ next }}" class="nav-link">
+      <i class="fa fa-reply"></i>
+    </a>
+    </li>
+  </ul>
+
+  <dl class="row l-box">
+    <dt class="col-12 col-sm-2">Title</dt>
+    <dd class="col-12 col-sm-10">{{ object.title }}</dd>
+    <dt class="col-12 col-sm-2">Description</dt>
+    <dd class="col-12 col-sm-10">
+      {% autoescape off %}
+        {{ object.description }}
+      {% endautoescape %}
+    </dd>
+    {% for item in object.ordered_slideshow %}
+    <dt class="col-12 col-sm-2">Slide {{ item.order }} {{ item.image.title }}</dt>
+    <dd class="col-12 col-sm-10">
+      <img
+        alt="{{ item.image.title }}"
+        title="{{ item.image.title }}"
+        class="img-fluid"
+        src="{% thumbnail item.image.image 200x150 crop='smart' %}">
+    </dd>
+    {% endfor %}
+  </dl>
+  <div class="row">
+    <div class="col-12">
+      <div class="l-box">
+        {% include '_form.html' with legend='Are you sure you want to publish this slideshow?' submit='Publish' %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

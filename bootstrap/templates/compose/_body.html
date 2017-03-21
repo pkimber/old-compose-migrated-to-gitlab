@@ -1,0 +1,43 @@
+{% load block_tags %}
+
+<div class="row">
+{% for b in body_list %}
+
+  <div class="col-12 {{ b.article_width }}">
+    <div class="l-box{% if design %} setting-buttons{% endif %}">
+
+      <{{ b.heading_level }}>{{ b.title }}</{{ b.heading_level }}>
+
+      {% if b.picture and not b.article_type == 'hidden' and not b.article_type == 'w-100 mb-2 mt-3' %}
+      {% include 'compose/_body_picture.html' with image_class=b.image_size|add:' '|add:b.article_type %}
+      {% endif %}
+
+      {% if not b.article_type == 'visible' %}
+      {% include 'compose/_text.html' with text_class='' %}
+      {% endif %}
+
+      {% if b.picture and b.article_type == 'w-100 mb-2 mt-3' %}
+      {% include 'compose/_body_picture.html' with image_class=b.image_size|add:' '|add:b.article_type %}
+      {% endif %}
+
+      {% if design %}
+        <div class="w-100 mt-3">
+        {% block_moderate b request_path=request_path %}
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+{% endfor %}
+
+{% if design %}
+  <div class="col-12">
+    <div class="l-box setting-buttons">
+      {% block_add body_create_url 'Article' request_path=request_path %}
+    </div>
+  </div>
+{% endif %}
+
+
+</div>

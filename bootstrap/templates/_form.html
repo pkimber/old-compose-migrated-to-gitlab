@@ -1,0 +1,47 @@
+<form action="{% if action %}{{ action }}{% else %}.{% endif %}" {% if form_id %}id="{{ form_id }}"{% endif %} method="{% if method %}{{ method }}{% else %}post{% endif %}" {% if multipart %}enctype="multipart/form-data"{% endif %} class="{% if aligned %}form-inline{% endif %}{% if form_class %} {{ form_class }}{% endif %}">
+  {% if not no_token %}
+    {% csrf_token %}
+  {% endif %}
+  {% if form.non_field_errors %}
+    {{ form.non_field_errors }}
+  {% endif %}
+  <fieldset class="form-group">
+    {% if legend %}
+      <legend>{{ legend }}</legend>
+    {% endif %}
+    {% for field in form.visible_fields %}
+      {% include '_form_field.html' with field=field %}
+    {% endfor %}
+    {% if formset %}
+      {{ formset.management_form }}
+    {% endif %}
+    {% for formset_form in formset %}
+      <legend>
+        {{ formset_legend }}
+        {% if formset_add %}
+          {{ forloop.counter|add:formset_add }}:
+        {% else %}
+          {{ forloop.counter }}:
+        {% endif %}
+      </legend>
+        {% for field in formset_form.visible_fields %}
+        {% include '_form_field.html' with field=field %}
+        {% endfor %}
+      {% for hidden in formset_form.hidden_fields %}
+      {{ hidden }}
+      {% endfor %}
+    {% endfor %}
+  </fieldset>
+  {% for hidden in form.hidden_fields %}
+    {{ hidden }}
+  {% endfor %}
+  {% if next %}
+    <input type="hidden" name="next" value="{{ next }}" >
+  {% endif %}
+  <button
+    type="submit"
+    class="btn btn-primary"
+    {% if submit_id %}id="{{ submit_id }}"{% endif %}>
+      {% if submit %}{{ submit }}{% else %}Submit{% endif %}
+  </button>
+</form>

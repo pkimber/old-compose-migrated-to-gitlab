@@ -1,0 +1,79 @@
+{% if user.is_authenticated %}
+  <li class="nav-item dropdown">
+    <a
+      class="nav-link dropdown-toggle"
+      href="http://example.com"
+      id="navbarDropdownDash"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false">
+      Dash
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownDash">
+      <a class="dropdown-item" href="{% url 'project.dash' %}">Dash Home</a>
+      {% if user.is_staff %}
+        <a class="dropdown-item" href="{% url 'project.settings' %}">Settings</a>
+      {% endif %}
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+    </div>
+  </li>
+  <li class="nav-item dropdown">
+    <a
+      class="nav-link dropdown-toggle"
+      href="#"
+      id="navbarDropdownCompose"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false">
+      CMS
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownCompose">
+      {% if user.is_superuser %}
+        <a class="dropdown-item" href="{% url 'block.template.list' %}">
+          <i class="fa fa-file-code-o"></i>
+          Page Templates
+        </a>
+      {% endif %}
+      <a class="dropdown-item" href="{% url 'block.page.list' %}">
+        <i class="fa fa-file-text-o"></i>
+        Pages
+      </a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="{% url 'block.image.list' %}">
+        <i class="fa fa-picture-o"></i>
+        Image Library
+      </a>
+      <a class="dropdown-item" href="{% url 'block.link.list' %}">
+        <i class="fa fa-picture-o"></i>
+        Link Library
+      </a>
+      {% if not no_navigation_menu %}
+        {# navigation menu should be called main #}
+        <a class="dropdown-item" href="{% url 'block.menuitem.list' 'main' %}">
+          <i class="fa fa-bars"></i>
+          Navigation Menu
+        </a>
+      {% endif %}
+      {% if not no_header_footer %}
+        <a class="dropdown-item" href="{% url 'block.header.footer.update' %}">
+          <i class="fa fa-header"></i>
+          Header and footer
+        </a>
+      {% endif %}
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="{% url 'compose.code.snippet.list' %}">
+        <i class="fa fa-code"></i>
+        Code Snippets
+      </a>
+      <a class="dropdown-item" href="{% url 'compose.feature.style.list' %}">
+        <i class="fa fa-tags"></i>
+        Feature Styles
+      </a>
+      <a class="dropdown-item" href="{% url 'compose.header.style.list' %}">
+        <i class="fa fa-tags"></i>
+        Header Styles
+      </a>
+    </div>
+  </li>
+{% endif %}

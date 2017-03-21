@@ -1,0 +1,21 @@
+{% if not field.field.widget.attrs.class == 'unformed' %}
+  <div class="form-group">
+
+    {% if field.widget.type == 'checkbox' %}
+      {% include 'compose/_form_field_checkbox.html' %}
+    {% elif field.widget.type == 'radio' %}
+      {% include 'compose/_form_field_radio.html' %}
+    {% else %}
+      {% include 'compose/_form_field_input.html' %}
+    {% endif %}
+
+    {% if field.errors %}
+    <div class="form-control-feedback">
+      {% for error in field.errors %}
+          {{ error }}<br>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>
+{% endif %}
