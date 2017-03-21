@@ -9,19 +9,21 @@
       </div>
     {% else %}
       <div class="container">
-        <h1>
-          {% block sub_heading %}
-            Tim's Bootstrap Compose App
-          {% endblock sub_heading %}
-        </h1>
+        <div class="l-box">
+          <h1>
+            {% block sub_heading %}
+              Tim's Bootstrap Compose App
+            {% endblock sub_heading %}
+          </h1>
+        </div>
         {% if messages %}
-          <div>
-            {% for message in messages %}
-              <div class="alert alert-info" role="alert">
-                {{ message }}
-              </div>
-            {% endfor %}
-          </div>
+        <div class="l-box">
+          {% for message in messages %}
+            <div class="alert alert-info" role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
         {% endif %}
       </div>
     {% endif %}

@@ -28,31 +28,35 @@
     </li>
   </ul>
 
+  <div class="row">
   {% for image in image_list %}
-    <div class="row">
-      {% ifchanged image.category %}
-      <div class="col-12">
-        <div class="l-box">
-          <h3>
-            {% if image.category %}
-              {{ image.category.name }}
-            {% else %}
-              No Category
-            {% endif %}
-          </h3>
-        </div>
+    {% ifchanged image.category %}
+    <div class="col-12">
+      <div class="l-box alert-info mb-2 mt-2 bg-secondary text-white">
+        <b>
+          {% if image.category %}
+            {{ image.category.name }}
+          {% else %}
+            No Category
+          {% endif %}
+        </b>
       </div>
-      {% endifchanged %}
-      <div class="col-2 col-4">
-        <div class="l-box">
-          <img src="{% thumbnail image.image 100x100  crop='center' %}">
-          <br>
-          <a href="{% url 'block.image.update' image.pk %}">
-            <i class="fa fa-edit"></i>
-            {{ image.title }}
-          </a>
-        </div>
-      </div>
-    {% endfor %}
+    </div>
+    {% endifchanged %}
+    <div class="col-4 col-sm-3 col-md-2 col-lg-1">
+      <figure class="figure">
+        <img
+          class="figure-img img-fluid rounded"
+          src="{% thumbnail image.image 100x100 crop='center' %}">
+          <figcaption class="figure-caption">
+            <a href="{% url 'block.image.update' image.pk %}">
+              {{ image.title }}
+              <i class="fa fa-edit"></i>
+            </a>
+          </figcaption>
+      </figure>
+    </div>
+  {% endfor %}
+  </div>
 
   {% endblock content %}

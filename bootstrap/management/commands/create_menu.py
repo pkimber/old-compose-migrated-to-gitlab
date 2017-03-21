@@ -30,6 +30,8 @@ class Command(BaseCommand):
 
         return page
 
+
+
     def handle(self, *args, **options):
         print ("Creating pages...")
         Template.objects.init_template('compose/page_article.html')
@@ -41,14 +43,14 @@ class Command(BaseCommand):
             'compose',
             'Header',
             'compose.header.create',
-        ) 
+        )
         section_feature = Section.objects.init_section(
             'feature',
             'FEATURE',
             'compose',
             'Feature',
             'compose.feature.create',
-        ) 
+        )
 
         page_article = self.create_page(
             'article-demo',

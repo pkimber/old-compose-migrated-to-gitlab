@@ -12,7 +12,9 @@
     <link rel="shortcut icon" href="{% static 'ico/favicon.ico' %}">
     <title>
       {% block title %}
-        {{ company_name }}
+        {% if header_footer.company_name %}
+          {{ header_footer.company_name }}
+        {% endif %}
       {% endblock title %}
       {% block sub_title %}
         {% if page %}
@@ -21,24 +23,30 @@
       {% endblock sub_title %}
     </title>
     {% block meta_extra %}
-    <meta http-equiv="content-language" content="en"/>
+    <meta http-equiv="content-language" content="en">
     <meta name="cache-control" content="no-cache">
     {% if page %}
-    <meta name="description" content="{{ page.meta_description }}"/>
-    <meta name="keywords" content="{{ page.meta_keywords }}"/>
     <meta itemprop="name" content="{{ page.name }}">
+    {% if page.meta_description %}
+    <meta name="description" content="{{ page.meta_description }}">
     <meta itemprop="description" content="{{ page.meta_description }}">
     {% endif %}
-    <meta name="publisher" content="{{ company_name }} (c) {{ current_year }}"/>
-    <meta name="rating" content="Safe For Kids"/>
+    {% if page.meta_keywords %}
+    <meta name="keywords" content="{{ page.meta_keywords }}">
+    {% endif %}
+    {% if page.company_name %}
+    <meta name="publisher" content="{{ page.company_name }} (c) {{ current_year }}">
+    {% endif %}
+    {% endif %}
+    <meta name="rating" content="Safe For Kids">
 
     {% if testing %}
     <meta name="robots" content="noindex, nofollow">
     <link rel="canonical" href="/this/is/base">
     {% else %}
-    <meta name="robots" content="index,follow"/>
+    <meta name="robots" content="index,follow">
     {% if header_footer.google_verification_code %}
-    <meta name="google-site-verification" content="{{ header_footer.google_verification_code }}"/>
+    <meta name="google-site-verification" content="{{ header_footer.google_verification_code }}">
     {% endif %}
     {% endif %}
     {% endblock meta_extra %}
@@ -48,7 +56,9 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
       integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
       crossorigin="anonymous">
-    <script src="https://use.fontawesome.com/5e3b6c320c.js"></script>
+    <script src="https://use.fontawesome.com/5e3b6c320c.js"></script>      <!-- photoswipe -->
+    <link rel="stylesheet" href="{% static 'vendor/css/photoswipe/photoswipe.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'vendor/css/photoswipe/default-skin/default-skin.css' %}" type="text/css">
     {% endblock stylesheets %}
     {% block stylesheets_extra %}{% endblock stylesheets_extra %}
     {% block analytics %}
@@ -63,10 +73,13 @@
       }
       .setting-buttons {
         margin: 10px 0;
-        border: 2px #888888 dotted;
+        border: 3px #888888 dashed;
       }
       .container-fluid.alert {
         margin: 0;
+      }
+      img.pull-right {
+
       }
     </style>
     <script type="text/javascript">
@@ -83,7 +96,7 @@
   <body>
     {% if testing %}
     <div class="container-fluid alert alert-warning text-center">
-      Testing
+      Testing [User: {{ user }}] [Auth? {% if user.is_authenticated %} True {% endif %}] [Staff? {{ user.is_staff }}] [Super? {{ user.is_superuser }}]
     </div>
     {% endif %}
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
@@ -99,7 +112,17 @@
       </button>
       <a class="navbar-brand" href="{% url 'project.home' %}">
         {% block heading %}
-          {{ site_name }}
+          {% if header_footer.company_name %}
+          {{ header_footer.company_name }}
+          {% else %}
+          <i class="fa fa-home"></i>
+          {% endif %}
+          {% if header_footer.header %}
+          <small>
+          <br>
+          {{ header_footer.header }}
+          </small>
+          {% endif %}
         {% endblock heading %}
       </a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -175,33 +198,44 @@
             <div class="col">
               {% if header_footer.company_address %}
               <address>
-                <strong>{{ header_footer.company_name }}</strong><br />
+                <strong>{{ header_footer.company_name }}</strong><br>
                 {{ header_footer.company_address|linebreaksbr }}
               </address>
               {% endif %}
 
               <address>
                 {% if header_footer.company_phone %}
-                <abbr title="Phone">P:</abbr> {{ header_footer.company_phone }}<br />
+                <abbr title="Phone">P:</abbr> {{ header_footer.company_phone }}<br>
                 {% endif %}
                 {% if header_footer.company_fax %}
-                <abbr title="Fax">P:</abbr> {{ header_footer.company_fax }}<br />
+                <abbr title="Fax">P:</abbr> {{ header_footer.company_fax }}<br>
                 {% endif %}
                 {% if header_footer.company_email %}
-                <abbr title="Email">E:</abbr> <a href="mailto:{{ header_footer.company_email }}">{{ header_footer.company_email }}</a><br />
+                <abbr title="Email">E:</abbr> <a href="mailto:{{ header_footer.company_email }}">{{ header_footer.company_email }}</a><br>
                 {% endif %}
               </address>
 
               {% if header_footer.company_hours %}
               <address>
-              <strong>Hours</strong><br />
+              <strong>Hours</strong><br>
               {{ header_footer.company_hours }}
               </address>
               {% endif %}
             </div>
             {% endif %}
 
+            {% if menu %}
             <div class="col">
+                {% if header_footer.footer_right_header %}
+                <h4>{{ header_footer.footer_right_header }}</h4>
+                {% endif %}
+                <p class="align-text-top">
+                  {{ header_footer.footer_right|linebreaksbr }}
+                </p>
+            </div>
+            {% endif %}
+
+            <div class="col-1">
               <div class="d-flex flex-row-reverse">
                 {% if header_footer.url_facebook %}
                   <a href="{{ header_footer.url_facebook }}" target="_blank" class="p-1">
@@ -260,6 +294,12 @@
       src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
       integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
       crossorigin="anonymous"></script>
+    <script
+      src="{% static 'vendor/js/photoswipe/photoswipe.min.js' %}"
+      type="text/javascript"></script>
+    <script
+      src="{% static 'vendor/js/photoswipe/photoswipe-ui-default.min.js' %}"
+      type="text/javascript"></script>
     {% endblock script %}
     {% block script_extra %}{% endblock script_extra %}
 

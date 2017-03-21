@@ -23,6 +23,18 @@ SECTION_NEWS = 'news'
 SECTION_SLIDESHOW = 'slideshow'
 SECTION_SIDEBAR = 'sidebar'
 
+H1 = 'h1'
+H2 = 'h2'
+H3 = 'h3'
+H4 = 'h4'
+
+HEADING_LEVELS = (
+    (H1, H1),
+    (H2, H2),
+    (H3, H3),
+    (H4, H4),
+)
+
 
 class ArticleBlock(BlockModel):
     pass
@@ -33,21 +45,24 @@ reversion.register(ArticleBlock)
 class Article(ContentModel):
 
     block = models.ForeignKey(ArticleBlock, related_name='content')
-
+    heading_level = models.CharField(max_length=2,
+        choices=HEADING_LEVELS,
+        default=H2,
+    )
     title = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
     article_width = models.CharField(
-        max_length=32,
+        max_length=64,
         choices=settings.ARTICLE_WIDTH_CHOICES,
         default=settings.ARTICLE_WIDTH_HALFBIG,
     )
     article_type = models.CharField(
-        max_length=32,
+        max_length=64,
         choices=settings.ARTICLE_TYPE_CHOICES,
         default=settings.ARTICLE_TYPE_LEFT,
     )
     image_size = models.CharField(
-        max_length=32,
+        max_length=64,
         choices=settings.ARTICLE_IMAGE_SIZE_CHOICES,
         default=settings.ARTICLE_IMAGE_SIZE_HALF,
     )
@@ -275,7 +290,10 @@ class Feature(ContentModel):
     SECTION_D = 'feature_d'
 
     block = models.ForeignKey(FeatureBlock, related_name='content')
-
+    heading_level = models.CharField(max_length=2,
+        choices=HEADING_LEVELS,
+        default=H4,
+    )
     title = models.TextField()
     description = models.TextField(blank=True)
     picture = models.ForeignKey(

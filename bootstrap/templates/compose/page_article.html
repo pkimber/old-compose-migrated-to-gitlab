@@ -1,14 +1,20 @@
-{% extends 'compose/base.html' %}
+{% extends 'web/base.html' %}
 
 {% load static %}
 
-{% block heading %}
+{% block sub_title %}
   {{ page.name }}
-{% endblock heading %}
+{% endblock sub_title %}
 
 {% block sub_heading %}
   {{ page.name }}
 {% endblock sub_heading %}
+
+{% block header %}
+  <div class="header">
+    {% include 'compose/_header_slideshow.html' %}
+  </div>
+{% endblock header %}
 
 {% block content %}
   {% include 'compose/_body.html' %}

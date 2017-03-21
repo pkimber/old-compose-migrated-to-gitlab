@@ -31,6 +31,7 @@ class ArticleForm(RequiredFieldForm):
     class Meta:
         model = Article
         fields = (
+            'heading_level',
             'title',
             'description',
             #'picture',
@@ -95,6 +96,7 @@ class FeatureForm(RequiredFieldForm):
     class Meta:
         model = Feature
         fields = (
+            'heading_level',
             'title',
             'description',
             'style',

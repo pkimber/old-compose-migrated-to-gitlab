@@ -98,7 +98,7 @@
           <h3>Current {{ field_name }}:</h3>
           <i class="fa fa-link"></i>
           {{ link.link_type_description }}:
-          {{ link.title }}
+          {{ link.caption }}
           {% if link.category.name %}
             <small>({{ link.category.name }})</small>
           {% endif %}
@@ -109,7 +109,7 @@
           {% for item in many_to_many %}
             {{ item.order }}.
             {{ item.link.link_type_description }}:
-            {{ item.link.title }}
+            {{ item.link.caption }}
             {% if item.link.category.name %}
               <small>({{ item.link.category.name }})</small>
             {% endif %}

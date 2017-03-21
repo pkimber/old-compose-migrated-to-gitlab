@@ -32,10 +32,10 @@
     <dt class="col-12 col-sm-2">Slide {{ item.order }} {{ item.image.title }}</dt>
     <dd class="col-12 col-sm-10">
       <img
-        alt="{{ item.image.caption }}"
-        title="{{ item.image.caption }}"
+        alt="{{ item.image.title }}"
+        title="{{ item.image.title }}"
         class="img-fluid"
-        src="{% thumbnail item.image.image 200x150 crop='smart' %}" />
+        src="{% thumbnail item.image.image 200x150 crop='smart' %}">
     </dd>
     {% endfor %}
   </dl>

@@ -1,4 +1,4 @@
-{% extends 'compose/base.html' %}
+{% extends 'web/base.html' %}
 
 {% load block_tags %}
 {% load static %}
@@ -29,31 +29,31 @@
             <a href="{{ MEDIA_URL }}{{ item.image.image }}" itemprop="contenturl" data-size="{{ item.image.image.width }}x{{ item.image.image.height }}">
               <img
                 itemprop="thumbnail"
-                alt="{{ item.image.caption }}"
-                title="{{ item.image.caption }}"
-                class="img-fluid"
-                src="{% thumbnail item.image.image '200x0' crop='auto' %}" />
+                alt="{{ item.image.title }}"
+                title="{{ item.image.title }}"
+
+                src="{% thumbnail item.image.image '200x0' crop='auto' %}">
             </a>
             <figcaption itemprop="caption description">{{ item.image.title }}</figcaption>
           </figure>
         </div>
       {% endfor %}
     </div>
+    {% if design %}
     <div class="row">
       <div class="col-12">
         <div class="l-box setting-buttons">
-        {% if design %}
-          {% block_moderate g return_path=return_path %}
-        {% endif %}
+          {% block_moderate g request_path=request_path %}
         </div>
       </div>
     </div>
+    {% endif %}
   {% endfor %}
   {% if design %}
     <div class="row">
       <div class="col-12">
         <div class="l-box setting-buttons">
-        {% block_add gallery_create_url 'Gallery' return_path=return_path %}
+        {% block_add gallery_create_url 'Gallery' request_path=request_path %}
         </div>
       </div>
     </div>

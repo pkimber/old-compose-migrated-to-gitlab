@@ -18,7 +18,7 @@ def addcss(field, css):
 #
 # @register.inclusion_tag('bootstrap/_cms_inctag_moderate.html')
 # def cms_moderate(generic_content, can_remove=True, caption='',
-#         is_first=False, is_last=False, can_reorder=True, return_path=None):
+#         is_first=False, is_last=False, can_reorder=True, request_path=None):
 #     return dict(
 #                 c=generic_content,
 #                 can_remove=can_remove,
@@ -26,7 +26,7 @@ def addcss(field, css):
 #                 is_first=is_first,
 #                 is_last=is_last,
 #                 can_reorder=can_reorder,
-#                 return_path=return_path,
+#                 request_path=request_path,
 #                 )
 #
 #

@@ -20,16 +20,16 @@
         {% for item in b.ordered_slideshow %}
           <div class="carousel-item{% if forloop.first %} active{% endif %}">
             <img
-              alt="{{ item.image.caption }}"
-              title="{{ item.image.caption }}"
+              alt="{{ item.image.title }}"
+              title="{{ item.image.title }}"
               class="d-block img-fluid"
-              src="{% thumbnail item.image.image 3681x664 autocrop background %}"/>
+              src="{% thumbnail item.image.image 3681x664 autocrop background %}">
             <div class="carousel-caption d-none d-md-block">
-              <h3>{{ item.image.caption }}</h3>
+              <h3>{{ item.image.title }}</h3>
               <p>{{ item }}</p>
               {% if design %}
               <div class="l-box setting-buttons">
-                {% block_moderate b return_path=return_path %}
+                {% block_moderate b request_path=request_path %}
               </div>
               {% endif %}
             </div>
@@ -60,7 +60,7 @@
       {% if design %}
       <div class="col-12">
         <div class="l-box setting-buttons">
-          {% block_add slideshow_create_url 'Slideshow' return_path=return_path %}
+          {% block_add slideshow_create_url 'Slideshow' request_path=request_path %}
         </div>
       </div>
       {% endif %}

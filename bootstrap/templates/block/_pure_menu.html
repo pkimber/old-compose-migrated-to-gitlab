@@ -8,8 +8,8 @@
       {% else %}
       <div class="nav-link">
       {% endif %}
-        {{ menu_item.title }}
-      {% if menu_item.has_link %}
+        {{ menu_item.caption }}
+      {% if menu_item.caption %}
       </a>
       {% else %}
       </div>
@@ -25,7 +25,7 @@
       {% for sub_menu_item in menu_item.menuitem_set.all %}
         <li class="nav-item sub-item">
           <a class="nav-link" href="{{ sub_menu_item.get_link }}">
-            {{ sub_menu_item.title }}
+            {{ sub_menu_item.caption }}
           </a>
         </li>
         {% if sub_menu_item.link and sub_menu_item.link.page and sub_menu_item.link.page.pk == page.pk %}

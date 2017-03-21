@@ -43,7 +43,7 @@
           <tbody>
             {% for link in link_list %}
               {% ifchanged link.category %}
-              <tr class="table-info">
+              <tr class="bg-secondary text-white">
                 <th scope="row" colspan="4">
                   {% if link.category %}
                     {{ link.category.name }}
@@ -58,7 +58,7 @@
                   <a
                     href="{% if link.is_document %}{% url 'block.link.document.update' link.pk %}{% elif link.is_external %}{% url 'block.link.external.update' link.pk %}{% elif link.is_internal %}{% url 'block.link.internal.update' link.pk %}{% endif %}">
                     <i class="fa fa-edit"></i>
-                    {{ link.title }}
+                    {{ link.caption }}
                   </a>
                 </th>
                 <td>

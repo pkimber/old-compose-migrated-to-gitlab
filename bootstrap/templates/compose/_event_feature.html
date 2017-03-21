@@ -9,7 +9,7 @@
     {% if design %}
       <div class="col-12">
         <div class="l-box setting-buttons">
-          {% block_moderate c return_path=return_path %}
+          {% block_moderate c request_path=request_path %}
         </div>
       </div>
     {% endif %}
@@ -18,7 +18,7 @@
       {% if design %}
         <div class="col-12">
           <div class="l-box setting-buttons">
-            {% block_add header_a_create_url 'Header' return_path=return_path %}
+            {% block_add header_a_create_url 'Header' request_path=request_path %}
           </div>
         </div>
       {% endif %}
@@ -31,7 +31,7 @@
             <div class="centre">
               <img
                 alt="{{ c.title }}"
-                title="{{ c.picture.caption }}"
+                title="{{ c.picture.title }}"
                 class="centre scale"
                 src="{% thumbnail c.picture 460x277 %}"  >
             </div>
@@ -48,7 +48,7 @@
       {% if design %}
         <div class="col-12">
           <div class="l-box setting-buttons">
-            {% block_moderate c return_path=return_path %}
+            {% block_moderate c request_path=request_path %}
           </div>
         </div>
       {% endif %}
@@ -59,7 +59,7 @@
   {% if design %}
     <div class="col-12">
       <div class="l-box setting-buttons">
-        {% block_add feature_a_create_url 'feature' return_path=return_path %}
+        {% block_add feature_a_create_url 'feature' request_path=request_path %}
       </div>
     </div>
   {% endif %}

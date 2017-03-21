@@ -17,8 +17,8 @@
                 <a href="{{ b.link.url }}" target="_blank">
                 {% endif %}
                 <img
-                  alt="{{ b.picture.caption }}"
-                  title="{{ b.picture.caption }}"
+                  alt="{{ b.picture.title }}"
+                  title="{{ b.picture.title }}"
                   class="img-fluid"
                   src="{% thumbnail b.picture.image 100x100 crop='smart' %}">
                 {% if b.link %}
@@ -49,7 +49,7 @@
 
       {% if design %}
         <div class="l-box setting-buttons">
-          {% block_moderate b return_path=return_path %}
+          {% block_moderate b request_path=request_path %}
         </div>
       {% endif %}
 
@@ -78,7 +78,7 @@
     <div class="row">
       <div class="col-12">
         <div class="l-box setting-buttons">
-          {% block_add news_create_url 'News' return_path=return_path %}
+          {% block_add news_create_url 'News' request_path=request_path %}
         </div>
       </div>
     </div>

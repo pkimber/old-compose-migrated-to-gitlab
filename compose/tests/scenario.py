@@ -11,6 +11,8 @@ from block.models import (
 from compose.models import (
     Article,
     ArticleBlock,
+    Feature,
+    FeatureBlock,
     SECTION_BODY,
     SECTION_CARD,
     SECTION_GALLERY,
@@ -67,8 +69,8 @@ def init_app_compose():
         SECTION_CARD,
         SECTION_CARD.capitalize(),
         'compose',
-        'Article',
-        'compose.article.create',
+        'Feature',
+        'compose.feature.create',
     )
     # section - gallery
     gallery = Section.objects.init_section(
