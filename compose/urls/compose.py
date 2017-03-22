@@ -7,6 +7,8 @@ from compose.views import (
     ArticlePublishView,
     ArticleRemoveView,
     ArticleUpdateView,
+    ArticleUpView,
+    ArticleDownView,
     # Feature
     FeatureCreateView,
     FeaturePublishView,
@@ -57,6 +59,14 @@ urlpatterns = [
     url(regex=r'^article/(?P<pk>\d+)/update/$',
         view=ArticleUpdateView.as_view(),
         name='compose.article.update'
+        ),
+    url(regex=r'^article/(?P<pk>\d+)/up/$',
+        view=ArticleUpView.as_view(),
+        name='compose.article.up'
+        ),
+    url(regex=r'^article/(?P<pk>\d+)/down/$',
+        view=ArticleDownView.as_view(),
+        name='compose.article.down'
         ),
     url(regex=r'^slideshow/create/(?P<page>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
         view=SlideshowCreateView.as_view(),
@@ -146,7 +156,7 @@ urlpatterns = [
         view=FeatureStyleCreateView.as_view(),
         name='compose.feature.style.create'
         ),
-    url(regex=r'^feature/style/list/$', 
+    url(regex=r'^feature/style/list/$',
         view=FeatureStyleListView.as_view(),
         name='compose.feature.style.list'
         ),
@@ -158,7 +168,7 @@ urlpatterns = [
         view=HeaderStyleCreateView.as_view(),
         name='compose.header.style.create'
         ),
-    url(regex=r'^header/style/list/$', 
+    url(regex=r'^header/style/list/$',
         view=HeaderStyleListView.as_view(),
         name='compose.header.style.list'
         ),

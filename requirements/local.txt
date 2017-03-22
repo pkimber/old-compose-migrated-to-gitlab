@@ -4,13 +4,9 @@
 -e ../block
 -e ../login
 -e ../mail
-devpi-client
 django-debug-toolbar
 django_extensions
-fabric
 factory-boy
-gitpython
-hgapi
 ipdb
 psycopg2
 pytest-cov
@@ -19,4 +15,3 @@ pytest-flakes
 pytest-pep8
 pytest-sugar
 pytest-watch
-pyyaml

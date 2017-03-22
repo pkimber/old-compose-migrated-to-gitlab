@@ -14,10 +14,8 @@ Virtual Environment
 
 ::
 
-  pyvenv-3.4 --without-pip venv-compose
+  virtualenv --python=python3 venv-compose
   source venv-compose/bin/activate
-  wget https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
-  python get-pip.py
 
   pip install -r requirements/local.txt
 
@@ -29,6 +27,9 @@ Testing
   find . -name '*.pyc' -delete
   py.test -x
 
+.. important:: Don't forget to use the ``--create-db`` parameter on ``pytest``
+               the first time.
+
 Usage
 =====
 
@@ -36,7 +37,7 @@ Usage
 
   ./init_dev.sh
 
-Release
-=======
+Release and Deploy
+==================
 
-https://www.pkimber.net/open/
+https://www.kbsoftware.co.uk/docs/

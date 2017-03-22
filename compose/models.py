@@ -46,7 +46,6 @@ class Article(ContentModel):
     )
 
     block = models.ForeignKey(ArticleBlock, related_name='content')
-    order = models.IntegerField()
 
     title = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
@@ -89,6 +88,23 @@ class Article(ContentModel):
 
     def url_update(self):
         return reverse('compose.article.update', kwargs={'pk': self.pk})
+
+    def url_order_up(self):
+        if self.order > 1:
+            return reverse('compose.article.up', kwargs={'pk': self.pk})
+        else:
+            return '#'
+
+    def url_order_down(self):
+        max_order = Article.objects.get_max_order(self.block)
+        if self.order < max_order:
+            return reverse('compose.article.down', kwargs={'pk': self.pk})
+        else:
+            return '#'
+
+    def text_size(self):
+        invert = self.image_size.split('-')
+        return '-'.join([str(int(invert[1])-int(invert[0])) or 1, invert[1]])
 
     @property
     def wizard_fields(self):
@@ -160,7 +176,6 @@ class Slideshow(ContentModel):
     """
 
     block = models.ForeignKey(SlideshowBlock, related_name='content')
-    order = models.IntegerField()
 
     title = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
@@ -266,7 +281,6 @@ class Feature(ContentModel):
     SECTION_D = 'feature_d'
 
     block = models.ForeignKey(FeatureBlock, related_name='content')
-    order = models.IntegerField()
 
     title = models.TextField()
     description = models.TextField(blank=True)
@@ -359,7 +373,6 @@ class Header(ContentModel):
     SECTION_D = 'header_d'
 
     block = models.ForeignKey(HeaderBlock, related_name='content')
-    order = models.IntegerField()
 
     title = models.TextField()
     style = models.ForeignKey(HeaderStyle, blank=True, null=True)
@@ -405,7 +418,6 @@ class Sidebar(ContentModel):
     SECTION = 'sidebar'
 
     block = models.ForeignKey(SidebarBlock, related_name='content')
-    order = models.IntegerField()
 
     title = models.TextField()
 

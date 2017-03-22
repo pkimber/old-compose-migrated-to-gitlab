@@ -1,54 +1,39 @@
 {% load block_tags %}
 
+<div class="pure-g">
 {% for b in body_list %}
-  {% if forloop.first %}
-    <div class="pure-g">
-  {% endif %}
+
   {% if b.article_type == 'text_right' %}
-    <!-- opening div inside this include -->
-    {% include 'compose/_image_width.html' %}
+  <div class="pure-u-1 pure-u-md-{{ b.image_size }}">
+    {% include 'compose/_body_picture.html' with image_class='article-image-left' %}
+  </div>
+  {% endif %}
+
+  {% if b.article_type == 'text_bottom' or b.article_type == 'picture_only' %}
+  <div class="pure-u-1">
+    {% include 'compose/_body_picture.html' with image_class='article-image-center' %}
+  </div>
+  {% endif %}
+
+  {% if not b.article_type == 'picture_only' %}
+  <div class="pure-u-1 pure-u-md-{{ b.text_size }}">
+    {% include 'compose/_text.html' with text_class='l-box' %}
+  </div>
+  {% endif %}
+
+  {% if b.article_type == 'text_right' %}
+    <div class="pure-u-1 pure-u-md-{{ b.image_size }}">
       {% include 'compose/_body_picture.html' with image_class='article-image-left' %}
     </div>
-    <!-- opening div inside this include -->
-    {% include 'compose/_text_width.html' %}
-      {% include 'compose/_text.html' with text_class='l-box' %}
-    </div>
-  {% elif b.article_type == 'text_top' %}
-    <div class="pure-u-1">
-      {% include 'compose/_text.html' with text_class='l-box' %}
-    </div>
-    <div class="pure-u-1">
-      {% include 'compose/_body_picture.html' with image_class='article-image-center' %}
-    </div>
-  {% elif b.article_type == 'text_bottom' %}
-    <div class="pure-u-1">
-      {% include 'compose/_body_picture.html' with image_class='article-image-center' %}
-    </div>
-      {% include 'compose/_text.html' with text_class='l-box' %}
-    </div>
-  {% elif b.article_type == 'picture_only' %}
-    <div class="pure-u-1">
-      {% include 'compose/_body_picture.html' with image_class='article-image-center' %}
-      {% if design %}
-        {% block_moderate b %}
-      {% endif %}
-    </div>
-  {% elif b.article_type == 'text_only' %}
-    <div class="pure-u-1">
-      {% include 'compose/_text.html' with text_class='l-box' %}
-    </div>
-  {% else %}
-    <!-- opening div inside this include -->
-    {% include 'compose/_text_width.html' %}
-      {% include 'compose/_text.html' with text_class='l-box' %}
-    </div>
-    <!-- opening div inside this include -->
-    {% include 'compose/_image_width.html' %}
+  {% endif %}
+
+  {% if b.article_type == 'text_left' %}
+    <div class="pure-u-1 pure-u-md-{{ b.image_size }}">
       {% include 'compose/_body_picture.html' with image_class='article-image-right' %}
     </div>
   {% endif %}
-  {% if forloop.last %}
-    </div>
-  {% endif %}
+
 {% endfor %}
+</div>
+
 {% if design %}{% block_add body_create_url 'Article' %}{% endif %}

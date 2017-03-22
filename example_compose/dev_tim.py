@@ -13,15 +13,3 @@ DATABASES = {
         'PORT': '',                                          # Set to empty string for default. Not used with sqlite3.
     }
 }
-
-MIDDLEWARE_CLASSES += MIDDLEWARE_CLASSES + (
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
-
-INSTALLED_APPS += (
-    #'django.contrib.formtools',
-    'django_extensions',
-    'debug_toolbar',
-)
-
-INTERNAL_IPS = ['127.0.0.1']
