@@ -1,5 +1,5 @@
 source venv-compose/bin/activate.fish
-set -x DJANGO_SETTINGS_MODULE "settings.dev_patrick"
+set -x DJANGO_SETTINGS_MODULE "example_compose.dev_patrick"
 set -x MAIL_TEMPLATE_TYPE "django"
 set -x NORECAPTCHA_SECRET_KEY "your secret key"
 set -x NORECAPTCHA_SITE_KEY "your site key"
