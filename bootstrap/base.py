@@ -129,9 +129,10 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    'compressor',
+    # 'compressor',
     'easy_thumbnails',
     'reversion',
+    'taggit'
 )
 
 
@@ -141,9 +142,9 @@ THIRD_PARTY_APPS = (
 
 LOCAL_APPS = (
     'bootstrap',
-    'compose',
     'base',
     'block',
+    'compose',
     'login',
     'mail',
 )
@@ -179,8 +180,8 @@ LOGGING = {
     }
 }
 
-# django-compressor
-COMPRESS_ENABLED = False # defaults to the opposite of DEBUG
+# # django-compressor
+# COMPRESS_ENABLED = False # defaults to the opposite of DEBUG
 
 FTP_STATIC_DIR = None
 FTP_STATIC_URL = None
@@ -240,20 +241,4 @@ CSS_IMAGE_SIZES = (
     (CSS_IMAGE_SIZE_HALF, 'Half Width'),
     (CSS_IMAGE_SIZE_THIRD, 'Third Width'),
     (CSS_IMAGE_SIZE_QUARTER, 'Quarter Width'),
-)
-
-
-CSS_TEXT_POSITION = (
-    ('text_left', 'Text Left'),
-    ('text_right', 'Text Right'),
-    ('text_top', 'Text Top'),
-    ('text_bottom', 'Text Bottom'),
-    ('text_only', 'Text Only'),
-    ('picture_only', 'Picture Only'),
-)
-
-CSS_IMAGE_SIZES = (
-    ('1-2', 'Half Width'),
-    ('1-3', 'Third Width'),
-    ('1-4', 'Quarter Width'),
 )
