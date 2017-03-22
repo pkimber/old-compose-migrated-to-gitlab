@@ -1,0 +1,32 @@
+{% comment %}
+A universal template for to add slideshow to a page.
+
+To use, specify an include directive and optionally set the following::
+
+  slideshow_class - defaults to bxslider (because of the style tag below only one class may be specified)
+  image_class - defaults to pure-img
+  slideshow_description - defaults to "Slideshow"
+{% endcomment %}
+
+{% load block_tags %}
+{% load thumbnail %}
+<style>
+  .{% if slideshow_class %}{{ slideshow_class }}{% else %}bxslider{% endif %} ul { position: relative; list-style-type: none;}
+  .{% if slideshow_class %}{{ slideshow_class }}{% else %}bxslider{% endif %} li { position: fixed; left: 0; top: 0;}
+</style>
+{% for b in slideshow_list %}
+    {% for picture in b.ordered_slideshow %}
+        {% if forloop.first %}
+          <ul class="{% if slideshow_class %}{{ slideshow_class }}{% else %}bxslider{% endif %}">
+        {% endif %}
+        <li>
+          <img src="{% thumbnail picture.image.image 1440x300 crop='center' %}" title="{{ picture.image.title }}" class="{% if image_class %}{{ image_class }}{% else %}pure-img{% endif %}" />
+        </li>
+        {% if forloop.last %}
+          </ul>
+        {% endif %}
+    {% endfor %}
+    {% if design %}{% block_moderate b %}{% endif %}
+{% empty %}
+  {% if design %}{% if slideshow_description %}{% block_add slideshow_create_url slideshow_description %}{% else %}{% block_add slideshow_create_url "Slideshow" %}{% endif %}{% endif %}
+{% endfor %}
