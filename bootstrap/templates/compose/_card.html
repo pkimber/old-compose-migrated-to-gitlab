@@ -3,7 +3,7 @@
 <div class="row">
 
   {% for b in card_list %}
-      <div class="col-12 col-sm-6 col-md-4">
+      <div class="{{ b.css_width }}">
         <div class="{{ b.style.css_class_name }}">
 
         {% if b.picture and not b.article_type == 'hidden' and not b.article_type == 'w-100 mb-2 mt-3' %}
@@ -11,8 +11,13 @@
           alt="{{ b.picture.title }}"
           title="{{ b.picture.title }}"
           class="card-img {% if not 'img-overlay' in b.style.name %}card-img-top img-fluid{% endif %}"
-          src="{% thumbnail b.picture.image 400x0 crop=true %}">
+          {% if not 'img-overlay' in b.style.name %}
+          src="{% thumbnail b.picture.image 1200x0 crop='false' %}"
+          {% else %}
+          src="{% thumbnail b.picture.image 600x0 crop='smart' %}"
+          {% endif %}>
         {% endif %}
+
 
         {% if 'img-overlay' in b.style.name %}
         <div class="card-block card-img-overlay">

@@ -11,6 +11,7 @@ from block.models import (
 from compose.models import (
     Article,
     ArticleBlock,
+    FeatureStyle,
     SECTION_BODY,
     SECTION_CARD,
     SECTION_GALLERY,
@@ -67,8 +68,8 @@ def init_app_compose():
         SECTION_CARD,
         SECTION_CARD.capitalize(),
         'compose',
-        'Article',
-        'compose.article.create',
+        'Feature',
+        'compose.feature.create',
     )
     # section - gallery
     gallery = Section.objects.init_section(
@@ -117,5 +118,16 @@ def init_app_compose():
     PageSection.objects.init_page_section(home, slideshow)
     PageSection.objects.init_page_section(page_gallery, gallery)
     PageSection.objects.init_page_section(page_gallery, slideshow)
+
+    FeatureStyle.objects.get_or_create(name='card', css_class_name='card')
+    FeatureStyle.objects.get_or_create(name='jumbotron', css_class_name='jumbotron')
+    FeatureStyle.objects.get_or_create(name='card-light-img-overlay', css_class_name='card img-overlay')
+    FeatureStyle.objects.get_or_create(name='card-dark-img-overlay', css_class_name='card card-inverse')
+    FeatureStyle.objects.get_or_create(name='card-primary', css_class_name='card card-inverse card-primary')
+    FeatureStyle.objects.get_or_create(name='card-secondary', css_class_name='card card-inverse card-secondary')
+    FeatureStyle.objects.get_or_create(name='card-info', css_class_name='card card-inverse card-info')
+    FeatureStyle.objects.get_or_create(name='card-warning', css_class_name='card card-inverse card-warning')
+    FeatureStyle.objects.get_or_create(name='card-danger', css_class_name='card card-inverse card-danger')
+
     # Link wizard
     Url.objects.init_pages()

@@ -31,9 +31,10 @@ class ArticleForm(RequiredFieldForm):
     class Meta:
         model = Article
         fields = (
+            'heading_level',
             'title',
             'description',
-            #'picture',
+            'css_width',
             'article_type',
             'image_size',
         )
@@ -94,8 +95,10 @@ class FeatureForm(RequiredFieldForm):
     class Meta:
         model = Feature
         fields = (
+            'heading_level',
             'title',
             'description',
+            'css_width',
             'style',
         )
 
@@ -179,5 +182,3 @@ class SidebarForm(RequiredFieldForm):
         fields = (
             'title',
         )
-
-

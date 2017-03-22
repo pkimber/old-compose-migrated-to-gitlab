@@ -14,6 +14,8 @@ from compose.views import (
     FeaturePublishView,
     FeatureRemoveView,
     FeatureUpdateView,
+    FeatureUpView,
+    FeatureDownView,
     # Header
     HeaderCreateView,
     HeaderPublishView,
@@ -108,6 +110,14 @@ urlpatterns = [
     url(regex=r'^feature/(?P<pk>\d+)/edit/$',
         view=FeatureUpdateView.as_view(),
         name='compose.feature.update'
+        ),
+    url(regex=r'^feature/(?P<pk>\d+)/up/$',
+        view=FeatureUpView.as_view(),
+        name='compose.feature.up'
+        ),
+    url(regex=r'^feature/(?P<pk>\d+)/down/$',
+        view=FeatureDownView.as_view(),
+        name='compose.feature.down'
         ),
     # Header
     url(regex=r'^header/create/(?P<page>[-\w\d]+)/(?P<section>[-\w\d]+)/$',

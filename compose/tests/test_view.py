@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -14,6 +15,7 @@ from block.tests.factories import (
 from compose.tests.factories import (
     ArticleFactory,
     CodeSnippetFactory,
+    FeatureFactory,
     SidebarFactory,
     SlideshowFactory,
 )
@@ -42,9 +44,11 @@ class TestView(TestCase):
         response = self.client.post(
             url,
             {
+                'heading_level': 'h2',
                 'title': 'pkimber.net',
-                'article_type': 'text_only',
-                'image_size': '1-3',
+                'css_width': settings.CSS_WIDTH_HALFBIG,
+                'article_type': settings.CSS_TEXT_LEFT,
+                'image_size': settings.CSS_IMAGE_SIZE_HALF,
             }
         )
         self.assertEqual(response.status_code, 302)
@@ -62,9 +66,11 @@ class TestView(TestCase):
         response = self.client.post(
             url,
             {
+                'heading_level': 'h3',
                 'title': 'pkimber.net',
-                'article_type': 'text_only',
-                'image_size': '1-4',
+                'css_width': settings.CSS_WIDTH_FULL,
+                'article_type': settings.CSS_TEXT_RIGHT,
+                'image_size': settings.CSS_IMAGE_SIZE_QUARTER,
             }
         )
         self.assertEqual(response.status_code, 302)
@@ -81,9 +87,11 @@ class TestView(TestCase):
         response = self.client.post(
             reverse('compose.article.update', kwargs={'pk': c.pk}),
             {
+                'heading_level': 'h2',
                 'title': 'pkimber.net',
-                'article_type': 'text_only',
-                'image_size': '1-2',
+                'css_width': settings.CSS_WIDTH_HALFBIG,
+                'article_type': settings.CSS_TEXT_LEFT,
+                'image_size': settings.CSS_IMAGE_SIZE_HALF,
             }
         )
         self.assertEqual(response.status_code, 302)
@@ -110,6 +118,71 @@ class TestView(TestCase):
         url = reverse('compose.code.snippet.update', args=[snippet.slug])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+
+    def test_feature_create(self):
+        p = PageSectionFactory(page=PageFactory(slug_menu=''))
+        url = reverse(
+            'compose.feature.create',
+            kwargs=dict(
+                page=p.page.slug,
+                section=p.section.slug,
+            )
+        )
+        response = self.client.post(
+            url,
+            {
+                'heading_level': 'h2',
+                'title': 'pkimber.net',
+                'css_width': settings.CSS_WIDTH_HALFBIG,
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_feature_create_page_and_menu(self):
+        p = PageSectionFactory()
+        url = reverse(
+            'compose.feature.create',
+            kwargs=dict(
+                page=p.page.slug,
+                menu=p.page.slug_menu,
+                section=p.section.slug,
+            )
+        )
+        response = self.client.post(
+            url,
+            {
+                'heading_level': 'h3',
+                'title': 'pkimber.net',
+                'css_width': settings.CSS_WIDTH_FULL,
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_feature_publish(self):
+        c = FeatureFactory()
+        response = self.client.post(
+            reverse('compose.feature.publish', kwargs={'pk': c.pk}),
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_feature_update(self):
+        c = FeatureFactory()
+        response = self.client.post(
+            reverse('compose.feature.update', kwargs={'pk': c.pk}),
+            {
+                'heading_level': 'h2',
+                'title': 'pkimber.net',
+                'css_width': settings.CSS_WIDTH_HALFBIG,
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_feature_remove(self):
+        c = FeatureFactory()
+        response = self.client.post(
+            reverse('compose.feature.remove', kwargs={'pk': c.pk}),
+        )
+        self.assertEqual(response.status_code, 302)
 
     def test_sidebar_create(self):
         p = PageSectionFactory(page=PageFactory(slug_menu=''))

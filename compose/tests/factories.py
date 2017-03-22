@@ -11,8 +11,8 @@ from compose.models import (
     Slideshow,
     SlideshowBlock,
     SlideshowImage,
-    #Feature,
-    #FeatureBlock,
+    Feature,
+    FeatureBlock,
     #Header,
     #HeaderBlock,
 )
@@ -94,26 +94,26 @@ class SlideshowFactory(factory.django.DjangoModelFactory):
         return n
 
 
-#class FeatureBlockFactory(factory.django.DjangoModelFactory):
-#
-#    page_section = factory.SubFactory(PageSectionFactory)
-#
-#    class Meta:
-#        model = FeatureBlock
-#
-#
-#class FeatureFactory(factory.django.DjangoModelFactory):
-#
-#    class Meta:
-#        model = Feature
-#
-#    block = factory.SubFactory(FeatureBlockFactory)
-#
-#    @factory.sequence
-#    def order(n):
-#        return n
-#
-#
+class FeatureBlockFactory(factory.django.DjangoModelFactory):
+
+   page_section = factory.SubFactory(PageSectionFactory)
+
+   class Meta:
+       model = FeatureBlock
+
+
+class FeatureFactory(factory.django.DjangoModelFactory):
+
+   class Meta:
+       model = Feature
+
+   block = factory.SubFactory(FeatureBlockFactory)
+
+   @factory.sequence
+   def order(n):
+       return n
+
+
 #class HeaderBlockFactory(factory.django.DjangoModelFactory):
 #
 #    page_section = factory.SubFactory(PageSectionFactory)

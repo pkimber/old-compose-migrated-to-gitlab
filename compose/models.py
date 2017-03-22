@@ -43,7 +43,7 @@ class ContentBase(ContentModel):
     title = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
     css_width = models.CharField(
-        max_length=12,
+        max_length=64,
         choices=settings.CSS_WIDTHS,
         default=settings.CSS_WIDTH_HALFBIG,
     )
@@ -332,6 +332,19 @@ class Feature(ContentBase):
 
     def url_update(self):
         return reverse('compose.feature.update', kwargs={'pk': self.pk})
+
+    def url_order_up(self):
+        if self.order > 1:
+            return reverse('compose.feature.up', kwargs={'pk': self.pk})
+        else:
+            return '#'
+
+    def url_order_down(self):
+        max_order = Feature.objects.get_max_order(self.block)
+        if self.order < max_order:
+            return reverse('compose.feature.down', kwargs={'pk': self.pk})
+        else:
+            return '#'
 
     def css_class_name(self):
         if self.style:

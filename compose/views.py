@@ -155,6 +155,18 @@ class FeatureUpdateView(
     template_name = 'compose/feature_create_update.html'
 
 
+class FeatureUpView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentUpView):
+
+    model = Feature
+
+
+class FeatureDownView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentDownView):
+
+    model = Feature
+
+
 class FeatureStyleCreateView(
         LoginRequiredMixin, StaffuserRequiredMixin, CreateView):
     form_class = FeatureStyleForm
