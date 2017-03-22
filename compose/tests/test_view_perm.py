@@ -11,6 +11,8 @@ from block.tests.factories import (
 from compose.tests.factories import (
     ArticleFactory,
     CodeSnippetFactory,
+    FeatureFactory,
+    HeaderFactory,
     SidebarFactory,
     SlideshowFactory,
 )
@@ -80,6 +82,79 @@ class TestViewPerm(PermTestCase):
         snippet = CodeSnippetFactory()
         url = reverse('compose.code.snippet.update', args=[snippet.slug])
         self.assert_staff_only(url)
+
+    def test_feature_create(self):
+        p = PageSectionFactory()
+        url = reverse(
+            'compose.feature.create',
+            kwargs=dict(
+                page=p.page.slug,
+                menu=p.page.slug_menu,
+                section=p.section.slug,
+            )
+        )
+        self.assert_staff_only(url)
+
+    def test_feature_publish(self):
+        c = FeatureFactory()
+        url = reverse('compose.feature.publish', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_feature_remove(self):
+        c = FeatureFactory()
+        url = reverse('compose.feature.remove', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_feature_update(self):
+        c = FeatureFactory()
+        url = reverse('compose.feature.update', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_feature_up(self):
+        c = FeatureFactory()
+        url = reverse('compose.feature.up', kwargs={'pk': c.pk})
+        self.client.logout()
+        response = self.client.get(url)
+        assert_redirect(response, 'login')
+        staff = self.login_staff()
+        response = self.client.get(url)
+        assert_redirect(response, 'design')
+
+    def test_feature_down(self):
+        c = FeatureFactory()
+        url = reverse('compose.feature.down', kwargs={'pk': c.pk})
+        self.client.logout()
+        response = self.client.get(url)
+        assert_redirect(response, 'login')
+        staff = self.login_staff()
+        response = self.client.get(url)
+        assert_redirect(response, 'design')
+
+    def test_header_create(self):
+        p = PageSectionFactory()
+        url = reverse(
+            'compose.header.create',
+            kwargs=dict(
+                page=p.page.slug,
+                menu=p.page.slug_menu,
+                section=p.section.slug,
+            )
+        )
+        self.assert_staff_only(url)
+
+    def test_header_publish(self):
+        c = HeaderFactory()
+        url = reverse('compose.header.publish', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_header_remove(self):
+        c = HeaderFactory()
+        url = reverse('compose.header.remove', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_header_update(self):
+        c = HeaderFactory()
+        url = reverse('compose.header.update', kwargs={'pk': c.pk})
 
     def test_home(self):
         template = TemplateFactory(template_name='compose/page_article.html')

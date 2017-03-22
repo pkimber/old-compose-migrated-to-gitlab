@@ -11,7 +11,9 @@ from block.models import (
 from compose.models import (
     Article,
     ArticleBlock,
+    Feature,
     FeatureStyle,
+    Header,
     SECTION_BODY,
     SECTION_CARD,
     SECTION_GALLERY,
@@ -71,6 +73,22 @@ def init_app_compose():
         'Feature',
         'compose.feature.create',
     )
+    # section - header
+    header_a = Section.objects.init_section(
+        Header.SECTION_A,
+        Header.SECTION_A.capitalize(),
+        'compose',
+        'Header',
+        'compose.header.create',
+    )
+    # section - feature
+    feature_a = Section.objects.init_section(
+        Feature.SECTION_A,
+        Feature.SECTION_A.capitalize(),
+        'compose',
+        'Feature',
+        'compose.feature.create',
+    )
     # section - gallery
     gallery = Section.objects.init_section(
         SECTION_GALLERY,
@@ -92,6 +110,10 @@ def init_app_compose():
     TemplateSection.objects.init_template_section(article_template, body)
     TemplateSection.objects.init_template_section(article_template, card)
     TemplateSection.objects.init_template_section(article_template, slideshow)
+    # template - feature
+    feature_template = Template.objects.init_template('Gallery', 'compose/page_feature.html')
+    TemplateSection.objects.init_template_section(feature_template, header_a)
+    TemplateSection.objects.init_template_section(feature_template, feature_a)
     # template - gallery
     gallery_template = Template.objects.init_template('Gallery', 'compose/page_gallery.html')
     TemplateSection.objects.init_template_section(gallery_template, gallery)
@@ -105,6 +127,14 @@ def init_app_compose():
         article_template,
         is_home=True,
     )
+    # page - features - hidden on init
+    page_feature = Page.objects.init_page(
+        'feature',
+        '',
+        'Feature',
+        0,
+        feature_template,
+    )
     # page - gallery - hidden on init
     page_gallery = Page.objects.init_page(
         'gallery',
@@ -116,6 +146,8 @@ def init_app_compose():
     PageSection.objects.init_page_section(home, body)
     PageSection.objects.init_page_section(home, card)
     PageSection.objects.init_page_section(home, slideshow)
+    PageSection.objects.init_page_section(page_feature, header_a)
+    PageSection.objects.init_page_section(page_feature, feature_a)
     PageSection.objects.init_page_section(page_gallery, gallery)
     PageSection.objects.init_page_section(page_gallery, slideshow)
 
@@ -128,6 +160,7 @@ def init_app_compose():
     FeatureStyle.objects.get_or_create(name='card-info', css_class_name='card card-inverse card-info')
     FeatureStyle.objects.get_or_create(name='card-warning', css_class_name='card card-inverse card-warning')
     FeatureStyle.objects.get_or_create(name='card-danger', css_class_name='card card-inverse card-danger')
+
 
     # Link wizard
     Url.objects.init_pages()

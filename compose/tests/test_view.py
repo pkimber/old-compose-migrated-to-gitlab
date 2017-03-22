@@ -16,6 +16,7 @@ from compose.tests.factories import (
     ArticleFactory,
     CodeSnippetFactory,
     FeatureFactory,
+    HeaderFactory,
     SidebarFactory,
     SlideshowFactory,
 )
@@ -181,6 +182,65 @@ class TestView(TestCase):
         c = FeatureFactory()
         response = self.client.post(
             reverse('compose.feature.remove', kwargs={'pk': c.pk}),
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_header_create(self):
+        p = PageSectionFactory(page=PageFactory(slug_menu=''))
+        url = reverse(
+            'compose.header.create',
+            kwargs=dict(
+                page=p.page.slug,
+                section=p.section.slug,
+            )
+        )
+        response = self.client.post(
+            url,
+            {
+                'title': 'pkimber1.net',
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_header_create_page_and_menu(self):
+        p = PageSectionFactory()
+        url = reverse(
+            'compose.header.create',
+            kwargs=dict(
+                page=p.page.slug,
+                menu=p.page.slug_menu,
+                section=p.section.slug,
+            )
+        )
+        response = self.client.post(
+            url,
+            {
+                'title': 'pkimber2.net',
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_header_publish(self):
+        c = HeaderFactory()
+        response = self.client.post(
+            reverse('compose.header.publish', kwargs={'pk': c.pk}),
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_header_update(self):
+        c = HeaderFactory()
+        response = self.client.post(
+            reverse('compose.header.update', kwargs={'pk': c.pk}),
+            {
+                'title': 'pkimber3.net',
+            }
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_header_remove(self):
+        c = HeaderFactory()
+        response = self.client.post(
+            reverse('compose.header.remove', kwargs={'pk': c.pk}),
         )
         self.assertEqual(response.status_code, 302)
 
