@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -31,20 +32,7 @@ reversion.register(ArticleBlock)
 
 class Article(ContentModel):
 
-    ARTICLE_TYPE_CHOICES = (
-        ('text_left', 'Text Left'),
-        ('text_right', 'Text Right'),
-        ('text_top', 'Text Top'),
-        ('text_bottom', 'Text Bottom'),
-        ('text_only', 'Text Only'),
-        ('picture_only', 'Picture Only'),
-    )
 
-    IMAGE_SIZE = (
-        ('1-2', 'Half Width'),
-        ('1-3', 'Third Width'),
-        ('1-4', 'Quarter Width'),
-    )
 
     block = models.ForeignKey(ArticleBlock, related_name='content')
 
@@ -52,12 +40,12 @@ class Article(ContentModel):
     description = models.TextField(blank=True)
     article_type = models.CharField(
         max_length=12,
-        choices=ARTICLE_TYPE_CHOICES,
+        choices=settings.CSS_TEXT_POSITION,
         default='text_left',
     )
     image_size = models.CharField(
         max_length=3,
-        choices=IMAGE_SIZE,
+        choices=settings.CSS_IMAGE_SIZES,
         default='1-2',
     )
     link = models.ForeignKey(
