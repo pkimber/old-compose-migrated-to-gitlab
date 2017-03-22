@@ -102,6 +102,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
+                'django.template.context_processors.request',
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
@@ -126,9 +127,9 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    'compressor',
     'easy_thumbnails',
     'reversion',
+    'taggit',
 )
 
 LOCAL_APPS = (
@@ -170,9 +171,6 @@ LOGGING = {
         },
     }
 }
-
-# django-compressor
-COMPRESS_ENABLED = False # defaults to the opposite of DEBUG
 
 FTP_STATIC_DIR = None
 FTP_STATIC_URL = None

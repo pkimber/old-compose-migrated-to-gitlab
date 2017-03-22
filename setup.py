@@ -20,21 +20,22 @@ def get_readme():
 
 setup(
     name='kb-compose',
-    packages=['compose', 'compose.management', 'compose.management.commands', 'compose.migrations', 'compose.tests', 'compose.urls'],
+    packages=['compose', 'compose.management', 'compose.management.commands', 'compose.tests', 'compose.migrations', 'compose.urls'],
     package_data={
         'compose': [
             'static/*.*',
             'static/compose/*.*',
             'static/compose/css/*.*',
             'static/compose/img/*.*',
+            'static/compose/js/*.*',
             'templates/*.*',
             'templates/compose/*.*',
         ],
     },
-    version='0.0.21',
+    version='0.0.30',
     description='compose',
     author='Malcolm Dinsmore',
-    author_email='m.dinsmore@talk21.com',
+    author_email='code-md@kbsoftware.co.uk',
     url='git@github.com:pkimber/compose.git',
     classifiers=[
         'Development Status :: 1 - Planning',

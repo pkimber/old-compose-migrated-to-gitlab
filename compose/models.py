@@ -33,7 +33,6 @@ SECTION_CARD = 'card'
 SECTION_GALLERY = 'gallery'
 SECTION_NEWS = 'news'
 SECTION_SLIDESHOW = 'slideshow'
-SECTION_SIDEBAR = 'sidebar'
 
 
 class ContentBase(ContentModel):
@@ -185,7 +184,8 @@ class Slideshow(ContentBase):
                         FK Slideshow        Order
                         FK Image            Image
 
-    Use https://docs.djangoproject.com/en/1.8/topics/db/models/#intermediary-manytomany
+    Use
+    https://docs.djangoproject.com/en/1.8/topics/db/models/#intermediary-manytomany
 
     """
 
@@ -377,10 +377,10 @@ class Header(ContentModel):
     """Header Block - title and style
     Used for heading for a section.
     """
-    SECTION_A='header_a'
-    SECTION_B='header_b'
-    SECTION_C='header_c'
-    SECTION_D='header_d'
+    SECTION_A = 'header_a'
+    SECTION_B = 'header_b'
+    SECTION_C = 'header_c'
+    SECTION_D = 'header_d'
 
     block = models.ForeignKey(HeaderBlock, related_name='content')
 
@@ -414,6 +414,7 @@ class Header(ContentModel):
 
 reversion.register(Header)
 
+
 class SidebarBlock(BlockModel):
     pass
 
@@ -424,7 +425,7 @@ class Sidebar(ContentModel):
     """Sidebar Block - title and style
     Used for heading for a section.
     """
-    SECTION='sidebar'
+    SECTION = 'sidebar'
 
     block = models.ForeignKey(SidebarBlock, related_name='content')
 
