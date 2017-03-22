@@ -16,6 +16,18 @@ from block.models import (
 )
 
 
+H1 = 'h1'
+H2 = 'h2'
+H3 = 'h3'
+H4 = 'h4'
+
+HEADING_LEVELS = (
+    (H1, H1),
+    (H2, H2),
+    (H3, H3),
+    (H4, H4),
+)
+
 SECTION_BODY = 'body'
 SECTION_CARD = 'card'
 SECTION_GALLERY = 'gallery'
@@ -24,29 +36,43 @@ SECTION_SLIDESHOW = 'slideshow'
 SECTION_SIDEBAR = 'sidebar'
 
 
+class ContentBase(ContentModel):
+
+    heading_level = models.CharField(max_length=2,
+        choices=HEADING_LEVELS,
+        default=H2,
+    )
+    title = models.CharField(max_length=200, blank=True)
+    description = models.TextField(blank=True)
+    css_width = models.CharField(
+        max_length=12,
+        choices=settings.CSS_WIDTHS,
+        default=settings.CSS_WIDTH_HALFBIG,
+    )
+
+    class Meta:
+        abstract = True
+
+
 class ArticleBlock(BlockModel):
     pass
 
 reversion.register(ArticleBlock)
 
 
-class Article(ContentModel):
-
-
+class Article(ContentBase):
 
     block = models.ForeignKey(ArticleBlock, related_name='content')
 
-    title = models.CharField(max_length=200, blank=True)
-    description = models.TextField(blank=True)
     article_type = models.CharField(
-        max_length=12,
+        max_length=64,
         choices=settings.CSS_TEXT_POSITION,
-        default='text_left',
+        default=settings.CSS_TEXT_LEFT,
     )
     image_size = models.CharField(
-        max_length=3,
+        max_length=64,
         choices=settings.CSS_IMAGE_SIZES,
-        default='1-2',
+        default=settings.CSS_IMAGE_SIZE_HALF,
     )
     link = models.ForeignKey(
         Link,
@@ -146,7 +172,7 @@ class SlideshowBlock(BlockModel):
 reversion.register(SlideshowBlock)
 
 
-class Slideshow(ContentModel):
+class Slideshow(ContentBase):
     """Slideshow/carousel.
 
     Note from Tim: In the future you can extend slideshow model to include some
@@ -165,8 +191,6 @@ class Slideshow(ContentModel):
 
     block = models.ForeignKey(SlideshowBlock, related_name='content')
 
-    title = models.CharField(max_length=200, blank=True)
-    description = models.TextField(blank=True)
     slideshow = models.ManyToManyField(
         Image,
         related_name='slideshow',
@@ -258,7 +282,7 @@ class FeatureStyle(models.Model):
 reversion.register(FeatureStyle)
 
 
-class Feature(ContentModel):
+class Feature(ContentBase):
     """Feature Block title, description (plain text), picture, URL style
     Used where we are providing a some links that we want to feature.
     """
@@ -270,8 +294,6 @@ class Feature(ContentModel):
 
     block = models.ForeignKey(FeatureBlock, related_name='content')
 
-    title = models.TextField()
-    description = models.TextField(blank=True)
     picture = models.ForeignKey(
         Image,
         related_name='feature_picture',
