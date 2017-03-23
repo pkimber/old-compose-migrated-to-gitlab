@@ -9,30 +9,33 @@
 {% endblock sub_heading %}
 
 {% block content %}
+  <div class="container dash-area">
 
-  <ul class="nav nav-pills">
-    <li class="nav-item">
-      <a href="{{ url_option }}" class="nav-link">
-        <i class="fa fa-reply"></i>
-      </a>
-    </li>
-  </ul>
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a href="{{ url_option }}" class="nav-link">
+          <i class="fa fa-reply"></i>
+        </a>
+      </li>
+    </ul>
 
-  {% if category %}
+    {% if category %}
+      <div class="row">
+        <div class="col-12">
+          <div class="l-box">
+            <h3>{{ category.name }}</h3>
+          </div>
+        </div>
+      </div>
+    {% endif %}
     <div class="row">
       <div class="col-12">
         <div class="l-box">
-          <h3>{{ category.name }}</h3>
+          {% include 'block/_wizard_form.html' with submit='Choose' %}
+
         </div>
       </div>
     </div>
-  {% endif %}
-  <div class="row">
-    <div class="col-12">
-      <div class="l-box">
-        {% include 'block/_wizard_form.html' with submit='Choose' %}
-
-      </div>
-    </div>
+    
   </div>
 {% endblock content %}

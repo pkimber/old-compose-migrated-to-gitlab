@@ -2,26 +2,34 @@
 
 {% block sub_title %}
   {% if object %}
-    Update {{object.menu }} Item
+    Update
+    {{object.menu }}
+    Item
   {% else %}
     Create Menu Item
   {% endif %}
 {% endblock sub_title %}
 
 {% block sub_heading %}
-{% if object %}
-  Update {{object.menu }} Item
-{% else %}
-  Create Menu Item
-{% endif %}
+  {% if object %}
+    Update
+    {{object.menu }}
+    Item
+  {% else %}
+    Create Menu Item
+  {% endif %}
 {% endblock sub_heading %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-12">
-      <div class="l-box">
-        {% include '_form.html' %}
+  <div class="container dash-area">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="l-box">
+          {% include '_form.html' %}
+        </div>
       </div>
     </div>
+    
   </div>
 {% endblock content %}

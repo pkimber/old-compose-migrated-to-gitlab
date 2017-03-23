@@ -9,44 +9,48 @@
 {% endblock sub_heading %}
 
 {% block content %}
+  <div class="container dash-area">
 
-  <ul class="nav nav-pills">
-    <li class="nav-item">
-      <a href="{{ url_option }}" class="nav-link">
-        <i class="fa fa-reply"></i>
-      </a>
-    </li>
-  </ul>
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a href="{{ url_option }}" class="nav-link">
+          <i class="fa fa-reply"></i>
+        </a>
+      </li>
+    </ul>
 
-  <dl class="row l-box">
-    <dt class="col-12 col-sm-2">Title</dt>
-    <dd class="col-12 col-sm-10">{{ object.title|linebreaksbr }}</dd>
-    <dt class="col-12 col-sm-2">Description</dt>
-    <dd class="col-12 col-sm-10">{{ object.description|linebreaksbr }}</dd>
-    <dt class="col-12 col-sm-2">Link</dt>
-    <dd class="col-12 col-sm-10">{{ object.link }}</dd>
-    {% if object.style %}
-    <dt class="col-12 col-sm-2">Style</dt>
-    <dd class="col-12 col-sm-10">{{ object.style }}</dd>
-    {% endif %}
-  </dl>
-  <div class="row">
-    <div class="col-12">
-      <div class="l-box">
-        {% if object.is_pending_edited or object.is_pending_pushed %}
-          <p>
-            This content is published on the live site.
-            Clicking the 'Remove' button will remove it from your web site.
-          </p>
-        {% endif %}
+    <dl class="row l-box">
+      <dt class="col-12 col-sm-2">Title</dt>
+      <dd class="col-12 col-sm-10">{{ object.title|linebreaksbr }}</dd>
+      <dt class="col-12 col-sm-2">Description</dt>
+      <dd class="col-12 col-sm-10">{{ object.description|linebreaksbr }}</dd>
+      <dt class="col-12 col-sm-2">Link</dt>
+      <dd class="col-12 col-sm-10">{{ object.link }}</dd>
+      {% if object.style %}
+        <dt class="col-12 col-sm-2">Style</dt>
+        <dd class="col-12 col-sm-10">{{ object.style }}</dd>
+      {% endif %}
+    </dl>
+    <div class="row">
+      <div class="col-12">
+        <div class="l-box">
+          {% if object.is_pending_edited or object.is_pending_pushed %}
+            <p>
+              This content is published on the live site. Clicking the 'Remove' button will remove it
+              from your web site.
+            </p>
+          {% endif %}
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <div class="l-box">
-        {% include '_form.html' with legend='Are you sure you want to remove this content?' submit='Remove' %}
+    <div class="row">
+      <div class="col-12">
+        <div class="l-box">
+          {% include '_form.html' with legend='Are you sure you want to remove this content?'
+          submit='Remove' %}
+        </div>
       </div>
     </div>
+    
   </div>
 {% endblock content %}

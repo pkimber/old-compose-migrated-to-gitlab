@@ -9,13 +9,16 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-12">
-      <div class="l-box">
-        Remove '{{ object.section.name }}'
-        from '{{ object.template.template_name }}'
-        {% include '_form.html' with submit='Remove' %}
+  <div class="container dash-area">
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="l-box">
+          Remove '{{ object.section.name }}' from '{{ object.template.template_name }}'
+          {% include '_form.html' with submit='Remove' %}
+        </div>
       </div>
     </div>
+
   </div>
 {% endblock content %}

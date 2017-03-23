@@ -11,52 +11,54 @@
 {% endblock sub_heading %}
 
 {% block content %}
+  <div class="container dash-area">
 
-  <ul class="nav nav-pills">
-    {% include 'base/_back_to_settings.html' %}
-    <li class="nav-item">
-      <a href="{% url 'block.image.category.list' %}" class="nav-link">
-        <i class="fa fa-picture-o"></i>
-        Image Categories
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="{% url 'block.image.list.delete' %}" class="nav-link">
-        <i class="fa fa-trash-o"></i>
-        Delete Images
-      </a>
-    </li>
-  </ul>
+    <ul class="nav nav-pills">
+      {% include 'base/_back_to_settings.html' %}
+      <li class="nav-item">
+        <a href="{% url 'block.image.category.list' %}" class="nav-link">
+          <i class="fa fa-picture-o"></i>
+          Image Categories
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'block.image.list.delete' %}" class="nav-link">
+          <i class="fa fa-trash-o"></i>
+          Delete Images
+        </a>
+      </li>
+    </ul>
 
-  <div class="row">
-  {% for image in image_list %}
-    {% ifchanged image.category %}
-    <div class="col-12">
-      <div class="l-box alert-info mb-2 mt-2 bg-secondary text-white">
-        <b>
-          {% if image.category %}
-            {{ image.category.name }}
-          {% else %}
-            No Category
-          {% endif %}
-        </b>
-      </div>
+    <div class="row">
+      {% for image in image_list %}
+        {% ifchanged image.category %}
+        <div class="col-12">
+          <div class="l-box alert-info mb-2 mt-2 bg-secondary text-white">
+            <b>
+              {% if image.category %}
+                {{ image.category.name }}
+              {% else %}
+                No Category
+              {% endif %}
+            </b>
+          </div>
+        </div>
+        {% endifchanged %}
+        <div class="col-4 col-sm-3 col-md-2 col-lg-1">
+          <figure class="figure">
+            <img
+              class="figure-img img-fluid rounded"
+              src="{% thumbnail image.image 100x100 crop='center' %}">
+            <figcaption class="figure-caption">
+              <a href="{% url 'block.image.update' image.pk %}">
+                {{ image.title }}
+                <i class="fa fa-edit"></i>
+              </a>
+            </figcaption>
+          </figure>
+        </div>
+      {% endfor %}
     </div>
-    {% endifchanged %}
-    <div class="col-4 col-sm-3 col-md-2 col-lg-1">
-      <figure class="figure">
-        <img
-          class="figure-img img-fluid rounded"
-          src="{% thumbnail image.image 100x100 crop='center' %}">
-          <figcaption class="figure-caption">
-            <a href="{% url 'block.image.update' image.pk %}">
-              {{ image.title }}
-              <i class="fa fa-edit"></i>
-            </a>
-          </figcaption>
-      </figure>
-    </div>
-  {% endfor %}
+
   </div>
-
-  {% endblock content %}
+{% endblock content %}

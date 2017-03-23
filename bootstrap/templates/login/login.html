@@ -9,16 +9,20 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-12">
-      <div class="l-box">
-        {% include '_form.html' with submit='Log in' %}
-        <p>
-          <a href="{% url 'password_reset' %}">
-            Click here if you have forgotten your password...
-          </a>
-        </p>
+  <div class="container dash-area">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="l-box">
+          {% include '_form.html' with submit='Log in' %}
+          <p>
+            <a href="{% url 'password_reset' %}" class="pull-right">
+              Click here if you have forgotten your password...
+            </a>
+          </p>
+        </div>
       </div>
     </div>
+
   </div>
-{% endblock %}
+{% endblock content %}

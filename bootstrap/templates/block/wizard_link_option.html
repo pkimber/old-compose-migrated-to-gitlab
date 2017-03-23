@@ -11,112 +11,121 @@
 {% endblock sub_heading %}
 
 {% block content %}
+  <div class="container dash-area">
 
-  <ul class="nav nav-pills">
-    <li class="nav-item">
-    <a href="{{ url_page_design }}" class="nav-link">
-      <i class="fa fa-reply"></i>
-    </a>
-    </li>
-  </ul>
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a href="{{ url_page_design }}" class="nav-link">
+          <i class="fa fa-reply"></i>
+        </a>
+      </li>
+    </ul>
 
-  <div class="row">
-    <div class="col-12">
-      <div class="l-box">
-        <h3>What would you like to do?</h3>
-        {% if categories %}
-          <p>
-            Choose a link from one of these categories:
-          </p>
-          {% for category in categories %}
+    <div class="row">
+      <div class="col-12">
+        <div class="l-box">
+          <h3>What would you like to do?</h3>
+          {% if categories %}
+            <p>
+              Choose a link from one of these categories:
+            </p>
+            {% for category in categories %}
               <a href="{{ category.url }}" class="nav-link">
                 <i class="fa fa-link"></i>
                 {{ category.name }}
               </a>
-          {% endfor %}
-        {% endif %}
-        <p>
-          Choose from the whole library:
-        </p>
-        <a href="{{ url_choose }}" class="nav-link">
-          <i class="fa fa-link"></i>
-          Link Library
-        </a>
-        <p>
-          Or:
-        </p>
-        <a href="{{ url_external }}" class="nav-link">
-          <i class="fa fa-external-link"></i>
-          Create a link to a site on the internet
-        </a>
-        <a href="{{ url_page }}" class="nav-link">
-          <i class="fa fa-file-text-o"></i>
-          Create a link to a page on this site
-        </a>
-        <a href="{{ url_upload }}" class="nav-link">
-          <i class="fa fa-cloud-upload"></i>
-          Upload a document and link to it
-        </a>
-        {% if link %}
-          <p>
-            Maintenance:
-          </p>
-          <a href="{{ url_remove }}" class="nav-link">
-            <i class="fa fa-times"></i>
-            Remove the {{ field_name }} from your page
-          </a>
-        {% endif %}
-        {# Wizard.MULTI #}
-        {% if many_to_many.count %}
-          <p>
-            Maintenance:
-          </p>
-          <a href="{{ url_order }}" class="nav-link">
-            <i class="fa fa-arrow-up"></i>
-            Order links in your {{ field_name }}
-          </a>
-          <a href="{{ url_select }}" class="nav-link">
-            <i class="fa fa-times"></i>
-            Remove links from your {{ field_name }}
-          </a>
-        {% endif %}
-        <br>
-        <a href="{{ url_page_design }}" class="btn btn-primary">
-          <span style="color:white;">
-            <i class="fa fa-reply"></i>
-            Finish
-          </span>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <div class="l-box">
-        {# Wizard.SINGLE #}
-        {% if link %}
-          <h3>Current {{ field_name }}:</h3>
-          <i class="fa fa-link"></i>
-          {{ link.link_type_description }}:
-          {{ link.caption }}
-          {% if link.category.name %}
-            <small>({{ link.category.name }})</small>
+            {% endfor %}
           {% endif %}
-        {% endif %}
-        {# Wizard.MULTI #}
-        {% if many_to_many.count %}
-          <h3>Current {{ field_name }}:</h3>
-          {% for item in many_to_many %}
-            {{ item.order }}.
-            {{ item.link.link_type_description }}:
-            {{ item.link.caption }}
-            {% if item.link.category.name %}
-              <small>({{ item.link.category.name }})</small>
-            {% endif %}
-            <br>
-          {% endfor %}
-        {% endif %}
+          <p>
+            Choose from the whole library:
+          </p>
+          <a href="{{ url_choose }}" class="nav-link">
+            <i class="fa fa-link"></i>
+            Link Library
+          </a>
+          <p>
+            Or:
+          </p>
+          <a href="{{ url_external }}" class="nav-link">
+            <i class="fa fa-external-link"></i>
+            Create a link to a site on the internet
+          </a>
+          <a href="{{ url_page }}" class="nav-link">
+            <i class="fa fa-file-text-o"></i>
+            Create a link to a page on this site
+          </a>
+          <a href="{{ url_upload }}" class="nav-link">
+            <i class="fa fa-cloud-upload"></i>
+            Upload a document and link to it
+          </a>
+          {% if link %}
+            <p>
+              Maintenance:
+            </p>
+            <a href="{{ url_remove }}" class="nav-link">
+              <i class="fa fa-times"></i>
+              Remove the
+              {{ field_name }}
+              from your page
+            </a>
+          {% endif %}
+          {# Wizard.MULTI #}
+          {% if many_to_many.count %}
+            <p>
+              Maintenance:
+            </p>
+            <a href="{{ url_order }}" class="nav-link">
+              <i class="fa fa-arrow-up"></i>
+              Order links in your
+              {{ field_name }}
+            </a>
+            <a href="{{ url_select }}" class="nav-link">
+              <i class="fa fa-times"></i>
+              Remove links from your
+              {{ field_name }}
+            </a>
+          {% endif %}
+          <br>
+          <a href="{{ url_page_design }}" class="btn btn-primary">
+            <span style="color:white;">
+              <i class="fa fa-reply"></i>
+              Finish
+            </span>
+          </a>
+        </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="l-box">
+          {# Wizard.SINGLE #}
+          {% if link %}
+            <h3>Current
+              {{ field_name }}:</h3>
+            <i class="fa fa-link"></i>
+            {{ link.link_type_description }}:
+            {{ link.caption }}
+            {% if link.category.name %}
+              <small>({{ link.category.name }})</small>
+            {% endif %}
+          {% endif %}
+          {# Wizard.MULTI #}
+          {% if many_to_many.count %}
+            <h3>Current
+              {{ field_name }}:</h3>
+            {% for item in many_to_many %}
+              {{ item.order }}.
+              {{ item.link.link_type_description }}:
+              {{ item.link.caption }}
+              {% if item.link.category.name %}
+                <small>({{ item.link.category.name }})</small>
+              {% endif %}
+              <br>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
   </div>
 {% endblock content %}

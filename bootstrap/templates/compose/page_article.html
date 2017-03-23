@@ -15,26 +15,37 @@
 {% endblock header %}
 
 {% block content %}
-  {% include 'compose/_body.html' %}
-  {% if form %}
-    <div class="l-box">
-      {% include '_form.html' %}
-    </div>
-  {% endif %}
-  {# calendar from the booking app #}
-  {% if calendar %}
-    {% for c in calendar %}
+  <div class="container">
+
+    {% include 'compose/_body.html' %}
+
+    {% if form %}
       <div class="row">
-        {% for month in c %}
-          <div class="col-12">
-            <div class="l-box">
-              {{ month }}
-            </div>
+        <div class="col-12">
+          <div class="l-box">
+            {% include '_form.html' %}
           </div>
-        {% endfor %}
+        </div>
       </div>
-    {% endfor %}
-  {% endif %}
-  {% include 'compose/_news.html' %}
-  {% include 'compose/_card.html' %}
+    {% endif %}
+
+    {# calendar from the booking app #}
+    {% if calendar %}
+      {% for c in calendar %}
+        <div class="row">
+          {% for month in c %}
+            <div class="col">
+              <div class="l-box">
+                {{ month }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% include 'compose/_news.html' %}
+    {% include 'compose/_card.html' %}
+
+  </div>
 {% endblock content %}

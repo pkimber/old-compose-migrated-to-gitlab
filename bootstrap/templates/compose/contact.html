@@ -1,26 +1,28 @@
 {% extends 'web/base.html' %}
 
-{% load block_tags %}
-{% load staticfiles %}
-
 {% block content %}
-  {% include 'compose/_body_list.html' %}
-  <div class="row">
-    <div class="col-12">
-      <div class="l-box">
-        {% if design %}
-          <p>
-            The contact form will appear here on the live site
-            <a href="{% url 'enquiry.list' %}">
-              (<i class="fa fa-comments-o"></i>
-              click here to review enquiries).
-            </a>
-          </p>
-        {% else %}
-          {% include '_form.html' %}
-        {% endif %}
+  <div class="container dash-area">
+
+    {% include 'compose/_body_list.html' %}
+
+    <div class="row">
+      <div class="col-12">
+        <div class="l-box">
+          {% if design %}
+            <p>
+              The contact form will appear here on the live site
+              <a href="{% url 'enquiry.list' %}">
+                (<i class="fa fa-comments-o"></i>
+                click here to review enquiries).
+              </a>
+            </p>
+          {% else %}
+            {% include '_form.html' %}
+          {% endif %}
+        </div>
       </div>
     </div>
+
   </div>
 {% endblock content %}
 

@@ -9,58 +9,61 @@
 {% endblock sub_heading %}
 
 {% block content %}
+  <div class="container dash-area">
 
-  <ul class="nav nav-pills">
-    <li class="nav-item">
-      <a href="{% url 'block.link.list' %}" class="nav-link">
-        <i class="fa fa-reply"></i>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="{% url 'block.link.category.create' %}" class="nav-link">
-        <i class="fa fa-picture-o"></i>
-        Create link category
-      </a>
-    </li>
-  </ul>
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a href="{% url 'block.link.list' %}" class="nav-link">
+          <i class="fa fa-reply"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'block.link.category.create' %}" class="nav-link">
+          <i class="fa fa-picture-o"></i>
+          Create link category
+        </a>
+      </li>
+    </ul>
 
-  <div class="row">
-    <div class="col-12">
-      <div class="l-box">
-        <table class="table table-sm table-bordered">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for o in object_list %}
-              <tr valign="top">
-                <td>
-                  {% if o.deleted %}
-                    <strike>
-                      {{ o.name }}
-                    </strike>
-                  {% else %}
-                    <a href="{% url 'block.link.category.update' o.pk %}">
-                      <i class="fa fa-edit"></i>
-                      {{ o.name }}
-                    </a>
-                  {% endif %}
-                </td>
-                <td>
-                  {% if not o.deleted and not o.in_use %}
-                    <a href="{% url 'block.link.category.delete' o.pk %}">
-                      <i class="fa fa-trash-o"></i>
-                    </a>
-                  {% endif %}
-                </td>
+    <div class="row">
+      <div class="col-12">
+        <div class="l-box">
+          <table class="table table-sm table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Delete</th>
               </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {% for o in object_list %}
+                <tr valign="top">
+                  <td>
+                    {% if o.deleted %}
+                      <strike>
+                        {{ o.name }}
+                      </strike>
+                    {% else %}
+                      <a href="{% url 'block.link.category.update' o.pk %}">
+                        <i class="fa fa-edit"></i>
+                        {{ o.name }}
+                      </a>
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if not o.deleted and not o.in_use %}
+                      <a href="{% url 'block.link.category.delete' o.pk %}">
+                        <i class="fa fa-trash-o"></i>
+                      </a>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
+    
   </div>
 {% endblock content %}

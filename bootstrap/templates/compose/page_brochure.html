@@ -1,9 +1,5 @@
 {% extends 'web/base.html' %}
 
-{% load block_tags %}
-{% load static %}
-{% load thumbnail %}
-
 {% block sub_title %}
   {{ page.name }}
 {% endblock sub_title %}
@@ -12,66 +8,8 @@
   {{ page.name }}
 {% endblock sub_heading %}
 
-
 {% block content %}
-  {% for g in gallery_list %}
-    {% if g.title or g.description %}
-      <div class="row">
-        <div class="col-12">
-          <div class="l-box">
-            {% if g.title %}
-              <h4>{{ g.title }}</h4>
-            {% endif %}
-            {% if g.description %}
-              {% autoescape off %}
-                {{ g.description }}
-              {% endautoescape %}
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    {% endif %}
-    <div class="row my-gallery" itemscope itemtype="http://schema.org/imagegallery">
-      {% for item in g.ordered_slideshow %}
-        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-          <figure itemprop="associatedmedia" itemscope itemtype="http://schema.org/imageobject">
-            <a href="{{ MEDIA_URL }}{{ item.image.image }}" itemprop="contenturl" data-size="{{ item.image.image.width }}x{{ item.image.image.height }}">
-              <img
-                itemprop="thumbnail"
-                alt="{{ item.image.title }}"
-                title="{{ item.image.title }}"
-
-                src="{% thumbnail item.image.image '200x0' crop='auto' %}">
-            </a>
-            <figcaption itemprop="caption description">{{ item.image.title }}</figcaption>
-          </figure>
-        </div>
-      {% endfor %}
-    </div>
-    {% if design %}
-    <div class="row">
-      <div class="col-12">
-        <div class="l-box setting-buttons">
-          {% block_moderate g request_path=request_path %}
-        </div>
-      </div>
-    </div>
-    {% endif %}
-  {% endfor %}
-  {% if design %}
-    <div class="row">
-      <div class="col-12">
-        <div class="l-box setting-buttons">
-        {% block_add gallery_create_url 'Gallery' request_path=request_path %}
-        </div>
-      </div>
-    </div>
-  {% endif %}
-  {% include 'base/_photoswipe.html' %}
+  <div class="container-fluid">
+    {% include 'compose/_brochure.html' %}
+  </div>
 {% endblock content %}
-
-{% block script_extra %}
-  {{ block.super }}
-  {% include 'base/_slider.html' %}
-  {% include 'base/_photoswipe.js.html' %}
-{% endblock script_extra %}

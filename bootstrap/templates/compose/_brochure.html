@@ -1,0 +1,64 @@
+{% load block_tags %}
+{% load thumbnail %}
+
+<div class="card-group">
+  {% for b in brochure_list %}
+
+    <div class="{{ b.style.css_class_name }}">
+
+      {% if b.picture %}
+        <img
+          alt="{{ b.picture.title }}"
+          title="{{ b.picture.title }}"
+          class="card-img"
+          src="{% thumbnail b.picture.image 1900x0 crop='false' %}">
+      {% endif %}
+
+
+      <div class="card-block {% if 'img-overlay' in b.style.css_class_name %}card-img-overlay{% endif %} m-5 w-50">
+
+        {% if b.title %}
+        <{{ b.heading_level }} class="card-title pt-5 pb-3">
+        {{ b.title }}
+        </{{ b.heading_level }}>
+        {% endif %}
+
+        {% if b.description %}
+          <div class="card-text lead pt-5 pb-3">
+            {% autoescape off %}
+              {{ b.description }}
+            {% endautoescape %}
+          </div>
+        {% endif %}
+
+        {% if b.link %}
+          <a href="{{ b.link.url }}" class="btn btn-primary btn-lg card-link">
+            {{ b.link.title }}
+          </a>
+        {% endif %}
+
+      </div>
+
+
+
+      {% if design %}
+        <div class="card-footer">
+          {% block_moderate b request_path=request_path %}
+        </div>
+      {% endif %}
+
+    </div>
+
+
+  {% endfor %}
+</div>
+
+{% if design %}
+  <div class="row">
+    <div class="col-12">
+      <div class="l-box setting-buttons">
+        {% block_add card_create_url 'Brochure' request_path=request_path %}
+      </div>
+    </div>
+  </div>
+{% endif %}

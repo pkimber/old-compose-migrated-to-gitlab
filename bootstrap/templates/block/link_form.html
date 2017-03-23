@@ -7,16 +7,21 @@
 {% endblock sub_title %}
 
 {% block sub_heading %}
-  Update Link Detail {% if object %}{{ object.title }}{% endif %}
+  Update Link Detail
+  {% if object %}{{ object.title }}{% endif %}
 {% endblock sub_heading %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-12">
-      <div class="l-box">
-        {% include '_form.html' %}
-        <br>
+  <div class="container dash-area">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="l-box">
+          {% include '_form.html' %}
+          <br>
+        </div>
       </div>
     </div>
+    
   </div>
 {% endblock content %}

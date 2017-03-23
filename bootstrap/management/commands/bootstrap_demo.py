@@ -250,30 +250,27 @@ class Command(BaseCommand):
         # sub_menu_item.save()
         print("Menu created")
 
-
         row_break_style = self.init_featurestyle('row_break', 'col-12 w-100')
         jumbotron_style = self.init_featurestyle('jumbotron', 'jumbotron')
         card_style = self.init_featurestyle('card', 'card')
         card_light_img_overlay_style = self.init_featurestyle('card-light-img-overlay', 'card img-overlay')
-        card_light_img_overlay_style = self.init_featurestyle('card-dark-img-overlay', 'card card-inverse')
+        card_dark_img_overlay_style = self.init_featurestyle('card-dark-img-overlay', 'card img-overlay card-inverse')
         card_primary_style = self.init_featurestyle('card-primary', 'card card-inverse card-primary')
         card_success_style = self.init_featurestyle('card-success', 'card card-inverse card-success')
         card_info_style = self.init_featurestyle('card-info', 'card card-info')
         card_warning_style = self.init_featurestyle('card-warning', 'card card-warning')
         card_danger_style = self.init_featurestyle('card-danger', 'card card-inverse card-danger')
-        brochure_style = self.init_featurestyle('brochure', 'card text-center align-middle')
-
-        plan_style = self.init_featurestyle('plan item', 'card text-center')
-        plan_row_head_style = self.init_featurestyle('plan row header', 'card card-info text-center')
-        plan_corner_style = self.init_headerstyle('plan corner', 'col card text-center')
-        plan_column_head_style = self.init_headerstyle('plan column header', 'col card card-primary text-center')
 
         card_style = {
             'name': 'card_style',
             'class': 'quicklist',
-            'data': [card_light_img_overlay_style, card_light_img_overlay_style,
-                    card_primary_style, card_success_style, card_info_style,
+            'data': [card_primary_style, card_success_style, card_info_style,
                     card_warning_style, card_danger_style, card_style,],
+        }
+        overlay_style = {
+            'name': 'overlay_style',
+            'class': 'quicklist',
+            'data': [card_light_img_overlay_style, card_dark_img_overlay_style,],
         }
         print("Styles created")
 
@@ -318,6 +315,7 @@ class Command(BaseCommand):
                                         inspirational_image,
                                         page_link,
                                         card_style,
+                                        overlay_style,
                                         ])
 
         for ds in my_data_set:
@@ -329,7 +327,10 @@ class Command(BaseCommand):
                                         css_width=settings.CSS_WIDTH_THIRDS,
                                         style=ds['card_style'],
                                         )
-            art.picture = ds['inspirational_image'] if ds['inspirational_image'] else None
+            if not ds['inspirational_image']:
+                style=ds['overlay_style']
+            else:
+                art.picture = ds['inspirational_image'] 
             art.link = ds['page_link'] if ds['page_link'] else None
             art.save()
             art.block.publish(staff_user)
@@ -360,6 +361,10 @@ class Command(BaseCommand):
 
         print("Home Page created")
 
+        plan_style = self.init_featurestyle('plan item', 'card text-center')
+        plan_row_head_style = self.init_featurestyle('plan row header', 'card card-info text-center')
+        plan_corner_style = self.init_headerstyle('plan corner', 'col card text-center')
+        plan_column_head_style = self.init_headerstyle('plan column header', 'col card card-primary text-center')
 
         plan = {
             'headings': ['Compare plans', 'Free', 'Bronze', 'Silver', 'Golden', 'Diamond',],
@@ -422,7 +427,78 @@ class Command(BaseCommand):
             art.block.publish(staff_user)
             #next option k, v
 
-        print("Plans created")
+        print("Plans Page created")
+
+        # HOME SLIDE
+        maker = IMakeData(1)
+        panel_count = 0
+
+        for gallery_name, gallery in images.items():
+            title = k.replace('_', ' ').title()
+            art = Slideshow.objects.create_slideshow(
+                                        page_gallery_gallery_section,
+                                        H2,
+                                        gallery_name,
+                                        'Images from {}'.format(gallery_name),
+                                        css_width=settings.CSS_WIDTH_FULL,
+                                        )
+            art.save()
+            self.add_gallery_images(art, gallery)
+            art.block.publish(staff_user)
+
+        print("Gallery Page created")
+
+
+        brochure_style = self.init_featurestyle('brochure image', 'card img-overlay card-inverse align-middle')
+        brochure_primary = self.init_featurestyle('brochure primary', 'card card-primary card-inverse align-middle')
+        brochure_success = self.init_featurestyle('brochure success', 'card card-success card-inverse align-middle')
+        brochure_info = self.init_featurestyle('brochure info', 'card card-info align-middle')
+        brochure_white = self.init_featurestyle('brochure white', 'card align-middle')
+
+
+        brochure_image = {
+            'name': 'brochure_image',
+            'class': 'quicklist',
+            'splutter': 70,
+            'data': images['bg'],
+        }
+
+        coloured_brochure_style = {
+                        'name': 'coloured_brochure_style',
+                        'class': 'quicklist',
+                        'data': [brochure_primary, brochure_white,
+                                brochure_success, brochure_info],
+        }
+
+        maker = IMakeData(12)
+        my_data_set = maker.get_dataset([
+                                        news_title,
+                                        short_blurb,
+                                        brochure_image,
+                                        coloured_brochure_style,
+                                        page_link,
+                                        ])
+        cnt = 1
+        for ds in my_data_set:
+            art = Feature.objects.create_feature(
+                                        page_brochure_brochure_section,
+                                        H2,
+                                        ds['news_title'],
+                                        ds['short_blurb'],
+                                        css_width=settings.CSS_WIDTH_FULL,
+                                        style=brochure_style,
+                                        )
+            if not ds['brochure_image']:
+                art.style = ds['coloured_brochure_style']
+            else:
+                art.picture = ds['brochure_image']
+            art.link = ds['page_link'] if ds['page_link'] else None
+            art.save()
+            art.block.publish(staff_user)
+            cnt += 1
+            #next article
+
+        print("Brochure Page created")
 
 
 
