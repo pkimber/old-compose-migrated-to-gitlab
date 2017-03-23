@@ -10,6 +10,7 @@ from base.model_utils import TimeStampedModel
 from block.models import (
     BlockModel,
     ContentModel,
+    ContentManager,
     Image,
     Link,
     Wizard,
@@ -19,12 +20,14 @@ H1 = 'h1'
 H2 = 'h2'
 H3 = 'h3'
 H4 = 'h4'
+H5 = 'h5'
 
 HEADING_LEVELS = (
     (H1, H1),
     (H2, H2),
     (H3, H3),
     (H4, H4),
+    (H5, H5),
 )
 
 SECTION_BODY = 'body'
@@ -58,6 +61,34 @@ class ArticleBlock(BlockModel):
 reversion.register(ArticleBlock)
 
 
+class ArticleManager(ContentManager):
+
+    def create_block(self, panelled_page_section):
+        panel_block = ArticleBlock(page_section=panelled_page_section)
+        panel_block.save()
+        return panel_block
+
+    def create_article(self,
+                    page_section,
+                    heading_level,
+                    title,
+                    description,
+                    css_width=settings.CSS_WIDTH_HALFBIG,
+                    article_type=settings.CSS_TEXT_LEFT,
+                    image_size=settings.CSS_IMAGE_SIZE_HALF):
+        obj = self.model(
+                    heading_level=heading_level,
+                    title=title,
+                    description=description,
+                    article_type=article_type,
+                    css_width=css_width,
+                    image_size=image_size,)
+        obj.block = self.create_block(page_section)
+        obj.order = self.model.objects.next_order(obj.block)
+        obj.save()
+        return obj
+
+
 class Article(ContentBase):
 
     block = models.ForeignKey(ArticleBlock, related_name='content')
@@ -82,6 +113,8 @@ class Article(ContentBase):
         related_name='article_picture',
         blank=True, null=True
     )
+
+    objects = ArticleManager()
 
     class Meta:
         # cannot put 'unique_together' on abstract base class
@@ -170,6 +203,30 @@ class SlideshowBlock(BlockModel):
 reversion.register(SlideshowBlock)
 
 
+class SlideshowManager(ContentManager):
+
+    def create_block(self, panelled_page_section):
+        panel_block = SlideshowBlock(page_section=panelled_page_section)
+        panel_block.save()
+        return panel_block
+
+    def create_slideshow(self,
+                page_section,
+                heading_level,
+                title,
+                description,
+                css_width=settings.CSS_WIDTH_HALFBIG,):
+        obj = self.model(
+                    heading_level=heading_level,
+                    title=title,
+                    description=description,
+                    css_width=css_width)
+        obj.block = self.create_block(page_section)
+        obj.order = self.model.objects.next_order(obj.block)
+        obj.save()
+        return obj
+
+
 class Slideshow(ContentBase):
     """Slideshow/carousel.
 
@@ -195,6 +252,8 @@ class Slideshow(ContentBase):
         related_name='slideshow',
         through='SlideshowImage'
     )
+
+    objects = SlideshowManager()
 
     class Meta:
         # cannot put 'unique_together' on abstract base class
@@ -264,6 +323,32 @@ class FeatureBlock(BlockModel):
 reversion.register(FeatureBlock)
 
 
+class FeatureManager(ContentManager):
+
+    def create_block(self, panelled_page_section):
+        panel_block = FeatureBlock(page_section=panelled_page_section)
+        panel_block.save()
+        return panel_block
+
+    def create_feature(self,
+                page_section,
+                heading_level,
+                title,
+                description,
+                css_width=settings.CSS_WIDTH_HALFBIG,
+                style=None):
+        obj = self.model(
+                    heading_level=heading_level,
+                    title=title,
+                    css_width=css_width,
+                    description=description,
+                    style=style)
+        obj.block = self.create_block(page_section)
+        obj.order = self.model.objects.next_order(obj.block)
+        obj.save()
+        return obj
+
+
 class FeatureStyle(models.Model):
     """Select Feature CSS class."""
 
@@ -290,6 +375,7 @@ class Feature(ContentBase):
     SECTION_B = 'feature_b'
     SECTION_C = 'feature_c'
     SECTION_D = 'feature_d'
+    SECTION_E = 'brochure'
 
     block = models.ForeignKey(FeatureBlock, related_name='content')
 
@@ -304,6 +390,8 @@ class Feature(ContentBase):
         blank=True, null=True
     )
     style = models.ForeignKey(FeatureStyle, blank=True, null=True)
+
+    objects = FeatureManager()
 
     class Meta:
         # cannot put 'unique_together' on abstract base class
@@ -385,6 +473,21 @@ class HeaderBlock(BlockModel):
 reversion.register(HeaderBlock)
 
 
+class HeaderManager(ContentManager):
+
+    def create_block(self, panelled_page_section):
+        panel_block = HeaderBlock(page_section=panelled_page_section)
+        panel_block.save()
+        return panel_block
+
+    def create_header(self, page_section, title, style=None):
+        obj = self.model(title=title, style=style)
+        obj.block = self.create_block(page_section)
+        obj.order = self.model.objects.next_order(obj.block)
+        obj.save()
+        return obj
+
+
 class Header(ContentModel):
     """Header Block - title and style
     Used for heading for a section.
@@ -398,6 +501,8 @@ class Header(ContentModel):
 
     title = models.TextField()
     style = models.ForeignKey(HeaderStyle, blank=True, null=True)
+
+    objects = HeaderManager()
 
     class Meta:
         # cannot put 'unique_together' on abstract base class

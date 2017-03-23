@@ -17,10 +17,10 @@ def get_readme():
             return read_file_into_string(name)
     return ''
 
-
 setup(
     name='kb-compose',
-    packages=['compose', 'compose.management', 'compose.management.commands', 'compose.tests', 'compose.migrations', 'compose.urls'],
+    packages=['compose', 'compose.management', 'compose.management.commands', 'compose.tests', 'compose.migrations', 'compose.urls',
+            'bootstrap', 'bootstrap.management', 'bootstrap.management.commands', 'bootstrap.tests',],
     package_data={
         'compose': [
             'static/*.*',
@@ -30,6 +30,20 @@ setup(
             'static/compose/js/*.*',
             'templates/*.*',
             'templates/compose/*.*',
+        ],
+        'bootstrap': [
+            'static/*.*',
+            'static/bootstrap/*.*',
+            'static/bootstrap/css/*.*',
+            'static/bootstrap/js/*.*',
+            'templates/*.*',
+            'templates/base/*.*',
+            'templates/block/*.*',
+            'templates/compose/*.*',
+            'templates/dash/*.*',
+            'templates/login/*.*',
+            'templates/project/*.*',
+            'templates/web/*.*',
         ],
     },
     version='0.0.30',

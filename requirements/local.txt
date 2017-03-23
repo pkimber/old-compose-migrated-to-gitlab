@@ -4,6 +4,7 @@
 -e ../block
 -e ../login
 -e ../mail
+-e ../ineeddata
 django-debug-toolbar
 django_extensions
 factory-boy

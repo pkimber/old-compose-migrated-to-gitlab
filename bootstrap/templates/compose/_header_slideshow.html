@@ -23,7 +23,7 @@
               alt="{{ item.image.title }}"
               title="{{ item.image.title }}"
               class="d-block img-fluid"
-              src="{% thumbnail item.image.image 3681x664 autocrop background %}">
+              src="{% thumbnail item.image.image 2400x700 crop='100,' upscale=True %}">
             <div class="carousel-caption d-none d-md-block">
               <h3>{{ item.image.title }}</h3>
               <p>{{ item }}</p>

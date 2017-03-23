@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from django_ajax.decorators import ajax
 from django.core.urlresolvers import reverse
 from bootstrap.models import *

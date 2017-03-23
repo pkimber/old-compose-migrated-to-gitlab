@@ -145,6 +145,7 @@ LOCAL_APPS = (
     'base',
     'block',
     'compose',
+    'imakedata',
     'login',
     'mail',
 )
@@ -195,6 +196,7 @@ SENDFILE_BACKEND = 'sendfile.backends.development'
 SENDFILE_ROOT = 'media-private'
 
 
+CSS_WIDTH_AUTO = 'col'
 CSS_WIDTH_HALFBIG = 'col-12 col-md-6'
 CSS_WIDTH_FULL = 'col-12'
 CSS_WIDTH_THIRDORSMALLER = 'col-12 col-sm-4 col-md-3'
@@ -202,6 +204,7 @@ CSS_WIDTH_HALFORSMALLER = 'col-12 col-sm-6 col-md-4 col-lg-3'
 CSS_WIDTH_THIRDS = 'col-12 col-sm-6 col-md-4'
 
 CSS_WIDTHS = (
+    (CSS_WIDTH_AUTO, 'Auto'),
     (CSS_WIDTH_HALFBIG, 'Half or Bigger'),
     (CSS_WIDTH_FULL, 'Full Width'),
     (CSS_WIDTH_THIRDORSMALLER, 'Third or Smaller'),

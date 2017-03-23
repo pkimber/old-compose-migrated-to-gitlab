@@ -6,49 +6,80 @@
   {% for c in header_a_list %}
 
   <div{% if c.css_class_name %} class="{{ c.css_class_name }}"{% endif %}>
-    {{ c.title }}
+
+    <div class="card-block">
+
+      {% if c.title %}
+      <h3 class="card-title align-middle">
+        {{ c.title }}
+      </h3>
+      {% endif %}
+
+    </div>
+
+
     {% if design %}
     <div class="l-box setting-buttons">
       {% block_moderate c request_path=request_path %}
     </div>
     {% endif %}
+
   </div>
 
-  {% empty %}
-    {% if design %}
-    <div class="col-12">
-      <div class="l-box setting-buttons">
-        {% block_add header_a_create_url 'Header' request_path=request_path %}
-      </div>
-    </div>
-    {% endif %}
   {% endfor %}
+
+  {% if design %}
+  <div class="col-12">
+    <div class="l-box setting-buttons">
+      {% block_add header_a_create_url 'Header' request_path=request_path %}
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+
+
+<div class="row">
 
   {% for c in feature_a_list %}
 
-  <div{% if c.css_class_name %} class="{{ c.css_class_name }}"{% endif %}>
+  <div class="{% if c.css_width %} {{ c.css_width }}{% endif %}{% if c.css_class_name %} {{ c.css_class_name }}{% endif %}">
 
     {% if c.picture %}
       {% if c.url %}<a href="{{ c.url }}" {% ifstartswith c.url 'http' %}target="_blank"{% endifstartswith %}>{% endif %}
         <img
-          alt="{{ c.title }}"
+          alt="{{ c.picture.title }}"
           title="{{ c.picture.title }}"
           class="img-fluid mx-auto d-block"
           src="{% thumbnail c.picture 460x277 %}"  >
       {% if c.url %}</a>{% endif %}
     {% endif %}
 
-    <{{ c.heading_level }}>
-      {% if c.url %}
-        <a href="{{ c.url }}" {% ifstartswith c.url 'http' %}target="_blank"{% endifstartswith %}>
-      {% endif %}{{ c.title }}{% if c.url %}</a>{% endif %}
-    </{{ c.heading_level }}>
+    {% if c.title or c.description or c.url %}
+    <div class="card-block align-middle">
 
-    <p>
-      {% autoescape off %}
-        {{ c.description }}
-      {% endautoescape %}
-    </p>
+      {% if c.title %}
+      <{{ c.heading_level|default:'h4' }} class="card-title">
+        {{ c.title }}
+      </{{ c.heading_level }}>
+      {% endif %}
+
+      {% if c.description %}
+      <p class="card-text align-middle">
+        {% autoescape off %}
+          {{ c.description }}
+        {% endautoescape %}
+      </p>
+      {% endif %}
+
+      {% if c.url %}
+      <a href="{{ c.url }}" {% ifstartswith c.url 'http' %}target="_blank"{% endifstartswith %}>
+      More
+      </a>
+      {% endif %}
+
+    </div>
+    {% endif %}
 
     {% if design %}
       <div class="l-box setting-buttons">
