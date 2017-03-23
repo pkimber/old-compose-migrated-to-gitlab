@@ -4,7 +4,7 @@ set -e
 # treat unset variables as an error when substituting.
 set -u
 
-# py.test -x -s
+py.test -x -s
 touch temp.db && rm temp.db
 django-admin.py migrate --noinput
 django-admin.py demo_data_login
