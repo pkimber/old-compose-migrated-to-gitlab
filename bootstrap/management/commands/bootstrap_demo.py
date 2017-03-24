@@ -22,14 +22,12 @@ from block.models import (
 )
 from compose.models import *
 from imakedata.imakedata import IMakeData
-from imakedata.definition.field.marketing import tweet, description, short_blurb, news_title
-from imakedata.definition.field.business import (
-    company_name,
-    company_address,
-    company_email,
-    company_web,
-    company_phone,
-)
+from imakedata.model.int import in_3
+from imakedata.model.marketing import tweet, description, short_blurb, news_title
+from imakedata.model.business import business_model
+
+maker = IMakeData(1)
+biz = maker.get_dataset(business_model + [tweet])[0]
 
 heading_level = {
     'name': 'heading_level',
@@ -168,8 +166,8 @@ class Command(BaseCommand):
         inspirational_image = {
             'name': 'inspirational_image',
             'class': 'quicklist',
-            'splutter': 20,
-            'data': images['inspirational'],
+            'splutter': 30,
+            'data': images['inspirational'] + images['people'],
         }
         print("Images imported")
 
@@ -225,7 +223,21 @@ class Command(BaseCommand):
         }
         print("Links created")
 
-        menu = Menu(slug='main', title='KB Software', navigation=True)
+
+        maker = IMakeData(12)
+        my_data_set = maker.get_dataset([
+                                        heading_level,
+                                        news_title,
+                                        short_blurb,
+                                        css_width,
+                                        text_position,
+                                        image_size,
+                                        iconic_image,
+                                        page_link,
+                                        ])
+        cnt = 1
+
+        menu = Menu(slug='main', title=biz['company_name'], navigation=True)
         menu.save()
         feature_item = MenuItem(menu=menu, slug='feature_link',
                             title='Chart', order=1, link=feature_link)
@@ -250,31 +262,12 @@ class Command(BaseCommand):
         # sub_menu_item.save()
         print("Menu created")
 
+
         row_break_style = self.init_featurestyle('row_break', 'col-12 w-100')
         jumbotron_style = self.init_featurestyle('jumbotron', 'jumbotron')
-        card_style = self.init_featurestyle('card', 'card')
-        card_light_img_overlay_style = self.init_featurestyle('card-light-img-overlay', 'card img-overlay')
-        card_dark_img_overlay_style = self.init_featurestyle('card-dark-img-overlay', 'card img-overlay card-inverse')
-        card_primary_style = self.init_featurestyle('card-primary', 'card card-inverse card-primary')
-        card_success_style = self.init_featurestyle('card-success', 'card card-inverse card-success')
-        card_info_style = self.init_featurestyle('card-info', 'card card-info')
-        card_warning_style = self.init_featurestyle('card-warning', 'card card-warning')
-        card_danger_style = self.init_featurestyle('card-danger', 'card card-inverse card-danger')
-
-        card_style = {
-            'name': 'card_style',
-            'class': 'quicklist',
-            'data': [card_primary_style, card_success_style, card_info_style,
-                    card_warning_style, card_danger_style, card_style,],
-        }
-        overlay_style = {
-            'name': 'overlay_style',
-            'class': 'quicklist',
-            'data': [card_light_img_overlay_style, card_dark_img_overlay_style,],
-        }
         print("Styles created")
 
-        # HOME ARTICLES
+
         maker = IMakeData(12)
         my_data_set = maker.get_dataset([
                                         heading_level,
@@ -304,8 +297,31 @@ class Command(BaseCommand):
             cnt += 1
             #next article
 
+        card_style = self.init_featurestyle('card', 'card')
+        card_light_img_overlay_style = self.init_featurestyle('card light img overlay', 'card img-overlay')
+        card_dark_img_overlay_style = self.init_featurestyle('card dark img overlay', 'card img-overlay card-inverse')
+        card_primary_style = self.init_featurestyle('card primary', 'card card-inverse card-primary')
+        card_success_style = self.init_featurestyle('card success', 'card card-inverse card-success')
+        card_info_style = self.init_featurestyle('card info', 'card card-info')
+        card_warning_style = self.init_featurestyle('card warning', 'card card-warning')
+        card_danger_style = self.init_featurestyle('card danger', 'card card-inverse card-danger')
 
-        # HOME CARDS
+        card_style = {
+            'name': 'card_style',
+            'class': 'quicklist',
+            'data': [card_primary_style, card_success_style, card_info_style,
+                    card_warning_style, card_danger_style, card_style,],
+        }
+        overlay_style = {
+            'name': 'overlay_style',
+            'class': 'quicklist',
+            'data': [card_light_img_overlay_style, card_dark_img_overlay_style,],
+        }
+        overlay_style = {
+            'name': 'overlay_style',
+            'class': 'quicklist',
+            'data': [card_light_img_overlay_style, card_dark_img_overlay_style,],
+        }
         maker = IMakeData(9)
         panel_count = 0
         my_data_set = maker.get_dataset([
@@ -316,6 +332,7 @@ class Command(BaseCommand):
                                         page_link,
                                         card_style,
                                         overlay_style,
+                                        in_3,
                                         ])
 
         for ds in my_data_set:
@@ -327,16 +344,14 @@ class Command(BaseCommand):
                                         css_width=settings.CSS_WIDTH_THIRDS,
                                         style=ds['card_style'],
                                         )
-            if not ds['inspirational_image']:
-                style=ds['overlay_style']
-            else:
-                art.picture = ds['inspirational_image'] 
+            if ds['inspirational_image']:
+                art.picture = ds['inspirational_image']
+                if ds['in_3'] == 1:
+                    art.style = ds['overlay_style']
             art.link = ds['page_link'] if ds['page_link'] else None
             art.save()
             art.block.publish(staff_user)
 
-
-        # HOME SLIDE
         maker = IMakeData(1)
         panel_count = 0
         my_data_set = maker.get_dataset([
@@ -429,17 +444,17 @@ class Command(BaseCommand):
 
         print("Plans Page created")
 
-        # HOME SLIDE
+
         maker = IMakeData(1)
         panel_count = 0
 
         for gallery_name, gallery in images.items():
-            title = k.replace('_', ' ').title()
+            title = gallery_name.replace('_', ' ').title()
             art = Slideshow.objects.create_slideshow(
                                         page_gallery_gallery_section,
                                         H2,
-                                        gallery_name,
-                                        'Images from {}'.format(gallery_name),
+                                        title,
+                                        'Images from {}:'.format(title),
                                         css_width=settings.CSS_WIDTH_FULL,
                                         )
             art.save()
@@ -486,11 +501,10 @@ class Command(BaseCommand):
                                         ds['news_title'],
                                         ds['short_blurb'],
                                         css_width=settings.CSS_WIDTH_FULL,
-                                        style=brochure_style,
+                                        style=ds['coloured_brochure_style'],
                                         )
-            if not ds['brochure_image']:
-                art.style = ds['coloured_brochure_style']
-            else:
+            if ds['brochure_image']:
+                art.style = brochure_style
                 art.picture = ds['brochure_image']
             art.link = ds['page_link'] if ds['page_link'] else None
             art.save()
@@ -501,5 +515,34 @@ class Command(BaseCommand):
         print("Brochure Page created")
 
 
+        ft = HeaderFooter.load()
+        ft.company_name = biz['company_name']
+        ft.footer_left_header = 'VAT'
+        ft.footer_left = """
+            <p> No GB 111 2323 99</p>
+            """
+        ft.footer_right_header = 'Mission'
+        ft.footer_right = biz['tweet']
+        ft.company_address =  '{}, {}, {}, {}, {} {}'.format(
+                                                            biz['company_address1'],
+                                                            biz['company_address2'],
+                                                            biz['company_geo_location']['city'],
+                                                            biz['company_geo_location']['region'],
+                                                            biz['company_geo_location']['country'],
+                                                            biz['company_post_code'],
+                                                        )
+        ft.company_phone = biz['company_phone']
+        ft.company_fax = biz['company_fax']
+        ft.company_email = biz['company_email']
+        ft.company_hours = 'Mon - Thur 9am - 5pm (excl Bank Holidays) & Fri 9am - 4pm.'
+        ft.google_verification_code = ''
+        ft.google_analytics_code = 'UA-12345678-1'
+        ft.google_map_long = biz['company_geo_location']['long']
+        ft.google_map_lat = biz['company_geo_location']['lat']
+        ft.google_map_zoom = 15
+        ft.url_twitter = 'http://twitter.com/{}'.format(biz['company_slug'])
+        ft.url_linkedin = 'http://linkedin.com/{}'.format(biz['company_slug'])
+        ft.url_facebook = 'http://facebook.com/{}'.format(biz['company_slug'])
+        ft.save()
 
         print("Content created")

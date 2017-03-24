@@ -1,27 +1,19 @@
 {% if not c.url_order_up == '#' %}
-
 <a
   class="btn btn-outline-primary btn-sm{% if c.url_order_up == '#' %} disabled{%endif%}"
   href="{{ c.url_order_up }}{% if request_path %}?next={{ request_path }}{% endif %}"
   title="Move {{ caption }} Up">
   <i class="fa fa-arrow-up"></i>
 </a>
-
 {% endif %}
 
-<!--
-<span class="h6">{# caption #}#{# c.order #}</span>
--->
-
 {% if not c.url_order_down == '#' %}
-
 <a
   class="btn btn-outline-primary btn-sm{% if c.url_order_down == '#' %} disabled{%endif%}"
   href="{{ c.url_order_down }}{% if request_path %}?next={{ request_path }}{% endif %}"
   title="Move {{ caption }} Down">
   <i class="fa fa-arrow-down"></i>
 </a>
-
 {% endif %}
 
 {% if c.is_pending_added or c.is_pending_edited %}

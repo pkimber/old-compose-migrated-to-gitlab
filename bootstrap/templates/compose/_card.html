@@ -2,75 +2,73 @@
 {% load thumbnail %}
 
 <div class="row">
-
-  {% for b in card_list %}
-      <div class="{{ b.css_width }}">
-        <div class="{{ b.style.css_class_name }}">
+  <div class="card-columns">
+    {% for b in card_list %}
+      <div class="{{ b.style.css_class_name }}">
 
         {% if b.picture and not b.article_type == 'hidden' and not b.article_type == 'w-100 mb-2 mt-3' %}
-        <img
-          alt="{{ b.picture.title }}"
-          title="{{ b.picture.title }}"
-          class="card-img {% if not 'img-overlay' in b.style.name %}card-img-top img-fluid{% endif %}"
-          {% if not 'img-overlay' in b.style.name %}
-          src="{% thumbnail b.picture.image 1200x0 crop='false' %}"
+          <img
+            alt="{{ b.picture.title }}"
+            title="{{ b.picture.title }}"
+            class="card-img {% if not 'img-overlay' in b.style.name %}card-img-top img-fluid{% endif %}"
+            {% if not 'img-overlay' in b.style.name %}
+            src="{% thumbnail b.picture.image 1200x0 crop='false' %}"
+            {% else %}
+            src="{% thumbnail b.picture.image 600x0 crop='smart' %}"
+            {% endif %}>
+        {% endif %}
+        <!-- #### {{ b.style.name }} -->
+        <div
+          {% if 'img-overlay' in b.style.name %}
+          class="card-block card-img-overlay"
           {% else %}
-          src="{% thumbnail b.picture.image 600x0 crop='smart' %}"
+          class="card-block"
           {% endif %}>
-        {% endif %}
-
-
-        {% if 'img-overlay' in b.style.name %}
-        <div class="card-block card-img-overlay">
-        {% else %}
-        <div class="card-block">
-        {% endif %}
 
           <{{ b.heading_level }} class="card-title">{{ b.title }}</{{ b.heading_level }}>
 
           {% if b.description %}
-          <div class="card-text">
-            {% autoescape off %}
-              {{ b.description }}
-            {% endautoescape %}
-          </div>
+            <div class="card-text">
+              {% autoescape off %}
+                {{ b.description }}
+              {% endautoescape %}
+            </div>
           {% endif %}
 
           {% if b.link %}
-          <a href="{{ b.link.url }}" class="btn btn-primary card-link">
-            {{ b.link.title }}
-          </a>
+            <a href="{{ b.link.url }}" class="btn btn-outline card-link">
+              {{ b.link.title }}
+            </a>
           {% endif %}
 
         </div>
 
         {% if b.picture and b.article_type == 'w-100 mb-2 mt-3' %}
-        <img
-          alt="{{ b.picture.title }}"
-          title="{{ b.picture.title }}"
-          class="card-img-bottom img-fluid"
-          src="{% thumbnail b.picture.image 400x0 autocrop %}">
+          <img
+            alt="{{ b.picture.title }}"
+            title="{{ b.picture.title }}"
+            class="card-img-bottom img-fluid"
+            src="{% thumbnail b.picture.image 400x0 autocrop %}">
+        {% endif %}
+
+        {% if design %}
+          <div class="card-footer">
+            {% block_moderate b request_path=request_path %}
+          </div>
         {% endif %}
 
       </div>
+    {% endfor %}
 
-      {% if design %}
-        <div class="card-footer">
-        {% block_moderate b request_path=request_path %}
-        </div>
-      {% endif %}
-
-    </div>
-  {% endfor %}
-
+  </div>
 </div>
 
 {% if design %}
-<div class="row">
-  <div class="col-12">
-    <div class="l-box setting-buttons">
-    {% block_add card_create_url 'Card' request_path=request_path %}
+  <div class="row">
+    <div class="col-12">
+      <div class="l-box setting-buttons">
+        {% block_add card_create_url 'Card' request_path=request_path %}
+      </div>
     </div>
   </div>
-</div>
 {% endif %}

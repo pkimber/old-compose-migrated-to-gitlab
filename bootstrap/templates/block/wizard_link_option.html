@@ -1,5 +1,4 @@
 {% extends 'dash/base.html' %}
-
 {% load thumbnail %}
 
 {% block sub_title %}
@@ -104,7 +103,7 @@
               {{ field_name }}:</h3>
             <i class="fa fa-link"></i>
             {{ link.link_type_description }}:
-            {{ link.caption }}
+            {{ link.title }}
             {% if link.category.name %}
               <small>({{ link.category.name }})</small>
             {% endif %}
@@ -116,7 +115,7 @@
             {% for item in many_to_many %}
               {{ item.order }}.
               {{ item.link.link_type_description }}:
-              {{ item.link.caption }}
+              {{ item.link.title }}
               {% if item.link.category.name %}
                 <small>({{ item.link.category.name }})</small>
               {% endif %}
@@ -126,6 +125,6 @@
         </div>
       </div>
     </div>
-    
+
   </div>
 {% endblock content %}

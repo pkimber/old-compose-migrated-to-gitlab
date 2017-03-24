@@ -58,7 +58,7 @@
                     <a
                       href="{% if link.is_document %}{% url 'block.link.document.update' link.pk %}{% elif link.is_external %}{% url 'block.link.external.update' link.pk %}{% elif link.is_internal %}{% url 'block.link.internal.update' link.pk %}{% endif %}">
                       <i class="fa fa-edit"></i>
-                      {{ link.caption }}
+                      {{ link.title }}
                     </a>
                   </th>
                   <td>

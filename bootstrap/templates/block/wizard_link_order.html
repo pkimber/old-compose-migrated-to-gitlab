@@ -1,5 +1,4 @@
 {% extends 'dash/base.html' %}
-
 {% load thumbnail %}
 
 {% block sub_title %}
@@ -33,7 +32,7 @@
 
               {{ item.order }}.
               {{ item.link.link_type_description }}:
-              {{ item.link.caption }}
+              {{ item.link.title }}
               {% if item.link.category.name %}
                 <small>({{ item.link.category.name }})</small>
               {% endif %}

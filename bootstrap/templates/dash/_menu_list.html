@@ -1,0 +1,21 @@
+{% if user.is_authenticated %}
+<li class="nav-item dropdown">
+  <a
+    class="nav-link dropdown-toggle"
+    href="http://example.com"
+    id="navbarDropdownDash"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false">
+    Dash
+  </a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownDash">
+    <a class="dropdown-item" href="{% url 'project.dash' %}">Dash Home</a>
+    {% if user.is_staff %}
+    <a class="dropdown-item" href="{% url 'project.settings' %}">Settings</a>
+    {% endif %}
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+  </div>
+</li>
+{% endif %}
