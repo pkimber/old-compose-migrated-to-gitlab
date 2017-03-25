@@ -202,34 +202,6 @@
         {% block footer %}
           <div class="row border-top-1">
 
-            {% if header_footer.footer_left %}
-              <div class="col">
-                {% if header_footer.footer_left_header %}
-                  <h4>{{ header_footer.footer_left_header }}</h4>
-                {% endif %}
-                <p class="align-text-top">
-                  {{ header_footer.footer_left|safe }}
-                </p>
-              </div>
-            {% endif %}
-
-            {% if header_footer.footer_right %}
-              <div class="col">
-                {% if header_footer.footer_right_header %}
-                  <h4>{{ header_footer.footer_right_header }}</h4>
-                {% endif %}
-                <p class="align-text-top">
-                  {{ header_footer.footer_right|safe }}
-                </p>
-              </div>
-            {% endif %}
-
-            <div class="col">
-              <ul class="nav flex-column">
-                {% include 'block/_menu_list.html' %}
-              </ul>
-            </div>
-
             {% if header_footer.company_address or header_footer.company_phone or header_footer.company_hours %}
               <div class="col">
                 {% if header_footer.company_address %}
@@ -245,7 +217,7 @@
                     {{ header_footer.company_phone }}<br>
                   {% endif %}
                   {% if header_footer.company_fax %}
-                    <abbr title="Fax">P: </abbr>
+                    <abbr title="Fax">F: </abbr>
                     {{ header_footer.company_fax }}<br>
                   {% endif %}
                   {% if header_footer.company_email %}
@@ -254,34 +226,64 @@
                   {% endif %}
                 </address>
 
-                {% if header_footer.company_hours %}
-                  <address>
-                    <strong>Hours</strong><br>
-                    {{ header_footer.company_hours|safe }}
-                  </address>
-                {% endif %}
+
+                <div class="d-flex flex-row">
+                  {% if header_footer.url_facebook %}
+                    <a href="{{ header_footer.url_facebook }}" target="_blank" class="p-1">
+                      <i class="fa fa-facebook-official fa-2x"></i>
+                    </a>
+                  {% endif %}
+                  {% if header_footer.url_linkedin %}
+                    <a href="{{ header_footer.url_linkedin }}" target="_blank" class="p-1">
+                      <i class="fa fa-linkedin fa-2x"></i>
+                    </a>
+                  {% endif %}
+                  {% if header_footer.url_twitter %}
+                    <a href="{{ header_footer.url_twitter }}" target="_blank" class="p-1">
+                      <i class="fa fa-twitter fa-2x"></i>
+                    </a>
+                  {% endif %}
+                </div>
               </div>
             {% endif %}
 
-            <div class="col-2">
-              <div class="d-flex flex-row-reverse">
-                {% if header_footer.url_facebook %}
-                  <a href="{{ header_footer.url_facebook }}" target="_blank" class="p-1">
-                    <i class="fa fa-facebook-official fa-2x"></i>
-                  </a>
+            {% if header_footer.footer_left %}
+              <div class="col">
+                {% if header_footer.footer_left_header %}
+                  <h4>{{ header_footer.footer_left_header }}</h4>
                 {% endif %}
-                {% if header_footer.url_linkedin %}
-                  <a href="{{ header_footer.url_linkedin }}" target="_blank" class="p-1">
-                    <i class="fa fa-linkedin fa-2x"></i>
-                  </a>
-                {% endif %}
-                {% if header_footer.url_twitter %}
-                  <a href="{{ header_footer.url_twitter }}" target="_blank" class="p-1">
-                    <i class="fa fa-twitter fa-2x"></i>
-                  </a>
-                {% endif %}
+                <p class="align-text-top">
+                  {{ header_footer.footer_left|safe }}
+                </p>
+
+
+              {% if header_footer.company_hours %}
+                <p>
+                  <strong>Hours:</strong>
+                  {{ header_footer.company_hours|safe }}
+                </p>
+              {% endif %}
+
               </div>
+            {% endif %}
+
+            {% if header_footer.footer_right %}
+              <div class="col">
+                {% if header_footer.footer_right_header %}
+                  <h4>{{ header_footer.footer_right_header }}</h4>
+                {% endif %}
+                <p class="align-text-top">
+                  {{ header_footer.footer_right|safe }}
+                </p>
+              </div>
+            {% endif %}
+
+            <div class="col">
+              <ul class="nav flex-column align-items-end">
+                {% include 'block/_menu_list.html' %}
+              </ul>
             </div>
+
           </div>
           <div class="row">
             <div class="col-12 text-center">
