@@ -1,6 +1,6 @@
 {% load block_tags %}
 {% load thumbnail %}
-
+{%if testing %}<!-- container.brochure -->{% endif %}
 <div class="card-group">
   {% for b in brochure_list %}
 
@@ -62,3 +62,4 @@
     </div>
   </div>
 {% endif %}
+{%if testing %}<!-- /container.brochure -->{% endif %}

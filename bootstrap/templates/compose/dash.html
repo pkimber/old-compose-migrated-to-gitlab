@@ -21,7 +21,8 @@
 {% endblock header %}
 
 {% block content %}
-  <div class="container dash-area">
+  {% if testing %}<!-- CSSFEATURE: we should consider using this html5 feature, e.g. the <dash /> tag -->{% endif %}
+  <dash class="container dash-area">
 
     <div class="row">
       <div class="col-12">
@@ -49,5 +50,5 @@
       </div>
     </div>
 
-  </div>
+  </dash>
 {% endblock content %}

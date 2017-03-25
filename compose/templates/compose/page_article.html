@@ -1,5 +1,10 @@
 {% extends 'compose/base.html' %}
+{% if testing %}
+  <!-- TODO:
+    consider reworking page templates like in the bootstrap app e.g. raise the "if block_list" condition to this level + commmenting blocks
 
+    Have the test in both or one level? -->
+  {% endif %}
 {% block content %}
   {% include 'compose/_body.html' %}
   {% if form %}

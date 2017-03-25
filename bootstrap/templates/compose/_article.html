@@ -1,5 +1,5 @@
 {% load block_tags %}
-
+{%if testing %}<!-- container.body -->{% endif %}
 <div class="row">
 {% for b in body_list %}
 
@@ -42,3 +42,4 @@
 
 
 </div>
+{%if testing %}<!-- /container.body -->{% endif %}

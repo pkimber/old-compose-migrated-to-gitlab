@@ -1,7 +1,7 @@
 {% load block_tags %}
 {% load static %}
 {% load thumbnail %}
-
+{%if testing %}<!-- container.gallery -->{% endif %}
 {% for g in gallery_list %}
   {% if g.title or g.description %}
     <div class="row">
@@ -60,3 +60,4 @@
 {% endif %}
 
 {% include 'base/_photoswipe.html' %}
+{%if testing %}<!-- /container.gallery -->{% endif %}

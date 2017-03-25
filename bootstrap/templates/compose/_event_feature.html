@@ -1,7 +1,7 @@
 {% load block_tags %}
 {% load thumbnail %}
 {% load startswith %}
-
+{%if testing %}<!-- container.feature -->{% endif %}
 <div class="row">
   {% for c in header_a_list %}
 
@@ -100,3 +100,4 @@
   {% endif %}
 
 </div>
+{%if testing %}<!-- /container.feature -->{% endif %}

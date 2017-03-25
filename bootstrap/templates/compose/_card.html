@@ -1,6 +1,6 @@
 {% load block_tags %}
 {% load thumbnail %}
-
+{%if testing %}<!-- container.card -->{% endif %}
 <div class="row">
   <div class="card-columns">
     {% for b in card_list %}
@@ -11,15 +11,15 @@
             alt="{{ b.picture.title }}"
             title="{{ b.picture.title }}"
             class="card-img {% if not 'img-overlay' in b.style.name %}card-img-top img-fluid{% endif %}"
-            {% if not 'img-overlay' in b.style.name %}
+            {% if not 'img overlay' in b.style.name %}
             src="{% thumbnail b.picture.image 1200x0 crop='false' %}"
             {% else %}
             src="{% thumbnail b.picture.image 600x0 crop='smart' %}"
             {% endif %}>
         {% endif %}
-        <!-- #### {{ b.style.name }} -->
+
         <div
-          {% if 'img-overlay' in b.style.name %}
+          {% if 'img overlay' in b.style.name %}
           class="card-block card-img-overlay"
           {% else %}
           class="card-block"
@@ -36,8 +36,10 @@
           {% endif %}
 
           {% if b.link %}
-            <a href="{{ b.link.url }}" class="btn btn-outline card-link">
-              {{ b.link.title }}
+            <a href="{{ b.link.url }}" class="btn btn-primary btn-outline card-link">
+              <span class="lead font-weight-bold">
+              {{ b.link.title }} &raquo;
+            </span>
             </a>
           {% endif %}
 
@@ -72,3 +74,4 @@
     </div>
   </div>
 {% endif %}
+{%if testing %}<!-- /container.card -->{% endif %}

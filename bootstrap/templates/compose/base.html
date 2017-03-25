@@ -107,7 +107,7 @@
   <body>
 
     {% if testing %}
-      <!-- **********  TESTING IS ON ********* -->
+      <!-- testing -->
       <div class="container-fluid alert alert-warning text-center">
 
         Testing [User:
@@ -119,9 +119,10 @@
         {{ user.is_superuser }}]
 
       </div>
+      <!-- /testing -->
     {% endif %}
 
-    {% if testing %}<!-- NAV START ********* -->{% endif %}
+    {% if testing %}<!-- nav -->{% endif %}
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
       <button
         class="navbar-toggler navbar-toggler-right"
@@ -165,11 +166,11 @@
         {% endblock nav_search %}
       </div>
     </nav>
-    {% if testing %}<!-- NAV END -->{% endif %}
+    {% if testing %}<!-- /nav -->{% endif %}
 
     {% block noheader %}
       {% block header %}
-        {% if testing %}<!-- HEADER START ********* -->{% endif %}
+        {% if testing %}<!-- header -->{% endif %}
         <div class="container">
           <div class="l-box">
             <h1>
@@ -179,12 +180,12 @@
             </h1>
           </div>
         </div>
-        {% if testing %}<!-- HEADER END -->{% endif %}
+        {% if testing %}<!-- /header -->{% endif %}
       {% endblock header %}
     {% endblock noheader %}
 
     {% block content %}
-      {% if testing %}<!-- CONTAINER START ********* -->{% endif %}
+      {% if testing %}<!-- content -->{% endif %}
       <div class="container">
         <div class="row">
           <div class="col-12">
@@ -192,10 +193,10 @@
           </div>
         </div>
       </div>
-      {% if testing %}<!-- CONTAINER END -->{% endif %}
+      {% if testing %}<!-- /content -->{% endif %}
     {% endblock content %}
 
-    {% if testing %}<!-- FOOTER START ********* -->{% endif %}
+    {% if testing %}<!-- footer -->{% endif %}
     <footer class="bg-faded mt-5 p-2">
       <div class="container">
         {% block footer %}
@@ -307,10 +308,10 @@
         {% endblock footer %}
       </div>
     </footer>
-    {% if testing %}<!-- FOOTER END -->{% endif %}
+    {% if testing %}<!-- /footer -->{% endif %}
 
 
-    {% if testing %}<!-- SCRIPTS -->{% endif %}
+    {% if testing %}<!-- scripts -->{% endif %}
     {% block script %}
       <script
         src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
@@ -351,6 +352,7 @@
         ga('send', 'pageview');
       </script>
     {% endif %}
+    {% if testing %}<!-- /scripts -->{% endif %}
 
   </body>
 </html>

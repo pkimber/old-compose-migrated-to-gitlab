@@ -1,6 +1,6 @@
 {% load block_tags %}
 {% load thumbnail %}
-
+{%if testing %}<!-- container.contact -->{% endif %}
 {% for b in body_list %}
   <div class="row">
     <div class="col-12">
@@ -66,3 +66,4 @@
     </div>
   </div>
 {% endif %}
+{%if testing %}<!-- /container.contact -->{% endif %}

@@ -1,6 +1,6 @@
 {% load block_tags %}
 {% load thumbnail %}
-
+{%if testing %}<!-- container.sildeshow -->{% endif %}
 <div class="row">
   {% for b in slideshow_list %}
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -67,3 +67,4 @@
 
   {% endfor %}
 </div>
+{%if testing %}<!-- /container.slideshow -->{% endif %}

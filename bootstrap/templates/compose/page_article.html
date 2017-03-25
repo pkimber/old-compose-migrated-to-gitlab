@@ -9,48 +9,61 @@
 {% endblock sub_heading %}
 
 {% block header %}
-  <div class="header">
+  {% if testing %}
+  <!-- CSSFEATURE:  .container.<block name>,
+                    .header.<block name>,
+                    .container-fluid.<block name> { wrapper: style }
+  TODO: add ContainerStyle + .css model to allow for styling -->
+  {% endif %}
+  <div class="header slideshow">
     {% include 'compose/_header_slideshow.html' %}
   </div>
 {% endblock header %}
 
 {% block content %}
-  <div class="container">
 
-    {% include 'compose/_body.html' %}
-
-    {% if form %}
-      <div class="row">
-        <div class="col-12">
-          <div class="l-box">
-            {% include '_form.html' %}
+  {% if body_list %}
+    <div class="container article">
+      {% include 'compose/_article.html' %}
+      {% if form %}
+        <div class="row">
+          <div class="col-12">
+            <div class="l-box">
+              {% include '_form.html' %}
+            </div>
           </div>
         </div>
-      </div>
-    {% endif %}
+      {% endif %}
+    </div>
+  {% endif %}
 
-    {# calendar from the booking app #}
-    {% if calendar %}
-      {% for c in calendar %}
-        <div class="row">
-          {% for month in c %}
-            <div class="col">
-              <div class="l-box">
-                {{ month }}
-              </div>
+  {# calendar from the booking app #}
+  {% if calendar %}
+    <div class="container calendar">
+    {% for c in calendar %}
+      <div class="row">
+        {% for month in c %}
+          <div class="col">
+            <div class="l-box">
+              {{ month }}
             </div>
-          {% endfor %}
-        </div>
-      {% endfor %}
-    {% endif %}
-
-    {% include 'compose/_news.html' %}
-    {% include 'compose/_card.html' %}
-
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
   </div>
+  {% endif %}
 
-  <div class="container">
+  {% if news_list %}
+    <div class="container news">
+      {% include 'compose/_news.html' %}
+    </div>
+  {% endif %}
+
+  {% if card_list %}
+  <div class="container card">
     {% include 'compose/_card.html' %}
   </div>
+  {% endif %}
 
 {% endblock content %}

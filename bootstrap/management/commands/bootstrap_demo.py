@@ -21,13 +21,14 @@ from block.models import (
     MenuItem,
 )
 from compose.models import *
+
 from imakedata.imakedata import IMakeData
 from imakedata.model.int import in_3
 from imakedata.model.marketing import tweet, description, short_blurb, news_title
 from imakedata.model.business import business_model
 
 maker = IMakeData(1)
-biz = maker.get_dataset(business_model + [tweet])[0]
+biz = maker.get_data(business_model + [tweet])[0]
 
 heading_level = {
     'name': 'heading_level',
@@ -225,7 +226,7 @@ class Command(BaseCommand):
 
 
         maker = IMakeData(12)
-        my_data_set = maker.get_dataset([
+        my_data_set = maker.get_data([
                                         heading_level,
                                         news_title,
                                         short_blurb,
@@ -269,7 +270,7 @@ class Command(BaseCommand):
 
 
         maker = IMakeData(12)
-        my_data_set = maker.get_dataset([
+        my_data_set = maker.get_data([
                                         heading_level,
                                         news_title,
                                         short_blurb,
@@ -324,7 +325,7 @@ class Command(BaseCommand):
         }
         maker = IMakeData(9)
         panel_count = 0
-        my_data_set = maker.get_dataset([
+        my_data_set = maker.get_data([
                                         heading_level,
                                         news_title,
                                         description,
@@ -354,7 +355,7 @@ class Command(BaseCommand):
 
         maker = IMakeData(1)
         panel_count = 0
-        my_data_set = maker.get_dataset([
+        my_data_set = maker.get_data([
                                         heading_level,
                                         news_title,
                                         tweet,
@@ -486,7 +487,7 @@ class Command(BaseCommand):
         }
 
         maker = IMakeData(12)
-        my_data_set = maker.get_dataset([
+        my_data_set = maker.get_data([
                                         news_title,
                                         short_blurb,
                                         brochure_image,
