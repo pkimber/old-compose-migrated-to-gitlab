@@ -2,11 +2,14 @@
 var menu = document.getElementById('menu'),
     WINDOW_CHANGE_EVENT = ('onorientationchange' in window) ? 'orientationchange':'resize';
 
-function toggleHorizontal() {
+function toggleMenuClass() {
     [].forEach.call(
         document.getElementById('menu').querySelectorAll('.mobile-menu-can-transform'),
         function(el){
-            el.classList.toggle('pure-menu-horizontal');
+            var menuClass = el.getAttribute('data-menu-class');
+            if (menuClass != '') {
+                el.classList.toggle(menuClass);
+            }
         }
     );
 };
@@ -15,10 +18,10 @@ function toggleMenu() {
     // set timeout so that the panel has a chance to roll up
     // before the menu switches states
     if (menu.classList.contains('open')) {
-        setTimeout(toggleHorizontal, 500);
+        setTimeout(toggleMenuClass, 500);
     }
     else {
-        toggleHorizontal();
+        toggleMenuClass();
     }
     menu.classList.toggle('open');
     document.getElementById('toggle').classList.toggle('x');
@@ -37,5 +40,3 @@ document.getElementById('toggle').addEventListener('click', function (e) {
 
 window.addEventListener(WINDOW_CHANGE_EVENT, closeMenu);
 })(this, this.document);
-
-

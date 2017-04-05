@@ -2,7 +2,7 @@
   background-color: #fff;
   margin-bottom: 1em;
   -webkit-font-smoothing: antialiased;
-  height: 3.1em;
+  height: auto;
   overflow: hidden;
   -webkit-transition: height 0.5s;
   -moz-transition: height 0.5s;
