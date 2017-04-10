@@ -1,0 +1,12 @@
+{% load block_tags %}
+
+{% for c in header_list %}
+  <{% if heading_tag %}{{ heading_tag}}{% else %}div{% endif %}{% if c.css_class_name %} class="{{c.css_class_name}}"{% endif %}>
+    {{ c.title }}
+  </{% if heading_tag %}{{ heading_tag}}{% else %}div{% endif %}>
+  {% if design %}<br>{% block_moderate c %}{% endif %}
+{% empty %}
+  {% if design %}
+    <p>{% block_add header_create_url 'header' %}</p>
+  {% endif %}
+{% endfor %}
