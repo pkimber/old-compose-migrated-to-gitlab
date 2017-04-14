@@ -25,6 +25,7 @@ SECTION_SLIDESHOW = 'slideshow'
 class ArticleBlock(BlockModel):
     pass
 
+
 reversion.register(ArticleBlock)
 
 
@@ -97,6 +98,7 @@ class Article(ContentModel):
             Wizard('link', Wizard.LINK, Wizard.SINGLE),
         ]
 
+
 reversion.register(Article)
 
 
@@ -132,11 +134,13 @@ class CodeSnippet(TimeStampedModel):
     def __str__(self):
         return '{}'.format(self.slug)
 
+
 reversion.register(CodeSnippet)
 
 
 class SlideshowBlock(BlockModel):
     pass
+
 
 reversion.register(SlideshowBlock)
 
@@ -208,6 +212,7 @@ class Slideshow(ContentModel):
             Wizard('slideshow', Wizard.IMAGE, Wizard.MULTI),
         ]
 
+
 reversion.register(Slideshow)
 
 
@@ -229,11 +234,13 @@ class SlideshowImage(models.Model):
         verbose_name = 'Slideshow Image'
         verbose_name_plural = 'Slideshow Images'
 
+
 reversion.register(SlideshowImage)
 
 
 class FeatureBlock(BlockModel):
     pass
+
 
 reversion.register(FeatureBlock)
 
@@ -251,6 +258,7 @@ class FeatureStyle(models.Model):
 
     def __str__(self):
         return '{}'.format(self.name)
+
 
 reversion.register(FeatureStyle)
 
@@ -323,6 +331,7 @@ class Feature(ContentModel):
             Wizard('link', Wizard.LINK, Wizard.SINGLE),
         ]
 
+
 reversion.register(Feature)
 
 
@@ -340,11 +349,13 @@ class HeaderStyle(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
+
 reversion.register(HeaderStyle)
 
 
 class HeaderBlock(BlockModel):
     pass
+
 
 reversion.register(HeaderBlock)
 
@@ -389,11 +400,13 @@ class Header(ContentModel):
         else:
             return ''
 
+
 reversion.register(Header)
 
 
 class SidebarBlock(BlockModel):
     pass
+
 
 reversion.register(SidebarBlock)
 
@@ -427,5 +440,6 @@ class Sidebar(ContentModel):
 
     def url_update(self):
         return reverse('compose.sidebar.update', kwargs={'pk': self.pk})
+
 
 reversion.register(Sidebar)
