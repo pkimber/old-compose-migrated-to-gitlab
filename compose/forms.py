@@ -3,6 +3,7 @@ from base.form_utils import (
     bleach_clean,
     RequiredFieldForm,
 )
+from block.forms import ContentEmptyForm
 from .models import (
     Article,
     CodeSnippet,
@@ -10,6 +11,7 @@ from .models import (
     FeatureStyle,
     Header,
     HeaderStyle,
+    Map,
     Sidebar,
     Slideshow,
 )
@@ -33,7 +35,7 @@ class ArticleForm(RequiredFieldForm):
         fields = (
             'title',
             'description',
-            #'picture',
+            # 'picture',
             'article_type',
             'image_size',
         )
@@ -132,7 +134,6 @@ class HeaderForm(RequiredFieldForm):
         data = self.cleaned_data['title']
         return bleach_clean(data)
 
-
     class Meta:
         model = Header
         fields = (
@@ -158,6 +159,13 @@ class HeaderStyleForm(RequiredFieldForm):
         )
 
 
+class MapForm(ContentEmptyForm):
+
+    class Meta:
+        model = Map
+        fields = ()
+
+
 class SidebarForm(RequiredFieldForm):
 
     def __init__(self, *args, **kwargs):
@@ -173,11 +181,8 @@ class SidebarForm(RequiredFieldForm):
         data = self.cleaned_data['title']
         return bleach_clean(data)
 
-
     class Meta:
         model = Sidebar
         fields = (
             'title',
         )
-
-

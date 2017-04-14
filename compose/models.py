@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -8,6 +9,7 @@ from reversion import revisions as reversion
 from base.model_utils import TimeStampedModel
 from block.models import (
     BlockModel,
+    ContentManager,
     ContentModel,
     Image,
     Link,
@@ -136,106 +138,6 @@ class CodeSnippet(TimeStampedModel):
 
 
 reversion.register(CodeSnippet)
-
-
-class SlideshowBlock(BlockModel):
-    pass
-
-
-reversion.register(SlideshowBlock)
-
-
-class Slideshow(ContentModel):
-    """Slideshow/carousel.
-
-    Note from Tim: In the future you can extend slideshow model to include some
-    basic slideshow options - like "Show controls" / "Speed" / "Auto Start"....
-    even if we didn't use the same slider each time these properties would
-    apply.
-
-    Slideshow           Interim             Image
-    ------------------- ------------------- -------------------
-                        FK Slideshow        Order
-                        FK Image            Image
-
-    Use
-    https://docs.djangoproject.com/en/1.8/topics/db/models/#intermediary-manytomany
-
-    """
-
-    block = models.ForeignKey(SlideshowBlock, related_name='content')
-    order = models.IntegerField()
-
-    title = models.CharField(max_length=200, blank=True)
-    description = models.TextField(blank=True)
-    slideshow = models.ManyToManyField(
-        Image,
-        related_name='slideshow',
-        through='SlideshowImage'
-    )
-
-    class Meta:
-        # cannot put 'unique_together' on abstract base class
-        # https://code.djangoproject.com/ticket/16732
-        unique_together = ('block', 'moderate_state')
-        verbose_name = 'Slideshow'
-        verbose_name_plural = 'Slideshow'
-
-    def __str__(self):
-        return '{} {}'.format(self.title, self.moderate_state)
-
-    def copy_related_data(self, published_instance):
-        """Copy slideshow images and links for the references."""
-        for item in self.ordered_slideshow():
-            obj = self.slideshow.through(
-                content=published_instance,
-                image=item.image,
-                order=item.order,
-            )
-            obj.save()
-
-    def ordered_slideshow(self):
-        return self.slideshow.through.objects.filter(content=self)
-
-    def url_publish(self):
-        return reverse('compose.slideshow.publish', kwargs={'pk': self.pk})
-
-    def url_remove(self):
-        return reverse('compose.slideshow.remove', kwargs={'pk': self.pk})
-
-    def url_update(self):
-        return reverse('compose.slideshow.update', kwargs={'pk': self.pk})
-
-    @property
-    def wizard_fields(self):
-        return [
-            Wizard('slideshow', Wizard.IMAGE, Wizard.MULTI),
-        ]
-
-
-reversion.register(Slideshow)
-
-
-class SlideshowImage(models.Model):
-    """Slideshow images for the slideshow.
-
-    This is the model that is used to govern the many-to-many relationship
-    between ``Title`` and ``Image``.
-
-    https://docs.djangoproject.com/en/1.8/topics/db/models/#extra-fields-on-many-to-many-relationships
-
-    """
-    content = models.ForeignKey(Slideshow)
-    image = models.ForeignKey(Image)
-    order = models.IntegerField()
-
-    class Meta:
-        ordering = ['order']
-        verbose_name = 'Slideshow Image'
-        verbose_name_plural = 'Slideshow Images'
-
-
-reversion.register(SlideshowImage)
 
 
 class FeatureBlock(BlockModel):
@@ -404,6 +306,81 @@ class Header(ContentModel):
 reversion.register(Header)
 
 
+class MapBlock(BlockModel):
+    pass
+
+
+reversion.register(MapBlock)
+
+
+class MapManager(ContentManager):
+    def init_map(self, page_section, order, map_link, **kwargs):
+        try:
+            obj = self.model.objects.get(block__page_section=page_section)
+        except self.model.DoesNotExist:
+            obj = self.model(map=map_link)
+            block = MapBlock(page_section=page_section)
+            block.save()
+            obj.block = block
+
+        if order and order != obj.order:
+            obj.order = order
+        if map_link and map_link != obj.map:
+            obj.map = map_link
+
+        obj.save()
+        return obj
+
+
+class Map(ContentModel):
+
+    """ Map """
+
+    SECTION_A = 'map_a'
+
+    block = models.ForeignKey(MapBlock, related_name='content')
+    order = models.IntegerField()
+
+    map = models.ForeignKey(
+        Link, related_name='map', blank=True, null=True
+    )
+    objects = MapManager()
+
+    def __str__(self):
+        title = "Undefined Map"
+        if self.map:
+            title = '{}'.format(self.map.title)
+
+        return title
+
+    class Meta:
+        # cannot put 'unique_together' on abstract base class
+        # https://code.djangoproject.com/ticket/16732
+        unique_together = ('block', 'moderate_state')
+        verbose_name = 'Map'
+        verbose_name_plural = 'Map'
+
+    def url_publish(self):
+        return reverse('compose.map.publish', kwargs={'pk': self.pk})
+
+    def url_remove(self):
+        return reverse('compose.map.remove', kwargs={'pk': self.pk})
+
+    def url_update(self):
+        content_type = ContentType.objects.get(
+            app_label='compose', model='map'
+        )
+        return reverse('block.wizard.link.option', kwargs={
+                'content': content_type.pk,
+                'pk': self.pk,
+                'field': 'map',
+                'type': Wizard.SINGLE
+            })
+
+
+reversion.register(Map)
+
+
 class SidebarBlock(BlockModel):
     pass
 
@@ -443,3 +420,103 @@ class Sidebar(ContentModel):
 
 
 reversion.register(Sidebar)
+
+
+class SlideshowBlock(BlockModel):
+    pass
+
+
+reversion.register(SlideshowBlock)
+
+
+class Slideshow(ContentModel):
+    """Slideshow/carousel.
+
+    Note from Tim: In the future you can extend slideshow model to include some
+    basic slideshow options - like "Show controls" / "Speed" / "Auto Start"....
+    even if we didn't use the same slider each time these properties would
+    apply.
+
+    Slideshow           Interim             Image
+    ------------------- ------------------- -------------------
+                        FK Slideshow        Order
+                        FK Image            Image
+
+    Use
+    https://docs.djangoproject.com/en/1.8/topics/db/models/#intermediary-manytomany
+
+    """
+
+    block = models.ForeignKey(SlideshowBlock, related_name='content')
+    order = models.IntegerField()
+
+    title = models.CharField(max_length=200, blank=True)
+    description = models.TextField(blank=True)
+    slideshow = models.ManyToManyField(
+        Image,
+        related_name='slideshow',
+        through='SlideshowImage'
+    )
+
+    class Meta:
+        # cannot put 'unique_together' on abstract base class
+        # https://code.djangoproject.com/ticket/16732
+        unique_together = ('block', 'moderate_state')
+        verbose_name = 'Slideshow'
+        verbose_name_plural = 'Slideshow'
+
+    def __str__(self):
+        return '{} {}'.format(self.title, self.moderate_state)
+
+    def copy_related_data(self, published_instance):
+        """Copy slideshow images and links for the references."""
+        for item in self.ordered_slideshow():
+            obj = self.slideshow.through(
+                content=published_instance,
+                image=item.image,
+                order=item.order,
+            )
+            obj.save()
+
+    def ordered_slideshow(self):
+        return self.slideshow.through.objects.filter(content=self)
+
+    def url_publish(self):
+        return reverse('compose.slideshow.publish', kwargs={'pk': self.pk})
+
+    def url_remove(self):
+        return reverse('compose.slideshow.remove', kwargs={'pk': self.pk})
+
+    def url_update(self):
+        return reverse('compose.slideshow.update', kwargs={'pk': self.pk})
+
+    @property
+    def wizard_fields(self):
+        return [
+            Wizard('slideshow', Wizard.IMAGE, Wizard.MULTI),
+        ]
+
+
+reversion.register(Slideshow)
+
+
+class SlideshowImage(models.Model):
+    """Slideshow images for the slideshow.
+
+    This is the model that is used to govern the many-to-many relationship
+    between ``Title`` and ``Image``.
+
+    https://docs.djangoproject.com/en/1.8/topics/db/models/#extra-fields-on-many-to-many-relationships
+
+    """
+    content = models.ForeignKey(Slideshow)
+    image = models.ForeignKey(Image)
+    order = models.IntegerField()
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'Slideshow Image'
+        verbose_name_plural = 'Slideshow Images'
+
+
+reversion.register(SlideshowImage)

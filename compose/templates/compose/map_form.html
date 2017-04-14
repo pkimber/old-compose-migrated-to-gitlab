@@ -1,0 +1,22 @@
+{% extends "dash/base.html" %}
+{% load staticfiles %}
+
+{% block sub_title %}
+  Create New Map
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Create New Map
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="pure-g">
+    <div class="pure-u-1">
+      <div class="l-box">
+        <div class="pure-u-1">
+          {% include '_form.html' with legend='Are you sure you want to create a new map block?' submit='Create' %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

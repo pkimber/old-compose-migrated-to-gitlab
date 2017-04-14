@@ -11,6 +11,7 @@ from block.tests.factories import (
 from compose.tests.factories import (
     ArticleFactory,
     CodeSnippetFactory,
+    MapFactory,
     SidebarFactory,
     SlideshowFactory,
 )
@@ -71,6 +72,28 @@ class TestViewPerm(PermTestCase):
         template = TemplateFactory(template_name='compose/page_article.html')
         p = PageFactory(slug='home', slug_menu='', template=template)
         url = reverse('project.page.design', kwargs=dict(page=p.slug))
+        self.assert_staff_only(url)
+
+    def test_map_create(self):
+        p = PageSectionFactory()
+        url = reverse(
+            'compose.map.create',
+            kwargs=dict(
+                page=p.page.slug,
+                menu=p.page.slug_menu,
+                section=p.section.slug,
+            )
+        )
+        self.assert_staff_only(url)
+
+    def test_map_publish(self):
+        c = MapFactory()
+        url = reverse('compose.map.publish', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_map_remove(self):
+        c = MapFactory()
+        url = reverse('compose.map.remove', kwargs={'pk': c.pk})
         self.assert_staff_only(url)
 
     def test_sidebar_create(self):

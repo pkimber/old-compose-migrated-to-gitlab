@@ -6,15 +6,17 @@ from compose.models import (
     Article,
     ArticleBlock,
     CodeSnippet,
+    Map,
+    MapBlock,
     Sidebar,
     SidebarBlock,
     Slideshow,
     SlideshowBlock,
     SlideshowImage,
-    #Feature,
-    #FeatureBlock,
-    #Header,
-    #HeaderBlock,
+    Feature,
+    FeatureBlock,
+    Header,
+    HeaderBlock,
 )
 
 
@@ -46,6 +48,66 @@ class CodeSnippetFactory(factory.django.DjangoModelFactory):
     @factory.sequence
     def slug(n):
         return 'slug_{:02d}'.format(n)
+
+
+class FeatureBlockFactory(factory.django.DjangoModelFactory):
+
+    page_section = factory.SubFactory(PageSectionFactory)
+
+    class Meta:
+        model = FeatureBlock
+
+
+class FeatureFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = Feature
+
+    block = factory.SubFactory(FeatureBlockFactory)
+
+    @factory.sequence
+    def order(n):
+        return n
+
+
+class HeaderBlockFactory(factory.django.DjangoModelFactory):
+
+    page_section = factory.SubFactory(PageSectionFactory)
+
+    class Meta:
+        model = HeaderBlock
+
+
+class HeaderFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = Header
+
+    block = factory.SubFactory(HeaderBlockFactory)
+
+    @factory.sequence
+    def order(n):
+        return n
+
+
+class MapBlockFactory(factory.django.DjangoModelFactory):
+
+    page_section = factory.SubFactory(PageSectionFactory)
+
+    class Meta:
+        model = MapBlock
+
+
+class MapFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = Map
+
+    block = factory.SubFactory(MapBlockFactory)
+
+    @factory.sequence
+    def order(n):
+        return n
 
 
 class SidebarBlockFactory(factory.django.DjangoModelFactory):
@@ -92,43 +154,3 @@ class SlideshowFactory(factory.django.DjangoModelFactory):
     @factory.sequence
     def order(n):
         return n
-
-
-#class FeatureBlockFactory(factory.django.DjangoModelFactory):
-#
-#    page_section = factory.SubFactory(PageSectionFactory)
-#
-#    class Meta:
-#        model = FeatureBlock
-#
-#
-#class FeatureFactory(factory.django.DjangoModelFactory):
-#
-#    class Meta:
-#        model = Feature
-#
-#    block = factory.SubFactory(FeatureBlockFactory)
-#
-#    @factory.sequence
-#    def order(n):
-#        return n
-#
-#
-#class HeaderBlockFactory(factory.django.DjangoModelFactory):
-#
-#    page_section = factory.SubFactory(PageSectionFactory)
-#
-#    class Meta:
-#        model = HeaderBlock
-#
-#
-#class HeaderFactory(factory.django.DjangoModelFactory):
-#
-#    class Meta:
-#        model = Header
-#
-#    block = factory.SubFactory(HeaderBlockFactory)
-#
-#    @factory.sequence
-#    def order(n):
-#        return n

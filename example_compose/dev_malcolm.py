@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
-
-from __future__ import unicode_literals
+import socket
 from .base import *
 
 DATABASES = {
@@ -14,9 +13,22 @@ DATABASES = {
     }
 }
 
+MIDDLEWARE_CLASSES += MIDDLEWARE_CLASSES + (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+)
+
 INSTALLED_APPS += (
     #'django.contrib.formtools',
     'django_extensions',
     'debug_toolbar',
 )
 
+INTERNAL_IPS = ['127.0.0.1']
+
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'localhost',
+    '::1',
+    socket.gethostbyname(socket.gethostname()),
+]

@@ -28,6 +28,7 @@ from .forms import (
     FeatureStyleForm,
     HeaderForm,
     HeaderStyleForm,
+    MapForm,
     SidebarForm,
     SlideshowForm,
 )
@@ -41,6 +42,8 @@ from .models import (
     Header,
     HeaderBlock,
     HeaderStyle,
+    Map,
+    MapBlock,
     Sidebar,
     SidebarBlock,
     Slideshow,
@@ -222,6 +225,31 @@ class FeatureStyleListView(
 class HeaderStyleListView(
         LoginRequiredMixin, StaffuserRequiredMixin, ListView):
     model = HeaderStyle
+
+
+class MapCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentCreateView):
+
+    block_class = MapBlock
+    form_class = MapForm
+    model = Map
+    template_name = 'compose/map_form.html'
+
+
+class MapPublishView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
+
+    form_class = ContentEmptyForm
+    model = Map
+    template_name = 'compose/map_publish.html'
+
+
+class MapRemoveView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentRemoveView):
+
+    form_class = ContentEmptyForm
+    model = Map
+    template_name = 'compose/map_remove.html'
 
 
 class SidebarCreateView(

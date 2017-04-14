@@ -17,6 +17,11 @@ from compose.views import (
     HeaderPublishView,
     HeaderRemoveView,
     HeaderUpdateView,
+    # Map
+    MapCreateView,
+    MapPublishView,
+    MapRemoveView,
+
     # Styles
     FeatureStyleCreateView,
     FeatureStyleListView,
@@ -120,6 +125,23 @@ urlpatterns = [
         view=HeaderUpdateView.as_view(),
         name='compose.header.update'
         ),
+    # Map block
+    url(regex=r'^map/create/(?P<page>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
+        view=MapCreateView.as_view(),
+        name='compose.map.create'
+        ),
+    url(regex=r'^map/create/(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
+        view=MapCreateView.as_view(),
+        name='compose.map.create'
+        ),
+    url(regex=r'^map/(?P<pk>\d+)/publish/$',
+        view=MapPublishView.as_view(),
+        name='compose.map.publish'
+        ),
+    url(regex=r'^map/(?P<pk>\d+)/remove/$',
+        view=MapRemoveView.as_view(),
+        name='compose.map.remove'
+        ),
     # Sidebar
     url(regex=r'^sidebar/create/(?P<page>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
         view=SidebarCreateView.as_view(),
@@ -146,7 +168,7 @@ urlpatterns = [
         view=FeatureStyleCreateView.as_view(),
         name='compose.feature.style.create'
         ),
-    url(regex=r'^feature/style/list/$', 
+    url(regex=r'^feature/style/list/$',
         view=FeatureStyleListView.as_view(),
         name='compose.feature.style.list'
         ),
@@ -158,7 +180,7 @@ urlpatterns = [
         view=HeaderStyleCreateView.as_view(),
         name='compose.header.style.create'
         ),
-    url(regex=r'^header/style/list/$', 
+    url(regex=r'^header/style/list/$',
         view=HeaderStyleListView.as_view(),
         name='compose.header.style.list'
         ),
