@@ -13,6 +13,7 @@ from block.tests.factories import (
 )
 from compose.tests.factories import (
     ArticleFactory,
+    CalendarFactory,
     CodeSnippetFactory,
     MapFactory,
     SidebarFactory,
@@ -93,6 +94,45 @@ class TestView(TestCase):
         c = ArticleFactory()
         response = self.client.post(
             reverse('compose.article.remove', kwargs={'pk': c.pk}),
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_calendar_create(self):
+        p = PageSectionFactory(page=PageFactory(slug_menu=''))
+        url = reverse(
+            'compose.calendar.create',
+            kwargs=dict(
+                page=p.page.slug,
+                section=p.section.slug,
+            )
+        )
+        response = self.client.post(url, {})
+        self.assertEqual(response.status_code, 302)
+
+    def test_calendar_create_page_and_menu(self):
+        p = PageSectionFactory()
+        url = reverse(
+            'compose.calendar.create',
+            kwargs=dict(
+                page=p.page.slug,
+                menu=p.page.slug_menu,
+                section=p.section.slug,
+            )
+        )
+        response = self.client.post(url, {})
+        self.assertEqual(response.status_code, 302)
+
+    def test_calendar_publish(self):
+        c = CalendarFactory()
+        response = self.client.post(
+            reverse('compose.calendar.publish', kwargs={'pk': c.pk}),
+        )
+        self.assertEqual(response.status_code, 302)
+
+    def test_calendar_remove(self):
+        c = CalendarFactory()
+        response = self.client.post(
+            reverse('compose.calendar.remove', kwargs={'pk': c.pk}),
         )
         self.assertEqual(response.status_code, 302)
 

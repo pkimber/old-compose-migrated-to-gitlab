@@ -10,6 +10,7 @@ from block.tests.factories import (
 )
 from compose.tests.factories import (
     ArticleFactory,
+    CalendarFactory,
     CodeSnippetFactory,
     MapFactory,
     SidebarFactory,
@@ -47,6 +48,28 @@ class TestViewPerm(PermTestCase):
     def test_article_update(self):
         c = ArticleFactory()
         url = reverse('compose.article.update', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_calendar_create(self):
+        p = PageSectionFactory()
+        url = reverse(
+            'compose.calendar.create',
+            kwargs=dict(
+                page=p.page.slug,
+                menu=p.page.slug_menu,
+                section=p.section.slug,
+            )
+        )
+        self.assert_staff_only(url)
+
+    def test_calendar_publish(self):
+        c = CalendarFactory()
+        url = reverse('compose.calendar.publish', kwargs={'pk': c.pk})
+        self.assert_staff_only(url)
+
+    def test_calendar_remove(self):
+        c = CalendarFactory()
+        url = reverse('compose.calendar.remove', kwargs={'pk': c.pk})
         self.assert_staff_only(url)
 
     def test_code_snippet_list(self):

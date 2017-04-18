@@ -5,6 +5,8 @@ from block.tests.factories import PageSectionFactory
 from compose.models import (
     Article,
     ArticleBlock,
+    Calendar,
+    CalendarBlock,
     CodeSnippet,
     Map,
     MapBlock,
@@ -34,6 +36,26 @@ class ArticleFactory(factory.django.DjangoModelFactory):
         model = Article
 
     block = factory.SubFactory(ArticleBlockFactory)
+
+    @factory.sequence
+    def order(n):
+        return n
+
+
+class CalendarBlockFactory(factory.django.DjangoModelFactory):
+
+    page_section = factory.SubFactory(PageSectionFactory)
+
+    class Meta:
+        model = CalendarBlock
+
+
+class CalendarFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = Calendar
+
+    block = factory.SubFactory(CalendarBlockFactory)
 
     @factory.sequence
     def order(n):
