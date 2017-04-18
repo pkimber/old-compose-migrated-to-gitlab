@@ -36,7 +36,7 @@ setup(
             'templates/compose/*.*',
         ],
     },
-    version='0.0.33',
+    version='0.0.34',
     description='compose',
     author='Malcolm Dinsmore',
     author_email='code-md@kbsoftware.co.uk',
