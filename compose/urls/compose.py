@@ -7,6 +7,10 @@ from compose.views import (
     ArticlePublishView,
     ArticleRemoveView,
     ArticleUpdateView,
+    # Calendar
+    CalendarCreateView,
+    CalendarPublishView,
+    CalendarRemoveView,
     # Feature
     FeatureCreateView,
     FeaturePublishView,
@@ -63,25 +67,22 @@ urlpatterns = [
         view=ArticleUpdateView.as_view(),
         name='compose.article.update'
         ),
-    url(regex=r'^slideshow/create/(?P<page>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
-        view=SlideshowCreateView.as_view(),
-        name='compose.slideshow.create'
+    # Calendar block
+    url(regex=r'^calendar/create/(?P<page>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
+        view=CalendarCreateView.as_view(),
+        name='compose.calendar.create'
         ),
-    url(regex=r'^slideshow/create/(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
-        view=SlideshowCreateView.as_view(),
-        name='compose.slideshow.create'
+    url(regex=r'^calendar/create/(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
+        view=CalendarCreateView.as_view(),
+        name='compose.calendar.create'
         ),
-    url(regex=r'^slideshow/(?P<pk>\d+)/publish/$',
-        view=SlideshowPublishView.as_view(),
-        name='compose.slideshow.publish'
+    url(regex=r'^calendar/(?P<pk>\d+)/publish/$',
+        view=CalendarPublishView.as_view(),
+        name='compose.calendar.publish'
         ),
-    url(regex=r'^slideshow/(?P<pk>\d+)/remove/$',
-        view=SlideshowRemoveView.as_view(),
-        name='compose.slideshow.remove'
-        ),
-    url(regex=r'^slideshow/(?P<pk>\d+)/update/$',
-        view=SlideshowUpdateView.as_view(),
-        name='compose.slideshow.update'
+    url(regex=r'^calendar/(?P<pk>\d+)/remove/$',
+        view=CalendarRemoveView.as_view(),
+        name='compose.calendar.remove'
         ),
     # Feature
     url(regex=r'^feature/create/(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
@@ -162,6 +163,27 @@ urlpatterns = [
     url(regex=r'^sidebar/(?P<pk>\d+)/edit/$',
         view=SidebarUpdateView.as_view(),
         name='compose.sidebar.update'
+        ),
+    # Slideshow
+    url(regex=r'^slideshow/create/(?P<page>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
+        view=SlideshowCreateView.as_view(),
+        name='compose.slideshow.create'
+        ),
+    url(regex=r'^slideshow/create/(?P<page>[-\w\d]+)/(?P<menu>[-\w\d]+)/(?P<section>[-\w\d]+)/$',
+        view=SlideshowCreateView.as_view(),
+        name='compose.slideshow.create'
+        ),
+    url(regex=r'^slideshow/(?P<pk>\d+)/publish/$',
+        view=SlideshowPublishView.as_view(),
+        name='compose.slideshow.publish'
+        ),
+    url(regex=r'^slideshow/(?P<pk>\d+)/remove/$',
+        view=SlideshowRemoveView.as_view(),
+        name='compose.slideshow.remove'
+        ),
+    url(regex=r'^slideshow/(?P<pk>\d+)/update/$',
+        view=SlideshowUpdateView.as_view(),
+        name='compose.slideshow.update'
         ),
     # styles
     url(regex=r'^feature/style/create/$',

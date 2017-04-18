@@ -6,6 +6,7 @@ from base.form_utils import (
 from block.forms import ContentEmptyForm
 from .models import (
     Article,
+    Calendar,
     CodeSnippet,
     Feature,
     FeatureStyle,
@@ -39,6 +40,13 @@ class ArticleForm(RequiredFieldForm):
             'article_type',
             'image_size',
         )
+
+
+class CalendarForm(ContentEmptyForm):
+
+    class Meta:
+        model = Calendar
+        fields = ()
 
 
 class CodeSnippetCreateForm(RequiredFieldForm):

@@ -1,0 +1,32 @@
+{% extends "dash/base.html" %}
+
+{% block sub_title %}
+  Remove Calendar
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Remove Calendar
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="pure-g">
+    <div class="pure-u-1">
+      <div class="l-box">
+        <table class="pure-table pure-table-bordered">
+          <tbody>
+            {% include 'compose/_calendar.html' %}
+          </tbody>
+        </table>
+        {% if object.is_pending_edited or object.is_pending_pushed %}
+          <p>
+            This content is published on the live site.
+            Clicking the 'Remove' button will remove it from your web site.
+          </p>
+        {% endif %}
+        <div class="pure-u-1">
+          {% include '_form.html' with legend='Are you sure you want to remove this calendar?' submit='Remove' %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

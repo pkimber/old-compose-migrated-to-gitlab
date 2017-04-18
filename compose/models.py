@@ -104,6 +104,81 @@ class Article(ContentModel):
 reversion.register(Article)
 
 
+class CalendarBlock(BlockModel):
+    pass
+
+
+reversion.register(CalendarBlock)
+
+
+class CalendarManager(ContentManager):
+    def init_calendar(self, page_section, order, calendar_link, **kwargs):
+        try:
+            obj = self.model.objects.get(block__page_section=page_section)
+        except self.model.DoesNotExist:
+            obj = self.model(calendar=calendar_link)
+            block = CalendarBlock(page_section=page_section)
+            block.save()
+            obj.block = block
+
+        if order and order != obj.order:
+            obj.order = order
+        if calendar_link and calendar_link != obj.calendar:
+            obj.calendar = calendar_link
+
+        obj.save()
+        return obj
+
+
+class Calendar(ContentModel):
+
+    """ Calendar """
+
+    SECTION_A = 'calendar_a'
+
+    block = models.ForeignKey(CalendarBlock, related_name='content')
+    order = models.IntegerField()
+
+    calendar = models.ForeignKey(
+        Link, related_name='calendar', blank=True, null=True
+    )
+    objects = CalendarManager()
+
+    def __str__(self):
+        title = "Undefined Calendar"
+        if self.calendar:
+            title = '{}'.format(self.calendar.title)
+
+        return title
+
+    class Meta:
+        # cannot put 'unique_together' on abstract base class
+        # https://code.djangoproject.com/ticket/16732
+        unique_together = ('block', 'moderate_state')
+        verbose_name = 'Calendar'
+        verbose_name_plural = 'Calendar'
+
+    def url_publish(self):
+        return reverse('compose.calendar.publish', kwargs={'pk': self.pk})
+
+    def url_remove(self):
+        return reverse('compose.calendar.remove', kwargs={'pk': self.pk})
+
+    def url_update(self):
+        content_type = ContentType.objects.get(
+            app_label='compose', model='calendar'
+        )
+        return reverse('block.wizard.link.option', kwargs={
+                'content': content_type.pk,
+                'pk': self.pk,
+                'field': 'calendar',
+                'type': Wizard.SINGLE
+            })
+
+
+reversion.register(Calendar)
+
+
 class CodeSnippetManager(models.Manager):
 
     def create_code_snippet(self, slug, snippet):

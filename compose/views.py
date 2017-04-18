@@ -22,6 +22,7 @@ from block.views import (
 
 from .forms import (
     ArticleForm,
+    CalendarForm,
     CodeSnippetCreateForm,
     CodeSnippetUpdateForm,
     FeatureForm,
@@ -35,6 +36,8 @@ from .forms import (
 from .models import (
     Article,
     ArticleBlock,
+    Calendar,
+    CalendarBlock,
     CodeSnippet,
     Feature,
     FeatureBlock,
@@ -82,6 +85,31 @@ class ArticleUpdateView(
     form_class = ArticleForm
     model = Article
     template_name = 'compose/article_update.html'
+
+
+class CalendarCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentCreateView):
+
+    block_class = CalendarBlock
+    form_class = CalendarForm
+    model = Calendar
+    template_name = 'compose/calendar_form.html'
+
+
+class CalendarPublishView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentPublishView):
+
+    form_class = ContentEmptyForm
+    model = Calendar
+    template_name = 'compose/calendar_publish.html'
+
+
+class CalendarRemoveView(
+        LoginRequiredMixin, StaffuserRequiredMixin, ContentRemoveView):
+
+    form_class = ContentEmptyForm
+    model = Calendar
+    template_name = 'compose/calendar_remove.html'
 
 
 class CodeSnippetCreateView(
