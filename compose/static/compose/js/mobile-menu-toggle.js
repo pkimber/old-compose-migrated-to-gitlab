@@ -121,9 +121,11 @@ window.addEventListener(WINDOW_CHANGE_EVENT, closeMenu);
 
             // Toggle on click
             this._link.addEventListener('click', function (e) {
-                e.stopPropagation();
-                e.preventDefault();
-                ddm.toggle();
+                // These lines would enable the menu to open and stay open on
+                // click but they disable following the link 
+                // e.stopPropagation();
+                // e.preventDefault();
+                // ddm.toggle();
             });
 
             // Keyboard navigation

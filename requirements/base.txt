@@ -3,8 +3,8 @@ celery==3.1.25
 django-braces==1.10.0
 django-reversion==2.0.8
 django-sendfile==0.3.11
-Django==1.10.7
-easy-thumbnails==2.3
-pillow==3.4.2
+Django==1.11
+easy-thumbnails==2.4.1
+pillow==4.1.0
 pytz==2016.10
 django-taggit==0.22.0
