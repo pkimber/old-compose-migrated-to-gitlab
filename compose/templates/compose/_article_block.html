@@ -34,7 +34,7 @@
     {% if b.link %}<a href="{{ b.link.url }}" title="{{ b.link.title }}" target="_blank">{% endif %}
     <img
       src="{% get_media_prefix %}{{ b.picture.image }}" title="{{ b.picture.title }}"
-      class="pure-img{% if b.article_type == 'text_right' and allow_image_float %} stick-left stick-{{b.image_size}}{% endif %} {% if b.article_type == 'text_left' and allow_image_float %} stick-right stick-{{b.image_size}}{% endif %}">
+      class="{% if image_class %}{{ image_class }}{% else %}pure-img{% endif %}{% if b.article_type == 'text_right' and allow_image_float %} stick-left stick-{{b.image_size}}{% endif %} {% if b.article_type == 'text_left' and allow_image_float %} stick-right stick-{{b.image_size}}{% endif %}">
     {% if b.link %}</a>{% endif %}
   {% endif %}
   {% if b.article_type != 'picture_only' %}
